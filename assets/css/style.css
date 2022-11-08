@@ -1,0 +1,191 @@
+body {
+    font-size: medium;
+    font-family: "Helvetica-Light","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",Helvetica,sans-serif,Arial;
+    color: #353637;
+}
+
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #24D4F7;
+  text-decoration: none;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.nav-link {
+  color: #353637;
+  text-decoration: none;
+}
+
+.nav-link:focus, .nav-link:hover {
+  color: #24D4F7;
+}
+
+.logo {
+  height: 50px;
+}
+
+.confluent_logo {
+  height: 70px;
+}
+
+/* Background */
+.bg-seynur-light {
+  background-color: #f1f3f5;
+}
+
+.bg-seynur-note {
+  /*background-color: #24D4F7;*/
+  background: rgba(36,212,247, 0.1);
+}
+
+.bg-seynur-dark {
+  background-color: #353637;
+}
+
+.dot-seynur-note {
+  height: 5em;
+  width: 5em;
+  background-color: #24D4F7;
+  opacity: 0.1;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  z-index: 5;
+}
+
+.dot-seynur-light {
+  height: 5em;
+  width: 5em;
+  background-color: #f1f3f5;
+  opacity: 0.3;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  z-index: 5;
+}
+
+.icon-lg-seynur-note {
+  color: #24D4F7;
+  font-size: 5em;
+  z-index: 100;
+  position: relative;
+}
+
+.icon-lg-seynur-light {
+  color: #f1f3f5;
+  font-size: 5em;
+  z-index: 100;
+  position: relative;
+}
+
+.icon-lg-seynur-dark {
+  color: #353637;
+  font-size: 5em;
+  z-index: 100;
+  position: relative;
+}
+
+/* Text */
+.text-seynur-light {
+  color: #f1f3f5;
+}
+
+.text-seynur-note {
+  color: #24D4F7;
+}
+
+.text-seynur-navy {
+  color: #245078;
+}
+.text-seynur-title {
+  font-size: large;
+}
+
+.btn-seynur-display {
+  color: #353637;
+  border-color: #353637;
+  text-decoration: none;
+  width: 100%;
+}
+
+.btn-seynur-display:hover {
+  color: #f1f3f5;
+  background-color: #353637;
+  border-color: #24D4F7;
+  text-decoration: none;
+  width: 100%;
+}
+
+.btn-seynur-outline {
+  color: #353637;
+  border-color: #24D4F7;
+  text-decoration: none;
+}
+
+.btn-seynur-outline:hover {
+  color: #f1f3f5;
+  background-color: #24D4F7;
+  border-color: #24D4F7;
+  text-decoration: none;
+}
+
+.btn-seynur-dark {
+  color: #f1f3f5;
+  background-color: #353637;
+  border-color: #353637;
+  text-decoration: none;
+}
+
+.btn-seynur-dark:hover {
+  color: #24D4F7;
+  background-color: #353637;
+  border-color: #24D4F7;
+  text-decoration: none;
+}
+
+.img-seynur-about {
+  width: 200px;
+}
+
+.img-seynur-rounded {
+  width: 140px;
+}
+
+
+.hr-seynur-note {
+  width: 50px;
+  border-color: #24D4F7;
+  border-width: 2px;
+}
+
+.hr-seynur-light {
+  width: 50px;
+  border-color: #F1F3F5;
+  border-width: 2px;
+}
+
+.hr-seynur-dark {
+  width: 50px;
+  border-color: #353637;
+  border-width: 2px;
+}
+
+#seynur-footer a {
+  color: #f1f3f5;
+  text-decoration: underline;
+}
+
+#seynur-footer a:hover {
+  color: #f1f3f5;
+  text-decoration: underline;
+}
+#seynur-footer .copyright {
+  font-size: small;
+}
