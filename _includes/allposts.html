@@ -1,34 +1,37 @@
 <span id="applications" class="pt-1" />
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for post in site.posts %} <!--limit:20 %}-->
+        {% for post in site.posts %}
+        <!--limit:20 %}-->
         <div class="col">
             <div class="card shadow-sm mt-3 ">
                 <div class="col s10 text-center">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="1" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></svg><img class="center" src="{{ post.image }}" width="200" height="200">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="1"
+                        xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid slice"
+                        focusable="false"></svg><img class="center" src="{{ post.image }}" width="200" height="200">
                 </div>
-            <div class="card-body">
-                <h4 class="card-title">{{ post.title }}</h4>
-                <p class="card-text">{{ post.summary }}</p>
-                <a href="{{ post.url }}" class="stretched-link">Continue reading</a>
-                <p class="card-text"><small class="text-muted">{{post.date| date: "%b %d"}} ·  {% include read_time.html %} read</small></p>
-                
-          
-                {% for tag in post.tags %}
-              {% assign tag_slug = tag | slugify: "raw" %}
-              <a class="tag-link"
-                href={{ post.url | append: "/tags/" | append: tag_slug | append: "/" }}
-                rel="category tag">
-                #{{ tag }}
-              </a>             
-                
-            {% endfor %}
-                
-            </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <p class="card-text">{{ post.summary }}</p>
+                    <a href="{{ post.url }}" class="stretched-link">Continue reading</a>
+                    <p class="card-text">
+                        <small class="text-muted">{{post.date| date: "%d %b %Y"}} · {% include read_time.html %}</small>
+                        <br/>
+                        <small >{{ post.author }}</small>
+                    </p>
+
+                    {% for tag in post.tags %}
+                    {% assign tag_slug = tag | slugify: "raw" %}
+                    <a class="tag-link" href={{ post.url | append: "/tags/" | append: tag_slug | append: "/" }}
+                        rel="category tag">
+                        #{{ tag }}
+                    </a>
+
+                    {% endfor %}
+
+                </div>
             </div>
         </div>
         {% endfor %}
     </div>
-</div> 
-
-
+</div>
