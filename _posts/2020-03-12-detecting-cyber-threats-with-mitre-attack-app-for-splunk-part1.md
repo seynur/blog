@@ -12,7 +12,7 @@ categories: Splunk
 
 # Detecting Cyber Threats with MITRE ATT&CK App for Splunk — Part 1
 
-![](/assets/img/blog/2020-03-12-mitre-attack-matrix-1.webp)
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-matrix-1.webp)
 
 The purpose of this blog post is to share our experience and knowledge in our attempts to detect cyber threats with [Splunk®](https://www.splunk.com). Since we have a knowledge base of adversary behavior (MITRE ATT&CK) and an analytics-driven platform (Splunk) that helps us identify, investigate, respond to threats; it would be best to combine these features for a better detection mechanism.
 
@@ -58,7 +58,7 @@ Note: Detailed documentation for the app can be found [here](https://seynur.gith
 
 I will share some of the views/screenshots from this application and try to explain how these views address the above use-cases. In order to get started, we have to have some baseline and rules enabled. The application starts with the following view for assessment purposes:
 
-![MITRE ATT&CK Compliance with Splunk ES](/assets/img/blog/2020-03-12-mitre-attack-compliance-1.webp)
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-compliance-1.webp)
 
 Things to consider about this view:
 - Each cell containing a technique is colored based on the percentage of enabled correlation searches.
@@ -70,19 +70,19 @@ Things to consider about this view:
   - high: 70%+ enabled
 - You can click on a specific technique in order to view the associated correlation rules within ES App. This takes you to MITRE ATT&CK Rule Finder view, which enables users to search for existing correlation rules based on technique names.
 
-![MITRE ATT&CK Rule Finder](/assets/img/blog/2020-03-12-mitre-attack-rulefinder-1.webp)
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-rulefinder-1.webp)
 
 You can click on the desired rule for further configuration (enable/edit rules, etc.). This will take you to Enterprise Security configuration for editing.
 
 Once the rules are configured and enabled you can view the MITRE ATT&CK Matrix view for the current status of related correlation rules within a given time frame. It provides and overview of triggered techniques within MITRE ATT&CK Matrix colored according to the “Urgency” level of Notable Events.
 
-![MITRE ATT&CK Matrix](/assets/img/blog/2020-03-12-mitre-attack-matrix-2.webp "MITRE ATT&amp;CK Matrix")
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-matrix-2.webp "MITRE ATT&amp;CK Matrix")
 
 You can click on the triggered technique which provides the drill-down functionality and opens up Enterprise Security App Incident Review view for further analysis/investigation.
 
 There’s also an additional view within this app for further analysis of detection use-cases based on triggered tactics and techniques.
 
-![MITRE ATT&CK Matrix](/assets/img/blog/2020-03-12-mitre-attack-sankey-1.webp)
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-sankey-1.webp)
 
 This visualization provides an overview of triggered rules (notable events) based on MITRE ATT&CK Tactics and Notable assets/identities. The number of triggered Notable Events according to MITRE ATT&CK techniques are aggregated by Notable Assets where `notable_asset` is populated by `src`, `dest` or `user` fields from related Data Models.
 
@@ -93,11 +93,11 @@ Installation of MITRE ATT&CK App for Splunk is pretty straight forward. You can 
 
 The visualizations depend on lookup tables and those lookup tables are scheduled to run at midnight every day by default. This schedule is configurable according to your needs of course (i.e. Lookup generator search). Upon the initial installation, you may need to visit the setup dashboard to trigger the searches that populate the lookup tables to get things started right away.
 
-![MITRE ATT&CK Compliance](/assets/img/blog/2020-03-12-mitre-attack-compliance-2.webp)
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-compliance-2.webp)
 
 Click on the table row.
 
-![MITRE ATT&CK Setup](/assets/img/blog/2020-03-12-mitre-attack-setup-1.webp)
+![screenshot](/assets/img/blog/2020-03-12-mitre-attack-setup-1.webp)
 
 Once on the setup page, just wait for the searches to complete and you’re done!
 
