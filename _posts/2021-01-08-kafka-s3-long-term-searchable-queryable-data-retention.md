@@ -2,11 +2,11 @@
 layout: default
 title: "Kafka + S3: Long-term searchable/queryable data retention"
 summary: "The goal of this post is to provide an alternate solution for a question we have started to face with our clients. What is the best way to store event-data in ..."
+author: Selim Seynur
 image: /assets/img/blog/2021-01-08-kafka-s3-1.webp
 date: 08-01-2021
-tags: kafka s3
+tags: kafka 
 categories: Kafka
-
 ---
 
 # Kafka + S3: Long-term searchable/queryable data retention
@@ -375,3 +375,5 @@ This has been a rather long post and thanks for reading. Please feel free to com
 - [AWS S3](htts://aws.amazon.com/s3/)
 - [Apache Drill](htts://drill.apache.org/)
 - [Apache Superset](htts://superset.apache.org/)
+
+---

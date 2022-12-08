@@ -48,6 +48,11 @@ blockquote {
   quotes: "\201C""\201D""\2018""\2019";
 }
 
+code {
+  white-space : pre-wrap !important;
+  word-break: break-word;
+}
+
 .w-15 {
   width: 15% !important;
 }

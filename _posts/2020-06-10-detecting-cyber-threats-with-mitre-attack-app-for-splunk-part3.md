@@ -163,3 +163,5 @@ In this part of the series I wanted to go over the process of creating a new cor
 - [Splunk ES Content Update](https://splunkbase.splunk.com/app/3449/)
 - [MITRE ATT&CK App for Splunk](https://splunkbase.splunk.com/app/4617/)
 - [Documentation for MITRE ATT&CK App for Splunk](https://seynur.github.io/DA-ESS-MitreContent/)
+
+---
