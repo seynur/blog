@@ -64,7 +64,7 @@ Looking at the pseudocode (or SPL), detection search needs to check for a create
 
 If you have [Data Model Acceleration](https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Acceleratedatamodels) enabled, then you can also utilize summariesonly=true parameter for tstats command. Such optimizations already come with [Splunk Enterprise Security](https://splunkbase.splunk.com/app/263/) helper macros, hence we can actually re-write the query as following:
 
-```
+```spl
 | tstats `security_content_summariesonly` count min(_time) as firstTime max(_time) as lastTime FROM datamodel=Endpoint.Processes WHERE Processes.action="allowed" AND Processes.process_path = "C:\\Windows\\*\\at.exe" by Processes.process_name Processes.process_path Processes.process Processes.parent_process_name Processes.dest Processes.user  | `drop_dm_object_name(Processes)`  | `security_content_ctime(firstTime)`  | `security_content_ctime(lastTime)`
 ```
 
@@ -82,7 +82,7 @@ If you need more data, perhaps [Mordor](https://github.com/hunters-forge/mordor)
 I used the following simple approach by editing under Sysmon Add-on (because I was lazy and it’s easier to copy/paste within the same file :) ):
 
 **TA-microsoft-sysmon/local/props.conf**
-```
+```properties
 [mordor:json]
 SHOULD_LINEMERGE = false
 KV_MODE=json
@@ -97,7 +97,7 @@ In order to match this sysmon data with Splunk Endpoint, we need the correct fie
 In addition to the above extraction related changes, I updated the following file so that we have this additional data matching to Endpoint Data Model (tags).
 
 **TA-microsoft-sysmon/local/eventtypes.conf**
-```
+```properties
 [ms-sysmon-network]
 search = ((index=mordor log_name="Microsoft-Windows-Sysmon/Operational") OR source="*WinEventLog:Microsoft-Windows-Sysmon/Operational") EventCode="3"
 

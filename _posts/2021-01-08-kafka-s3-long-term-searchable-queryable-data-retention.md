@@ -75,7 +75,7 @@ Once installed, I followed the instructions to generate data on `pageviews` and 
 **Apache Drill**:
 You can download (https://drill.apache.org/download/) the latest version, I used 1.18 in this environment. Once extracted, you run the embedded version for testing.
 
-```sh
+```bash
 tar xvzf apache-drill-1.18.0.tar.gz 
 bin/drill-embedded
 ```
@@ -89,7 +89,7 @@ Once started, you can run queries either from the command-line or from the web U
 **Apache Superset**:
 You can follow the [instructions](https://superset.apache.org/docs/installation/installing-superset-from-scratch) to install this python application from scratch. The only difference is that I used [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) to create/manage the Python virtual environment and put the start command in a shell script.
 
-```sh
+```bash
 # install dependencies
 sudo apt-get install build-essential libssl-dev libffi-dev python-dev python-pip libsasl2-dev libldap2-dev
 # create virtual environment
@@ -110,7 +110,7 @@ superset init
 _Troubleshooting — error on “superset db ugprade” command_:
 When I run the command, I figured that python was complaining about a specific import for "**dataclasses**". Hence, I installed that as well :)
 
-```sh
+```bash
 (superset) $> superset db upgrade
 Traceback (most recent call last):
  File "/home/selim/.virtualenvs/superset/bin/superset", line 5, in <module>
