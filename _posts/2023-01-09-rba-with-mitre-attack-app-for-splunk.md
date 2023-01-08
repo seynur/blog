@@ -3,8 +3,8 @@ layout: default
 title: "Risk-Based Alerting (RBA) with MITRE ATT&CK App for Splunk"
 summary: "..."
 author: Selim Seynur
-image: /assets/img/blog/2023-01-06-rba-mitre.webp
-date: 06-01-2023
+image: /assets/img/blog/2023-01-09-rba-mitre.webp
+date: 09-01-2023
 tags: splunk risk-based-alerting rba risk-analysis siem
 categories: Splunk
 
@@ -38,7 +38,7 @@ I think a brief explanation of MITRE ATT&CK tactics and techniques would be usef
 ### Entities (Assets and Identities):
 [Asset and Identity framework](https://dev.splunk.com/enterprise/docs/devtools/enterprisesecurity/assetandidentityframework/) is a key component for RBA to work properly since having up-to-date entity information with somewhat accurate importance levels determines the total risk score associated with those entities (e.g. risk factors for entities).  
 
-![screenshot](/assets/img/blog/2023-01-06-assetandidentity-framework.webp)
+![screenshot](/assets/img/blog/2023-01-09-assetandidentity-framework.webp)
 
 Tuning some of the fields in these lookups turn out to be pretty important moving forward.  One approach we perform with our clients is to come up with a Data Flow Diagram (DFD) for the purposes of Splunk.  We start with a high-level approach to understanding the underlying organizational architecture, business model, data workflow, and importance levels of entities.  This information gives us a good starting point to tune existing out-of-the-box correlation searches, adjust risk scores/factors, and come up with new use cases pertaining to the organization's security goals.
 
@@ -48,7 +48,7 @@ For this demo, I'll create 2 simple correlation (risk) rules by generating comma
 
 Here's a quick snapshot of the activity:
 
-![screenshot](/assets/img/blog/2023-01-06-rba-mitre.webp)
+![screenshot](/assets/img/blog/2023-01-09-rba-mitre.webp)
 
 2 rules are created with the following information and they both utilize "Risk Analysis" Adaptive Response Action to increment `src` and `user` risk scores.  Here are the relevant parts from `savedsearches.conf`:
 
@@ -84,21 +84,21 @@ I updated the earliest time to `-730m@m` to match 12 hours and the threshold cou
 mitre_tactic_id_count >= 2 and source_count >= 1
 ```
 
-![screenshot](/assets/img/blog/2023-01-06-rir-rule-1.webp)
+![screenshot](/assets/img/blog/2023-01-09-rir-rule-1.webp)
 
 Note that this rule does not have any static MITRE ATT&CK annotations specified, it simply gathers this information from the other rules (namely Demo1 and Demo2) and populates the annotations dynamically.  Here's the list of all 3 demo rules we have.
 
-![screenshot](/assets/img/blog/2023-01-06-demo-rules.webp)
+![screenshot](/assets/img/blog/2023-01-09-demo-rules.webp)
 
 MITRE ATT&CK views will be populated when our demo RIR triggers and populate the `notable` index.  We can see multiple techniques being triggered and when we do a drill-down, we can see our Demo - RIR rule with both `user` and `src` entity information.  In this case, instead of having to dive into multiple rules with possible false positives, we can focus on risky entities and investigate further.
 
-![screenshot](/assets/img/blog/2023-01-06-mitre-matrix.webp)
+![screenshot](/assets/img/blog/2023-01-09-mitre-matrix.webp)
 
-![screenshot](/assets/img/blog/2023-01-06-incident-review.webp)
+![screenshot](/assets/img/blog/2023-01-09-incident-review.webp)
 
 A similar view is also provided within MITRE ATT&CK App.  Triggered Tactics & Techniques view displays 2 Sankey diagrams for analyzing kill-chain based on the entity (asset or identity).  This visualization can be powerful for investigations to determine the activity of risky objects and perhaps new alerting rules can be generated from this as well (e.g. A technique under "Privilege Escalation" is triggered for the same user that had previously triggered one or more techniques under "Initial Access").
 
-![screenshot](/assets/img/blog/2023-01-06-mitre-triggered-tactics.webp)
+![screenshot](/assets/img/blog/2023-01-09-mitre-triggered-tactics.webp)
 
 For example, in our demo rules, we have both `demo1_user` and `demo2_user` firing correlation searches and populating the `risk` index.  Our Demo - RIR rule is looking for risky objects that trigger 2 or more tactics within the past 12 hours and only one of the users falls under this category.  Such a view enables an analyst to focus directly on the high-risk object (`demo1_user` in this case) for further investigation.
 
