@@ -76,7 +76,7 @@ search = | makeresults | eval src="10.10.1.1", dest="10.20.30.40", user="demo2_u
 
 ```
 
-Both these rules will populate the `risk` every few minutes.  Since we don't have anything on the `notable` index, we will not be alerted on any of these events as an analyst.  In order to be notified, I cloned "ATT&CK Tactic Threshold Exceeded For Object Over Previous 7 Days" correlation search and named it as "RIR - Demo - ATT&CK Tactic Threshold Exceeded For Object Over 12 Hours"
+Both these rules will populate the `risk` index every few minutes.  Since we don't have anything on the `notable` index, we will not be alerted on any of these events as an analyst.  In order to be notified, I cloned "ATT&CK Tactic Threshold Exceeded For Object Over Previous 7 Days" correlation search and named it as "RIR - Demo - ATT&CK Tactic Threshold Exceeded For Object Over 12 Hours"
 
 I updated the earliest time to `-730m@m` to match 12 hours and the threshold counts in the search as follows (last line):
 ```
@@ -110,7 +110,7 @@ Splunk ES and ESCU come with many useful correlation searches and while most of 
 > More than 40% of organizations receive 10,000+ alerts per day, with 50%+ of those alerts turning out to be false positives.
 <br/> - [The Essential Guide to Risk Based Alerting (RBA)](https://www.splunk.com/en_us/form/the-essential-guide-to-risk-based-alerting.html)
 
-Risk-Based Alerting (RBA) is a method for prioritizing security alerts based on risk scores that are calculated using a variety of factors such as the type of entity involved, the severity of the event, and the potential consequences of the event. This helps organizations more effectively identify and prioritize the most significant security threats. It is very likely that teams will need to iteratively review, tune, and improve their RBA implementations.  Especially integrating RBA with the MITRE ATT&CK framework to effectively identify and prioritize threats by taking into account the potential impact of different tactics and techniques.  Overall, the best approach for integrating RBA with the MITRE ATT&CK framework will depend on the specific needs and resources of the organization but I feel that adding this
+Risk-Based Alerting (RBA) is a method for prioritizing security alerts based on risk scores that are calculated using a variety of factors such as the type of entity involved, the severity of the event, and the potential consequences of the event. This helps organizations more effectively identify and prioritize the most significant security threats. It is very likely that teams will need to iteratively review, tune, and improve their RBA implementations.  I tried to provide guidance on integrating RBA with the MITRE ATT&CK framework to effectively identify and prioritize threats by taking into account the potential impact of different tactics and techniques.  Overall, the best approach for integrating RBA with the MITRE ATT&CK framework will depend on the specific needs and resources of the organization.
 
 ---
 
