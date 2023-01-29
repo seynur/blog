@@ -147,10 +147,10 @@ Starting with version 2.2.0, we’ve added a new feature to integrate MITRE ATT&
 
 API service simply provides a set of rules/SPL searches, which are continuously updated by our team. With version 2.2.0 of the app we added an optional scheduled search as a setup parameter: **MITRE ATT&CK Get Attack Detection Rules**.
 
-UPDATE (December 2022): We removed the API service and included all the rules within the app with newer versions.  In addition, most of the Splunk's out-of-the-box rules come with proper annotations so that we simply updated the app to read those on the fly instead.
+**UPDATE (December 2022)**: We removed the API service and included all the rules within the app with newer versions starting with version 3.4.0.  In addition, most of the Splunk's out-of-the-box rules come with proper annotations so that we simply updated the app to read those on the fly instead.
 
 ## Summary
-In this part of the series I wanted to go over the process of creating a new correlation search for MITRE ATT&CK related techniques in order to use with MITRE ATT&CK App for Splunk.
+In this part of the series, I wanted to go over the process of creating a new correlation search for MITRE ATT&CK related techniques in order to use with MITRE ATT&CK App for Splunk.
 
 ---
 
