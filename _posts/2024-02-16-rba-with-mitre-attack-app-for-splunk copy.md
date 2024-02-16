@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Navigating the Implementation of a Splunk (with Enterprise Security) Project"
+title: "Navigating Splunk Implementation (with Enterprise Security): A Practical Approach"
 summary: "..."
 author: Selim Seynur
 image: /assets/img/blog/2024-02-16-splunkproject.webp
@@ -10,7 +10,7 @@ categories: Splunk
 
 ---
 
-# Navigating the Implementation of a Splunk (with Enterprise Security) Project
+# Navigating Splunk Implementation (with Enterprise Security): A Practical Approach
 
 
 ## Introduction
@@ -23,6 +23,7 @@ Before diving into the intricacies of the project, it's important to establish a
 Each project is unique but there are some standards we utilize in order to provide better estimates on project time lines.  At the very least, we need to know the general objectives, sizing (e.g. GB/day), number of data sources, and number or use-cases.  The more detail we have, the better the project plan and estimates are.  Typically a successful implementation can take anywhere from a few months to a year depending on how we schedule our mutual times with the customers.  I’d like to provide the steps of the project plan template that we use with our customers.
 
 ![screenshot](/assets/img/blog/2024-02-16-splunkproject.webp)
+**Note**: The plan does not have to follow a strict waterfall model; however we've found it to be more efficient in order to minimize dependencies on other teams.  Some of the phases can be done iteratively (i.e. 3. Data Collection, 4. Enterprise Security Application Implementation, 5. Use-Case Development).
 
 ### 1. Architecture and Planning Workshop
 Like any project, a project kicks off with engaging workshops to align stakeholders and define project goals, scope, and timelines.  Most of the time, we have already determined the high-level requirements and desired architecture for Splunk implementation during POC and pre-sales.  In this phase, we dive deeper by referencing Splunk Validated Architectures, infrastructure resources, specifics on data inputs and use-cases.
