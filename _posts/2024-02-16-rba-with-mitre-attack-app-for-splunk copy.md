@@ -21,7 +21,7 @@ Before diving into the intricacies of the project, it's important to establish a
 Each project is unique but there are some standards we utilize in order to provide better estimates on project time lines.  At the very least, we need to know the general objectives, sizing (e.g. GB/day), number of data sources, and number or use-cases.  The more detail we have, the better the project plan and estimates are.  Typically a successful implementation can take anywhere from a few months to a year depending on how we schedule our mutual times with the customers.  I’d like to provide the steps of the project plan template that we use with our customers.
 
 ![screenshot](/assets/img/blog/2024-02-16-splunkproject.webp)
-**Note**: The plan does not have to follow a strict waterfall model; however we've found it to be more efficient in order to minimize dependencies on other teams.  Some of the phases can be done iteratively (i.e. 3. Data Collection, 4. Enterprise Security Application Implementation, 5. Use-Case Development).
+**Note**: While the plan outlines a general sequence, it doesn't have to follow a strictly linear approach. We've found this method efficient in minimizing dependencies on other teams, which can help streamline the process. However, it's important to acknowledge that this approach can also limit flexibility in later stages. Some phases, like data collection, application implementation, and use-case development, can be iteratively refined throughout the project.
 
 ### 1. Architecture and Planning Workshop
 Like any project, a project kicks off with engaging workshops to align stakeholders and define project goals, scope, and timelines.  Most of the time, we have already determined the high-level requirements and desired architecture for Splunk implementation during POC and pre-sales.  In this phase, we dive deeper by referencing Splunk Validated Architectures, infrastructure resources, specifics on data inputs and use-cases.
@@ -55,18 +55,16 @@ Installation of the application is pretty straight forward.  For our projects, s
 - With regards to adding assets, our experience has been variable.  While some customers have up-to-date CMDB or similar inventory of their assets that we can periodically retrieve, others have out-dated or nonexistent asset inventory, where we have to work with various departments in order to understand the prioritizations.  In such cases, we usually try to add subnets initially to make things easier and then move on to more detailed information.
 - Ensure that Data Model accelerations are configured properly by checking the time range, backfill options, and index whitelisting.
 
-
 ### 5. Use-Case Development
 Developing use-cases on a clean slate is relatively easier but I’d like to mention the case where we usually transition from an existing SIEM system.  It is very likely for an existing system to have hundreds of correlation searches.  Based on the projects we’ve done so far, we usually face with 200-600 correlation searches on old/legacy SIEM systems that need to be transferred over to the new Splunk installation.  Instead of diving directly into rule implementation, we usually spend a 1-3 days (depending on content) to go over Splunk’s view point.  Up to this stage working with Splunk to arrange workshops and trainings for the team is crucial so that we can all speak the same language.  This step can become pretty different for each customer since each environment is unique and may have varying requirements.  We try to stick go general guidelines and use-cases/analytic stories as starting point and shape our approach accordingly.
 
 **Notes**
-- Review Security Essentials App (https://splunkbase.splunk.com/app/3435) as well as Content Library (https://docs.splunk.com/Documentation/ESSOC/4.23.0/user/HowtoUsetheContentPack#Content) – the information can also be found online https://research.splunk.com/
+- Review [Security Essentials App](https://splunkbase.splunk.com/app/3435) as well as [Content Library](https://docs.splunk.com/Documentation/ESSOC/4.23.0/user/HowtoUsetheContentPack#Content) – the information can also be found online [Splunk Security Content](https://research.splunk.com/)
 - Begin with a certain number of popular use-cases/stories.  For example, starting with Access, Network, and Endpoint seem to have the most initial coverage (e.g. Access - Brute Force Access Behavior Detected - Rule is a good fit that usually addresses several legacy correlation searches written separately for each data source)
-- Track use-case coverage.  We’ve done this with Security Essentials App bookmark feature (https://docs.splunk.com/Documentation/SSE/3.7.1/User/ManageBookmarks) where team members can chime in as needed and using excel or google sheets.  The best approach is to find a way to work efficiently with the other team members and this turns out to be a very subjective topic.
+- Track use-case coverage.  We’ve done this with Security Essentials App [bookmark feature](https://docs.splunk.com/Documentation/SSE/3.7.1/User/ManageBookmarks) where team members can chime in as needed and using excel or google sheets.  The best approach is to find a way to work efficiently with the other team members and this turns out to be a very subjective topic.
 - Implement any missing use-cases by writing new correlation searches.
 - Introduce the concept of Risk Based Alerting
 - Integrate with SOAR (if available) or introduce ES App incident workflow so that operation teams can start utilizing Splunk right away.
-
 
 ### 6. Project Closing
 At this stage, the goal is to verify implementation of previous steps by testing, documentation and knowledge transfer in order to ensure a smooth transition to operational use.  I personally find environment specific documentation aspect to be very important.  It is always best to finish testing and documentation during implementation but in practice (e.g. due to time limitations) we may end up reviewing and doing these tasks at the very end.
@@ -76,17 +74,14 @@ At this stage, the goal is to verify implementation of previous steps by testing
 - Document naming conventions and procedures on data collection (SC4S configuration, UF installation, custom add-on development, etc.) and creating knowledge object (dashboards, searches, lookups, etc.)
 - If applicable, document other administrative procedures as well, such as git/Ansible usage with deployment operations
 
-
 ## Challenges
 As it is the case with any project, we always face issues and challenges throughout the implementation.  I’ve tried to list some of the major ones below:
-Customer Motivation: Ensuring sustained customer motivation throughout the project can be challenging. Regular communication, demonstrating value, and showcasing early wins are essential.
 
-
-- Resource Availability: Adequate resources, both human and technical, are crucial for successful implementation. Clear resource allocation and contingency planning can mitigate this challenge.
+- Resource Availability: Adequate resources, both human and technical, are crucial for successful implementation. Clear resource allocation and contingency planning can mitigate this challenge.  We also may need to plan some phases of the project iteratively in order to accomodate available resources.
 - Interdepartmental Communication: Interdepartmental communication gaps at the customer's end can hinder progress. Facilitating collaboration and establishing effective communication channels are vital.  Most of the time we try to be involved in every aspect in order to better communicate the requirements on our end with various departments.
 - Multiple Project Managers: Dealing with multiple project managers can lead to confusion and conflicting priorities. Streamlining communication and decision-making processes can address this issue.  We also keep everyone involved up to date with weekly progress reports and planned meetings when necessary.
 - Customer Training: Equipping the customer with the necessary training and knowledge is key for maximizing the benefits of Splunk. Comprehensive training programs and ongoing support are essential.  In addition to recommended official Splunk training it is also helpful to organize Splunk hands-on workshops to get the teams up to speed with Splunk platform.
-- Project Workshop Challenges: Incorrect or incomplete information gathered during workshops, such as disparate data formats or sources, can pose challenges. For example, it is not unusual to get a few new data sources after implementation phases.  Depending on how much detail we have during these workshops, we try to put some buffer in the project plan accordingly based on our previous engagements.
+- Project Workshop Challenges: Incorrect or incomplete information gathered during workshops, such as disparate data formats or sources, can pose challenges. For example, it is not unusual to get a few (or many) new data sources after implementation phases.  Depending on how much detail we have during these workshops, we try to put some buffer in the project plan accordingly based on our previous engagements.
 
 ## Conclusion
 Implementing a Splunk project requires meticulous planning, effective communication, and a proactive approach to challenges. By leveraging the platform's capabilities and addressing these hurdles head-on, organizations can unlock valuable insights from their data, leading to improved operational efficiency and informed decision-making. While the specifics may differ, the core principles of planning, communication, and overcoming challenges can be applied to many data-oriented projects. I encourage you to share your own experiences and feedback in the comments below. This outline, based on our experience, can serve as a starting point for navigating similar projects and unlocking the power of data for your organization.
@@ -98,7 +93,10 @@ Implementing a Splunk project requires meticulous planning, effective communicat
 
 - [Splunk Validated Architectures](https://www.splunk.com/en_us/pdfs/tech-brief/splunk-validated-architectures.pdf)
 - [Splunk Success Framework](https://lantern.splunk.com/Splunk_Success_Framework)
+- [Splunk Security Content](https://research.splunk.com/)
 - [Build integrations for Splunk Enterprise Security](https://dev.splunk.com/enterprise/docs/devtools/enterprisesecurity/)
 - [Splunk Enterprise Security](https://splunkbase.splunk.com/app/263/)
+- [Splunk ES Content Update](https://splunkbase.splunk.com/app/3449)
+- [Security Essentials App](https://splunkbase.splunk.com/app/3435)
 
 ---
