@@ -12,9 +12,7 @@ categories: Splunk
 
 # Navigating Splunk Implementation (with Enterprise Security): A Practical Approach
 
-
-## Introduction
-Implementing a Splunk project can revolutionize how businesses manage and analyze their data, leading to enhanced insights and informed decision-making. In our work, our goal is to provide a reliable, scalable and maintainable solution by understanding project requirements and following Splunk best practices.  However, like any project, it comes with its own set of challenges. In this blog, we'll explore the journey of implementing a Splunk project, from planning to overcoming hurdles and achieving success.  My goal is to share our experience at a high level with other practitioners (e.g. security teams, architects, consultants, etc.).
+In this post, I'd like to go over a Splunk project implementation (on premises) with regards to security. This is based on our experiences as consultants, where we've helped numerous organizations overcome common challenges and unlock the power of Splunk for enhanced security insights and streamlined operations. As security professionals ourselves, we understand the critical need for robust security posture, and Splunk plays a vital role in achieving that. In our work, our goal is to provide a reliable, scalable and maintainable solution by understanding project requirements and following Splunk best practices.  However, like any project, it comes with its own set of challenges. In this blog, we'll explore the journey of implementing a Splunk project, from planning to overcoming hurdles and achieving success.  I hope this high-level overview empowers other practitioners (e.g. security teams, architects, consultants, etc.) to navigate Splunk implementations successfully.
 
 ## Assumption
 Before diving into the intricacies of the project, it's important to establish a few assumptions.  Assuming there are no significant business or contractual issues, we can focus our attention on the key aspects of the implementation process.  Note that Splunk has significant resources and documentation available online (see References below) and I’m trying to summarize our interpretation based on our years of experience implementing Splunk projects on premises.
@@ -97,7 +95,7 @@ Implementing a Splunk project involves meticulous planning, effective communicat
 ---
 
 
-#### References:
+## References:
 
 - [Splunk Validated Architectures](https://www.splunk.com/en_us/pdfs/tech-brief/splunk-validated-architectures.pdf)
 - [Splunk Success Framework](https://lantern.splunk.com/Splunk_Success_Framework)
