@@ -12,7 +12,7 @@ categories: Splunk
 
 # Splunk Connect for Syslog (SC4S): Installation, Usage & Implementations
 
-This blog outlines the usage of SC4S to import syslog input data into Splunk, addressing various use cases including custom and complex configurations. From installation of SC4S and establishing connections to ensuring accurate timestamping and field mappings on indexed data, each step is crucial for effective log management and analysis. By providing insights and tips, this article aims to empower users to optimize their syslog integration process, ensuring accurate and actionable insights from their log data within Splunk. If you want to learn more information about SC4S you can check [Splunk Connect for Splunk](https://splunk.github.io/splunk-connect-for-syslog/main/) official documentation page, [Splunk Connect for Syslog: Extending the Platform](https://conf.splunk.com/files/2020/slides/PLA1454C.pdf) .conf2020 presentation and [Syslog Data Collection (SC4S) for Splunk and Custom Inputs](https://blog.seynur.com/splunk/2021/01/26/syslog-data-collection-sc4s.html) blog written by Splunk, Mark Bonsack/Ryan Faircloth and Merih Bozbura Türk respectively. After reading this, you may also want to check [github page of SC4S](https://github.com/splunk/splunk-connect-for-syslog) and [syslog-ng administration guide](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.25/administration-guide/parser-parse-and-segment-structured-messages/parsing-dates-and-timestamps/options-of-date-parser-parsers/) to understand and to create different types of filters in the future for your custom or known vendor inputs.
+This blog outlines the usage of SC4S to import syslog input data into Splunk, addressing various use cases including custom and complex configurations. From the installation of SC4S and establishing connections to ensuring accurate timestamping and field mappings on indexed data, each step is crucial for effective log management and analysis. By providing insights and tips, this article aims to empower users to optimize their syslog integration process, ensuring accurate and actionable insights from their log data within Splunk. If you want to learn more information about SC4S you can check [Splunk Connect for Splunk](https://splunk.github.io/splunk-connect-for-syslog/main/) official documentation page, [Splunk Connect for Syslog: Extending the Platform](https://conf.splunk.com/files/2020/slides/PLA1454C.pdf) .conf2020 presentation and [Syslog Data Collection (SC4S) for Splunk and Custom Inputs](https://blog.seynur.com/splunk/2021/01/26/syslog-data-collection-sc4s.html) blog written by Splunk, Mark Bonsack/Ryan Faircloth and Merih Bozbura Türk respectively. After reading this, you may also want to check [the GitHub page of SC4S](https://github.com/splunk/splunk-connect-for-syslog) and [syslog-ng administration guide](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.25/administration-guide/parser-parse-and-segment-structured-messages/parsing-dates-and-timestamps/options-of-date-parser-parsers/) to understand and to create different types of filters in the future for your custom or known vendor inputs.
 
 SC4S, Splunk Connect for Syslog is an open-source and Splunk supported solution that utilizes syslog-ng (Open Source Edition) to transport data directly to Splunk via the Splunk HTTP Event Collector (HEC) without reading data from somewhere on the disk [[1]](https://splunk.github.io/splunk-connect-for-syslog/main/). This also implies that there is no requirement for a Universal/Heavy Forwarder or extensive disk space on SC4S server(s) during the data collection process.
 
@@ -24,23 +24,35 @@ Below, you'll find a list of the use cases covered in this blog. If you prefer, 
         * [CASE 1.2](#sc4s-known-vendor-usecases-12) : *SC4S recognizes and parses automatically but custom index will be used.*
         * [CASE 1.3](#sc4s-known-vendor-usecases-13) : *SC4S recognizes and parses automatically but custom sourcetype will be used for message contents.*
     * [Custom Vendor Use-Cases](#sc4s-custom-vendor-usecases) 
-        * [CASE 2.1](#sc4s-custom-vendor-usecases-21) : *SC4S can't recognizes and can't parse automatically - to change index, sourcetype fields*
-        * [CASE 2.2](#sc4s-custom-vendor-usecases-22) : *SC4S can't recognizes and can't parse automatically - to change timestamp, index, sourcetype, some custom fields due to message context*
-        * [CASE 2.3](#sc4s-custom-vendor-usecases-23) : *SC4S can't recognizes and can't parse automatically - to delete due to message context*
+        * [CASE 2.1](#sc4s-custom-vendor-usecases-21) : *SC4S can't recognize and can't parse automatically - to change index, sourcetype fields*
+        * [CASE 2.2](#sc4s-custom-vendor-usecases-22) : *SC4S can't recognize and can't parse automatically - to change timestamp, index, sourcetype, some custom fields due to message context*
+        * [CASE 2.3](#sc4s-custom-vendor-usecases-23) : *SC4S can't recognize and can't parse automatically - to delete due to message context*
 
 <div id="sc4s-custom-vendor-usecases-22"></div>
 
 ### Before Starting
-Before stating, be sure which ports will be used and there is no connection issues between SC4S and Splunk Servers. This is basic but one of the most common issues. [The SC4S documentation](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-splunk-setup/) says that there are several pre-defined indexes that Splunk should have if data from known vendors is to be imported, and HTTP Event Collector (HEC) needs to be defined in Splunk. So, be sure both of them is defined correctly for your deployment, and check SC4S official documentation page, [getting started](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/) for planning your deployment and other basics. 
+Before starting, be sure which ports will be used and that there are no connection issues between SC4S and Splunk Servers. This is basic but one of the most common issues. [The SC4S documentation](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-splunk-setup/) says that there are several pre-defined indexes that Splunk should have if data from known vendors is to be imported, and HTTP Event Collector (HEC) needs to be defined in Splunk. So, be sure both of them are defined correctly for your deployment, and check the SC4S official documentation page, [getting started](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/) for planning your deployment and other basics. 
 
-To utilize SC4S, you must choose an installation method that suits your needs, which can with either Podman or Docker, and the installation can be done offline or online as outlined on the [Runtime Configuration](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-runtime-configuration/) page. While installation can be done in any desired method, there will be used two different installation methods in this article such as [*Docker Desktop + Compose (MacOS)*](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/docker-compose-MacOS/) and [*Docker&Podman offline installation*](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/docker-podman-offline/). 
+> *Notes* : If you don't know [how to create HEC inputs](https://docs.splunk.com/Documentation/Splunk/9.2.0/Admin/Inputsconf), please check the documentation. Below you can find inputs.conf example.
+
+
+````
+# inputs.conf
+[http://sc4sinput]
+disabled = 0
+token = e8de5f0e-97b1-4485-b111-1191cbf89392
+useACK = 0
+index = sc4s
+````
+
+To utilize SC4S, you must choose an installation method that suits your needs. The installation can be done offline or online as outlined on the [Runtime Configuration](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-runtime-configuration/) page. While installation can be done in any desired method, there will be used two different installation methods in this article as [*Docker Desktop + Compose (MacOS)*](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/docker-compose-MacOS/) and [*Docker&Podman offline installation*](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/docker-podman-offline/). 
 
 ### SC4S Installations:
-Docker Desktop will be utilized for both installations. You can refer to the Docker [documentation page](https://docs.docker.com/desktop/install/mac-install/) for proper installation guidance. In this article, we will adhere to the official documentation pages for the two runtime installations as mentioned, without creating any service file. These installations reflect the setup I implemented on my local laptop for test some configurations. If you are installing SC4S in your production environment, you may need to create a service file as outlined in the documentation. Also, don't forget to check [pre-configurations](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-runtime-configuration/) on this page.
+Docker Desktop will be utilized for both installations. You can refer to the Docker [documentation page](https://docs.docker.com/desktop/install/mac-install/) for proper installation guidance. In this article, we will adhere to the official documentation pages for the two runtime installations as mentioned, without creating any service file. These installations reflect the setup I implemented on my local laptop to test some configurations. If you are installing SC4S in your production environment, you may need to create a service file as outlined in the documentation. Also, don't forget to check [pre-configurations](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-runtime-configuration/) on this page.
 
 ---
 
-1. At the beginning of the SC4S installation, we need to create a volume, which we will call it as *splunk-sc4s-volume* with below command, and some directories (&lt;path-of-sc4s&gt;/**sc4s** and &lt;path-of-sc4s&gt;/**sc4s/local**) under other than /opt directory to locate and run the Docker Container in our local system for both method. 
+1. At the beginning of the SC4S installation, we need to create a volume, which we will call *splunk-sc4s-volume* with below command, and some directories (&lt;path-of-sc4s&gt;/**sc4s** and &lt;path-of-sc4s&gt;/**sc4s/local**) under other than /opt directory to locate and run the Docker Container in our local system for both method. 
 
     > *Notes*: If you intend to utilize your local /opt directory to create SC4S directories as outlined in the documentation, ensure that the Docker user executing the operation has the necessary read, write, and delete permissions.
 
@@ -48,15 +60,15 @@ Docker Desktop will be utilized for both installations. You can refer to the Doc
     ````
     ````
 ---
-2. After this creation we need to define directory mappings between the Docker Container and the local to control SC4S configurations from the local with *docker-compose.yml* file. The difference between online and offline method can be seen in this step, because online method will get sc4s image from Splunk repository directly but we need to deploy the image to Docker in offline method by ourselves. 
+2. After this creation we need to define directory mappings between the Docker Container and the local to control SC4S configurations from the local with the *docker-compose.yml* file. The difference between the online and offline methods can be seen in this step. The online method will get the sc4s image from the Splunk repository directly but we need to deploy the image to Docker in the offline method by ourselves. 
 
     > *Tip*:  Also, don't forget target port is your local & published is the Docker Container's port. If you want, you can change them individually.
 
-    > *Notes*: Only 514 (default) port for UDP/TCP protocols are defined in these YAML files for start. We will add more ports when we talk about use cases section. 
+    > *Notes*: Only 514 (default) port for UDP/TCP protocols are defined in these YAML files for start. We will add more ports when we talk about the use cases section. 
 
     * **Online** Docker Compose YAML configuration: [Docker Desktop + Compose (MacOS)](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/docker-compose-MacOS/)
 
-        In the online method, the following *docker-compose.yml* file which can be located under sc4s directory, can be used for the latest image of SC4S version 3. If you wish to modify the version, you can simply adjust the **container3:latest** section in the provided YAML file. 
+        In the online method, the following *docker-compose.yml* file which can be located under the sc4s directory, can be used for the latest image of SC4S version 3. If you wish to modify the version, you can simply adjust the **container3:latest** section in the provided YAML file. 
 
     ```
         version: "Latest"
@@ -93,7 +105,7 @@ Docker Desktop will be utilized for both installations. You can refer to the Doc
 
     * **Offline** Docker Compose YAML configuration: [ Docker/Podman](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/docker-podman-offline/)
 
-        In the offline method, we need to download depending on which version of the sc4s image (*oci_container.tar.gz*) we want to use from the relevant [github repository](https://github.com/splunk/splunk-connect-for-syslog/releases) releases. After this, we need to load image into Docker with following command.
+        In the offline method, we need to download depending on which version of the sc4s image (*oci_container.tar.gz*) we want to use from the relevant [github repository](https://github.com/splunk/splunk-connect-for-syslog/releases) releases. After this, we need to load the image into Docker with the following command.
 
         * <code>docker load < oci_container.tar.gz</code>
 
@@ -105,7 +117,7 @@ Docker Desktop will be utilized for both installations. You can refer to the Doc
 
         * <code>docker tag &lt;image-id&gt; sc4simage:latest</code>
 
-        Now you can use the following *docker-compose.yml* file which can be located under sc4s directory, as the online method. 
+        Now you can use the following *docker-compose.yml* file which can be located under the SC4S directory, as the online method. 
         
         > *Notes*: It is not the exact docker-compose.yml file in online method. So, be sure you are using the correct version of the method.
 
@@ -142,7 +154,7 @@ Docker Desktop will be utilized for both installations. You can refer to the Doc
     ```
 ---
 
-3. We need to create env_file to define relevant ports and communication information with Splunk for SC4S as below. 
+3. We need to create the env_file to define relevant ports and communication information with Splunk for SC4S as below. 
 
     > *Tips* : The SC4S DEFAULT_TIMEZONE option allows you to change the default time zone of your SC4S to which you want. Also, if you are using the default port, there's no need to define it in the env_file unless you have specific plans for filtering usage. 
 
@@ -153,12 +165,12 @@ Docker Desktop will be utilized for both installations. You can refer to the Doc
     SC4S_DEST_SPLUNK_HEC_DEFAULT_TOKEN = <hec-token-that-is-created-in-the-Splunk>
     SC4S_DEST_SPLUNK_HEC_DEFAULT_TLS_VERIFY = no
 
-    SC4S_DEFAULT_TIMEZONE=Turkey
+    SC4S_DEFAULT_TIMEZONE=Europe/Istanbul
     ```
 ---
-4. After completing the previous steps, executing one of the commands below will ensure that Docker properly composes up with the SC4S image. You can then check the SC4S logs and Splunk Search Head as shown in *Figure 1* and *Figure 2* respectively to verify if the connection was successfully established.
+4. After completing the previous steps, executing one of the commands below will ensure that Docker properly composes with the SC4S image. You can then check the SC4S logs and Splunk Search Head as shown in *Figure 1* and *Figure 2* respectively to verify if the connection was successfully established.
 
-    > *Notes*: If you want to use first command, you need to ensure you are located under exact directory that includes docker-compose.yml file. 
+    > *Notes*: If you want to use the first command, you need to ensure you are located under the exact directory that includes the docker-compose.yml file. 
 
     * <code>docker-compose up docker-compose.yml</code>
 
@@ -180,12 +192,12 @@ Docker Desktop will be utilized for both installations. You can refer to the Doc
 <div id="sc4s-known-vendor-usecases"></div>
     
 ### SC4S Use-Cases:
-In this section we will examine various scenarios I encountered when trying to retrieve syslog data via SC4S. These scenarios fall into two categories: known and custom vendors. So, let's get starting.
+In this section, we will examine various scenarios I encountered when trying to retrieve syslog data via SC4S. These scenarios fall into two categories: known and custom vendors. So, let's get started.
 
 <div id="sc4s-known-vendor-usecases-11"></div>
 
 ##### 1. Known Vendor Use-Cases: 
-List of known vendors that have already successfully parsers in the SC4S as default, can be found on documentation page. These are generally well-known and well-used vendors. Also, most probably, you will use at least one of them in your deployment.
+A list of known vendors that have already successfully parsed in the SC4S as default, can be found on the documentation page. These are generally well-known and well-used vendors. Also, most probably, you will use at least one of them in your deployment.
 
 ---
 * CASE 1.1 : *SC4S recognizes and automatically parses successfully.*
@@ -196,7 +208,7 @@ List of known vendors that have already successfully parsers in the SC4S as defa
 <12>Feb 20 09:40:10.326: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
     ````
 
-    According to the documentation, Cisco IOS can be listened to on port *514*. As it is a known vendor, it is automatically parsed. Moreover, sourcetype and index information associated with the relevant key can be found here. Therefore, when Cisco IOS is parsed automatically, based on the format we have, its index should be *netops* and sourcetype should be *cisco:ios*. Alternatively, we have the option to use either port 514 or any custom port with a preference for a high port. Because it may be difficult to troubleshoot problems that may arise when multiple sources direct data to the same port, custom port usage is important. In this case, you can either choose 514 or let's say, 5140 ports. Additionally, as mentioned before, if we intend to use a custom port, we must first define it within SC4S. You can simply add below into docker-compose.yml and env_file. SC4S now will listen 5140 port for both TCP/UDP protocols. 
+    According to the documentation, Cisco IOS can be listened to on port *514*. As it is a known vendor, it is automatically parsed. Moreover, sourcetype and index information associated with the relevant key can be found here. Therefore, when Cisco IOS is parsed automatically, based on the format we have, its index should be *netops* and sourcetype should be *cisco:ios*. Alternatively, we have the option to use either port 514 or any custom port with a preference for a high port. Because it may be difficult to troubleshoot problems that may arise when multiple sources direct data to the same port, custom port usage is important. In this case, you can either choose 514 or let's say, 5140 ports. Additionally, as mentioned before, if we intend to use a custom port, we must first define it within SC4S. You can simply add the below into docker-compose.yml and env_file. SC4S now will listen 5140 port for both TCP/UDP protocols. 
 
     ````
     # For docker-compose.yml 
@@ -217,9 +229,9 @@ List of known vendors that have already successfully parsers in the SC4S as defa
     SC4S_LISTEN_CISCO_IOS_UDP_PORT=5140
     ````   
     
-    Furthermore, there are some pre-configuration requirements that we need to define them, as specified in the official SC4S documentation, when directing data to the SC4S server. If you wonder what rules and functions work, take a look at [app-almost-syslog-cisco_syslog.conf](https://github.com/splunk/splunk-connect-for-syslog/blob/9d125838172450c4739224dde4a0e76122680f99/package/lite/etc/addons/cisco/app-almost-syslog-cisco_syslog.conf) in SC4S github repository. This configuration file will execute perfectly. 
+    Furthermore, there are some pre-configuration requirements that we need to define, as specified in the official SC4S documentation when directing data to the SC4S server. If you wonder what rules and functions work, take a look at [app-almost-syslog-cisco_syslog.conf](https://github.com/splunk/splunk-connect-for-syslog/blob/9d125838172450c4739224dde4a0e76122680f99/package/lite/etc/addons/cisco/app-almost-syslog-cisco_syslog.conf) in SC4S github repository. This configuration file will execute perfectly. 
 
-    Finally, the documentation mentions an add-on for Cisco IOS developed by Mikael Bjerkeland. This add-on contains pre-defined configuration files that are compatible with the Splunk Common Information Model (CIM). Hence, there's no need to perform key mappings after data ingestion into Splunk. It's important to note that this add-on is not officially supported by Splunk; any issues should be directed to Mikael Bjerkeland. While using add-ons not created by Splunk is not my preferred approach, since it was recommended on SC4S's page, I've included it here. For greater reliability, consider creating your own add-ons.
+    Finally, the documentation mentions an add-on for Cisco IOS developed by Mikael Bjerkeland. This add-on contains pre-defined configuration files that are compatible with the Splunk Common Information Model (CIM). Hence, there's no need to perform key mappings after data ingestion into Splunk. It's important to note that this add-on is not officially supported by Splunk; any issues should be directed to Mikael Bjerkeland. While using add-ons not created by Splunk is not my preferred approach, since it was recommended on SC4S's page, I've included it here. For greater reliability, consider creating your add-ons.
 
     Now, we can check our final results. 
 
@@ -237,13 +249,13 @@ List of known vendors that have already successfully parsers in the SC4S as defa
     | *Figure 4:* Result of Cisco IOS events coming through port 5140 (with using the add-on). |
 
 ---
-* CASE 1.2 : *SC4S recognizes and automatically parses successfully but custom index will be used.*
+* CASE 1.2 : *SC4S recognizes and automatically parses successfully but a custom index will be used.*
    
-    In this scenario, let's assume we're attempting same Cisco IOS event as in CASE 1.1. In this scenario, let's assume we're attempting same Cisco IOS event as in CASE 1.1, but this time we will change default index for this event type. 
+    In this scenario, let's assume we're attempting the same Cisco IOS event as in CASE 1.1. In this scenario, let's assume we're attempting the same Cisco IOS event as in CASE 1.1, but this time we will change the default index for this event type. 
 
-    > *Note*: Please don't forget to create new index called as *cisco_test* or whatever you will use in this case. In this example, *cisco_test* index will be used.
+    > *Note*: Please don't forget to create a new index called *cisco_test* or whatever you will use in this case. In this example, the *cisco_test* index will be used.
 
-    There is a file named *splunk_metadata.csv* located in the local/context directory, which we previously mapped to our local, during installation. This file is utilized for customizing simple fields for known vendors. Upon reviewing the documentation, it can be seen that a key such as *cisco_ios* is defined for Cisco IOS. If you can simple add below into *local/context/splunk_metadata.csv* file, SC4S will send events directly into the *cisco_test* index as in *Figure 5*. 
+    There is a file named *splunk_metadata.csv* located in the local/context directory, which we previously mapped to our local, during installation. This file is utilized for customizing simple fields for known vendors. Upon reviewing the documentation, it can be seen that a key such as *cisco_ios* is defined for Cisco IOS. If you can simply add the below into the *local/context/splunk_metadata.csv* file, SC4S will send events directly into the *cisco_test* index as in *Figure 5*. 
 
     ````
     # For splunk_metadata.csv
@@ -260,21 +272,21 @@ List of known vendors that have already successfully parsers in the SC4S as defa
 ---
 * CASE 1.3 : *SC4S recognizes and automatically parses successfully but custom sourcetype will be used for message contents.*
 
-    In this scenario, we will use the same event as in previous cases, but with a slight change on date and message to understand differences. Let's assume that if events contain *%LINK-3-UPDOWN* as below, the sourcetype of the event will be *cisco:ios*, otherwise *cisco:ios:new*. 
+    In this scenario, we will use the same event as in previous cases, but with a slight change in date and message to understand the differences. Let's assume that if events contain *%LINK-3-UPDOWN* as below, the sourcetype of the event will be *cisco:ios*, otherwise *cisco:ios:new*. 
     
-    Before starting configurations we need to know that there are two different file format under *local/context* directory as *compliance_meta_by_source.\** and *vendor_product_by_source.\**. Generally, *vendor_product_by_source.\** files are indicated known vendors but it doesn't mean you can't use *compliance_meta_by_source.\** for them too. On the other hand, custom vendors should use *compliance_meta_by_source.\** file. Also, there are some configuration examples for both files under same directory as default. Because creating a filter with both files are not so different and complicated, we will continue with *compliance_meta_by_source.\**. If you want you can check documentation page for further investigation about *vendor_product_by_source.\**. 
+    Before starting configurations, we need to know that there are two different file formats under the *local/context* directory as *compliance_meta_by_source.\** and *vendor_product_by_source.\**. Generally, *vendor_product_by_source.\** files are indicated as known vendors but it doesn't mean you can't use *compliance_meta_by_source.\** for them too. On the other hand, custom vendors should use *compliance_meta_by_source.\** file. Also, there are some configuration examples for both files under the same directory as default. Because creating a filter with both files is not so different and complicated, we will continue with *compliance_meta_by_source.\**. If you want you can check the documentation page for further investigation about *vendor_product_by_source.\**. 
     
-    > *Note*: You need to find out your known vendor filter key from the documentation page to use vendor_product_by_source.\* files but in *compliance_meta_by_source.\** you can create your own filter key. 
+    > *Note*: You need to find out your known vendor filter key from the documentation page to use vendor_product_by_source.\* files but in *compliance_meta_by_source.\** you can create your filter key. 
     
-    So, let's continue with *compliance_meta_by_source.\** files. First of all we need to make some changes on both *local/context/compliance_meta_by_source.conf* and *local/context/compliance_meta_by_source.csv* files. You can see two different event examples below.
+    So, let's continue with *compliance_meta_by_source.\** files. First of all, we need to make some changes on both the *local/context/compliance_meta_by_source.conf* and *local/context/compliance_meta_by_source.csv* files. You can see two different event examples below.
 
     ```` 
 <12>Feb 21 09:00:00.000: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to up
 <12>Feb 21 09:00:00.000: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
     ````    
-    While the *compliance_meta_by_source.conf* file contains filters for known vendors, the *compliance_meta_by_source.csv* file contains the changes to be made. So, if you add the following lines to the csv and conf files respectively, and run SC4S again, the filters will be activated. You can see the results in *Figure 6*.
+    While the *compliance_meta_by_source.conf* file contains filters for known vendors, and the *compliance_meta_by_source.csv* file contains the changes to be made. So, if you add the following lines to the CSV and conf files respectively, and run SC4S again, the filters will be activated. You can see the results in *Figure 6*.
     
-    > *Note*: These configurations are independent on any particular port. However, if you wish to define a specific port in the filter, you may use the *5140* port which was defined in Use Case 1.1. To do this, simply add *filter f_cisco_ios_new_filter{tag(".source.s_CISCO_IOS")}* into the *compliance_meta_by_source.conf* file. Additionally, keep in mind that you should still use the filter that is specific to the csv file.
+    > *Note*: These configurations are independent of any particular port. However, if you wish to define a specific port in the filter, you may use the *5140* port which was defined in Use Case 1.1. To do this, simply add *filter f_cisco_ios_new_filter{tag(".source.s_CISCO_IOS")}* into the *compliance_meta_by_source.conf* file. Additionally, keep in mind that you should still use the filter that is specific to the CSV file.
 
     ````
     # For compliance_meta_by_source.conf
@@ -305,20 +317,20 @@ List of known vendors that have already successfully parsers in the SC4S as defa
 
 
 ##### 2. Custom Vendor Use-Cases: 
-Some vendors/apps cannot be parsed by SC4S due to lack of parsing configurations. Even though, the least known apps for "known vendors" may not be available. Information about all pre-defined parsers can be found on official SC4S documentation which was mentioned in the [Known Vendor User-Cases](#sc4s-known-vendor-usecases) section.
+Some vendors/apps cannot be parsed by SC4S due to a lack of parsing configurations. Even though, the least known apps for "known vendors" may not be available. Information about all pre-defined parsers can be found on official SC4S documentation which was mentioned in the [Known Vendor User-Cases](#sc4s-known-vendor-usecases) section.
 
 <div id="sc4s-custom-vendor-usecases-21"></div>
 
-In this section we will create both simple & complicated configuration files with different examples of custom vendors.
+In this section, we will create both simple & complicated configuration files with different examples of custom vendors.
 
 ---
-* CASE 2.1 : *SC4S can't recognizes and can't parse automatically - to change index, sourcetype fields*
-    In this scenario, we will get events from a *Custom Vendor* on 5141 port, and we'll refer to this vendor as *Custom Vendor* for this case. Also, index will be *custom_vendor* and sourcetype will be *custom:vendor*. In order to this, we will use below event as example.
+* CASE 2.1 : *SC4S can't recognize and can't parse automatically - to change index, sourcetype fields*
+    In this scenario, we will get events from a *Custom Vendor* on the 5141 port, and we'll refer to this vendor as *Custom Vendor* for this case. Also, the index will be *custom_vendor* and sourcetype will be *custom:vendor*. To this, we will use the below event as an example.
 
     ```
     <14> hostname "This is my example event"
     ```
-    For custom vendors, you can simply create a filter in *compliance_meta_by_source.\** file. Yet, for creating and using more complicated filters, you may want to create a configuration file as app-custom_vendor.conf under */local/config/app-parsers/* directory for your specific vendor. Also, we need to define a custom port to both *docker-compose.yml* and *env_file* files as our previous use cases. So, simply add below lines to *docker-compose.yml*, *env_file* and *app-custom_vendor.conf* files respectively, and re-run the SC4S. You can see the results in *Figure 7*. 
+    For custom vendors, you can simply create a filter in *compliance_meta_by_source.\** file. Yet, for creating and using more complicated filters, you may want to create a configuration file as app-custom_vendor.conf under the */local/config/app-parsers/* directory for your specific vendor. Also, we need to define a custom port to both the *docker-compose.yml* and *env_file* files as in our previous use cases. So, simply add below lines to *docker-compose.yml*, *env_file* and *app-custom_vendor.conf* files respectively, and re-run the SC4S. You can see the results in *Figure 7*. 
 
 
     ````
@@ -357,7 +369,7 @@ In this section we will create both simple & complicated configuration files wit
     application custom_vendor[sc4s-network-source] {
         filter {
             tags(".source.s_CUSTOM_VENDOR");
-            };	
+            };  
         parser { custom_vendor-parser(); };
         };
 
@@ -370,20 +382,20 @@ In this section we will create both simple & complicated configuration files wit
     | *Figure 7:* Result of "Custom Vendor" events with different resource types due to message contents. |
 
 ---
-* CASE 2.2 : *SC4S can't recognizes and can't parse automatically - to change timestamp, index, sourcetype, some custom fields due to message*
-    In this scenario, let's assume we're ingesting audit and network logs from the same vendor into the Splunk on the same port, 5142, and we'll refer to this vendor as *Custom Vendor 2* in this case. Events sourcetypes will change due to their *type* field. If it is AUDIT, we will send them *custom:vendor2:audit*, otherwise it will be *custom:vendor2:alert*. You can find event examples below that will be used in this case.
+* CASE 2.2 : *SC4S can't recognize and can't parse automatically - to change timestamp, index, sourcetype, and some custom fields due to message*
+    In this scenario, let's assume we're ingesting audit and network logs from the same vendor into Splunk on the same port, 5142, and we'll refer to this vendor as *Custom Vendor 2* in this case. Events sourcetypes will change due to their *type* field. If it is AUDIT, we will send them *custom:vendor2:audit*, otherwise it will be *custom:vendor2:alert*. You can find event examples below that will be used in this case.
 
     ```
-    # Alert Example
+    # Alert Example
     <14>{"Alert":{"app":"App4CustomVendor","severity":"Low","src_ip":"1.1.1.1","dest_host":"desthost","subject":"This is subject","type":"Alert","mitre tatic name":[],"mitre technique name":[],"mitre technique id":[],"timestamp":"19/02/2024 12:22:34 MSK"}}
 
-    # Audit Example
+    # Audit Example
     <14>{"Alert":{"app":"App4CustomVendor","severity":"Low","src_ip":"1.1.1.1","dest_host":"desthost","subject":"This is subject","type":"Audit","mitre tatic name":[],"mitre technique name":[],"mitre technique id":[],"timestamp":"19/02/2024 12:22:34 TRT"}}
     ```
 
-    If we examine the examples, we can see that some fields are not given correctly. This could be due to improper definition or the product's characteristics. For example, Splunk has *mitre_tatic_name*, *mitre_technique_name*, *mitre_technique_id* fields but in the events these fields are slightly different. Also, all fields in the example events have same pattern as *Alert.field_name* but we need *fields* independently. Lastly, there are different time zone definings at the end of timestamp field. *MSK* and *TRT* indicates same time zone (+3 UTC) in the reality, but we need to customize timestamp field in configuration files.
+    If we examine the examples, we can see that some fields are not given correctly. This could be due to improper definition or the product's characteristics. For example, Splunk has *mitre_tatic_name*, *mitre_technique_name*, and *mitre_technique_id* fields but in the events, these fields are slightly different. Also, all fields in the example events have the same pattern as *Alert.field_name* but we need *fields* independently. Lastly, there are different time zone definings at the end of the timestamp field. *MSK* and *TRT* indicate the same time zone (+3 UTC) in reality, but we need to customize the timestamp field in configuration files.
 
-    We will folow same path as *CASE 2.1* to define new configurations for both event and custom port. Below lines will add to *docker-compose.yml*, *env_file* and *local/config/app-parsers/app-custom_vendor_2.conf* files respectively, and re-run the SC4S. Results can be seen in *Figure 8*.
+    We will follow the same path as *CASE 2.1* to define new configurations for both the event and custom port. Below lines will add to *docker-compose.yml*, *env_file* and *local/config/app-parsers/app-custom_vendor_2.conf* files respectively, and re-run the SC4S. Results can be seen in *Figure 8*.
 
     ````
     # Custom Vendor definition for docker-compose.yml
@@ -411,14 +423,14 @@ In this section we will create both simple & complicated configuration files wit
     block parser custom_vendor_2_syslog_app-parser() {
         channel {
 
-            # create a prefix to create custom fields
+            # create a prefix to create a custom fields
             parser {
                     json-parser ( prefix(".json."));
                 };
 
-            # Because events timestamp pattern may change due to different causes, this is for not return any error due to timestamp extractions in the future.
+            # Because the event's timestamp pattern may change due to different causes, this is for not returning any error due to timestamp extractions in the future.
             if {
-                # if timestamp pattern is in the event, extract it as timestamp field.
+                # If the timestamp pattern is in the event, extract it as a timestamp field.
                 parser {
                     regexp-parser(
                         prefix(".json.")
@@ -426,7 +438,7 @@ In this section we will create both simple & complicated configuration files wit
                         template("${.json.Alert.timestamp}")
                         );
                     };
-                # if so, add +0300 to timestamp field and change timestamp field (date) in the metadata.
+                # If so, add +0300 to the timestamp field and change the timestamp field (date) in the metadata.
                 rewrite {
                     set("${.json.timestamp} +0300", value(".metadata.date"));
                   };
@@ -458,7 +470,7 @@ In this section we will create both simple & complicated configuration files wit
                     };
                 };
 
-            # rewrite Alert.<fields> as <fields> into MESSAGE
+            # rewrite Alert.<fields> as <fields> into MESSAGE
             parser {
                 regexp-parser(
                     patterns('"Alert":(?<msg>.+})}')
@@ -474,7 +486,7 @@ In this section we will create both simple & complicated configuration files wit
                 rewrite {
                     subst("mitre technique name", "mitre_technique_name", value("MESSAGE"));
                     subst("mitre technique id", "mitre_technique_id", value("MESSAGE"));
-                    subst("mitre tatic name", "mitre_tactic_name", value("MESSAGE"));
+                    subst("mitre tactic name", "mitre_tactic_name", value("MESSAGE"));
                     };
                 };
             };
@@ -498,17 +510,17 @@ In this section we will create both simple & complicated configuration files wit
     | *Figure 8:* Result of "Custom Vendor" events with different resource types due to message contents. |
 
 
-* CASE 2.3 : *SC4S can't recognizes and can't parse automatically - to delete due to message context*
-    In this scenario, we will get events from a *Custom Vendor 3* on 5143 port. Also, index will be *custom_vendor_3* and sourcetype will be *custom:vendor3*. Similar to the *CASE 2.1*, we will define index and sourcetype in configuration file, but unlike that, we will not forward the events includes "unwanted event" text in the messages to the Splunk but will filter them directly in SC4S. In order to this, we will use below events as example.
+* CASE 2.3 : *SC4S can't recognize and can't parse automatically - to delete due to message context*
+    In this scenario, we will get events from a *Custom Vendor 3* on the 5143 port. Also, the index will be *custom_vendor_3* and the sourcetype will be *custom:vendor3*. Similar to the *CASE 2.1*, we will define index and sourcetype in the configuration file, but unlike that, we will not forward the events that include "unwanted event" text in the messages to Splunk but will filter them directly in SC4S. To this, we will use the below events as examples.
 
-    > *Note* : You can only understand whether the filtered example works or not by doing the same example yourself, because you can only see to the unfiltered sample is passed to the correct index and sourcetype in *Figure 9*. I can't provide you with proof that the filter works.
+    > *Note* : You can only understand whether the filtered example works or not by doing the same example yourself because you can only see that the unfiltered sample is passed to the correct index and sourcetype in *Figure 9*. I can't provide you with proof that the filter works.
 
     ```
     <14> hostname "This is my example event"
     <14> hostname "This is my unwanted event"
     ```
 
-    We will folow same path as *CASE 2.1*  and *CASE 2.2* to define new configurations for both event and custom port. Below lines will add to *docker-compose.yml*, *env_file* and *local/config/app-parsers/app-custom_vendor_3.conf* files respectively, and re-run the SC4S. Results can be seen in *Figure 9*.
+    We will follow the same path as *CASE 2.1*  and *CASE 2.2* to define new configurations for both the event and custom port. Below lines will add to *docker-compose.yml*, *env_file* and *local/config/app-parsers/app-custom_vendor_3.conf* files respectively, and re-run the SC4S. Results can be seen in *Figure 9*.
 
     ````
     # Custom Vendor 3 definition for docker-compose.yml
@@ -536,7 +548,7 @@ In this section we will create both simple & complicated configuration files wit
     block parser custom_vendor_3_syslog_app-parser() {
         channel {
                 if {
-                    # if there is "unwanted event" in the message, this event will be send to null queue (SC4S won't push events to the Splunk)       
+                    # If there is an "unwanted event" in the message, this event will be sent to the null queue (SC4S won't push events to the Splunk)       
                     parser {
                         regexp-parser(
                             prefix(".customvendor.")
@@ -545,7 +557,7 @@ In this section we will create both simple & complicated configuration files wit
                     };
                     rewrite(r_set_dest_splunk_null_queue);
                 };
-                # if event doesn't include "unwanted event" pattern, index = "custom_vendor_3" and sourcetype = "custom:vendor3"
+                # If the event doesn't include an "unwanted event" pattern, index = "custom_vendor_3" and sourcetype = "custom:vendor3"
                 rewrite {
                     r_set_splunk_dest_default(
                         index("custom_vendor_3")
