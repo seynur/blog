@@ -72,14 +72,65 @@ The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 
 | *Figure 3:* Calculating upper bounds for each signature for 4 hours. |
 
 
+```
+| tstats `summariesonly` count as ids_attacks,values(IDS_Attacks.tag) as tag from datamodel=Intrusion_Detection.IDS_Attacks by IDS_Attacks.signature 
+| `drop_dm_object_name("IDS_Attacks")` 
+| join type=left signature 
+    [
+    | tstats summariesonly=T count as ids_attacks from datamodel=Intrusion_Detection.IDS_Attacks where earliest=-5h@h latest=-1h@h by IDS_Attacks.signature _time span=1h
+    | `drop_dm_object_name("IDS_Attacks")`
+    | stats stdev(ids_attacks) AS stdev avg(ids_attacks) AS avg p50(ids_attacks) AS median by signature
+    | eval upper_bound = ceil(avg + stdev * 4)
+    | fields signature, upper_bound
+    ]
+|  fillnull
+| where (ids_attacks > upper_bound) OR isnull(upper_bound)
+
+```
+
+
+
 | ![screenshot](/assets/img/blog/2024-07-18-new-filter-7d.webp) |
 |:--:| 
 | *Figure 4* Calculating upper bounds for each signature for 7 days. |
 
 
+```
+| tstats `summariesonly` count as ids_attacks,values(IDS_Attacks.tag) as tag from datamodel=Intrusion_Detection.IDS_Attacks by IDS_Attacks.signature 
+| `drop_dm_object_name("IDS_Attacks")` 
+| join type=left signature 
+    [
+    | tstats summariesonly=T count as ids_attacks from datamodel=Intrusion_Detection.IDS_Attacks where earliest=-8d@d latest=-1d@d by IDS_Attacks.signature _time span=1h
+    | `drop_dm_object_name("IDS_Attacks")`
+    | stats stdev(ids_attacks) AS stdev avg(ids_attacks) AS avg p50(ids_attacks) AS median by signature
+    | eval upper_bound = ceil(avg + stdev * 4)
+    | fields signature, upper_bound
+    ]
+|  fillnull
+| where (ids_attacks > upper_bound) OR isnull(upper_bound)
+
+```
+
+
 | ![screenshot](/assets/img/blog/2024-07-18-new-filter-30d.webp) |
 |:--:| 
 | *Figure 5:* Calculating upper bounds for each signature for 30 days. |
+
+```
+| tstats `summariesonly` count as ids_attacks,values(IDS_Attacks.tag) as tag from datamodel=Intrusion_Detection.IDS_Attacks by IDS_Attacks.signature 
+| `drop_dm_object_name("IDS_Attacks")` 
+| join type=left signature 
+    [
+    | tstats summariesonly=T count as ids_attacks from datamodel=Intrusion_Detection.IDS_Attacks where earliest=-31d@d latest=-1d@d by IDS_Attacks.signature _time span=1h
+    | `drop_dm_object_name("IDS_Attacks")`
+    | stats stdev(ids_attacks) AS stdev avg(ids_attacks) AS avg p50(ids_attacks) AS median by signature
+    | eval upper_bound = ceil(avg + stdev * 4)
+    | fields signature, upper_bound
+    ]
+|  fillnull
+| where (ids_attacks > upper_bound) OR isnull(upper_bound)
+
+```
 
 There can be different statistical analysis before decide which SPL will be used. There may be developed different filters according to event analysis. 
 
