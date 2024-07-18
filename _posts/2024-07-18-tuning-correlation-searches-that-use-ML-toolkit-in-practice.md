@@ -60,7 +60,7 @@ As previously mentioned, under some circumstances, it will not be possible to us
 | *Figure 1:* The information about exceeding 1024 signature groups and error images. |
 
 
-#### New
+#### Custom
 The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 days ago to 1 day ago and from 31 days ago to 1 day ago with hourly data, resulting in **Figure 2** all together as a table. Also, all spls, and all results can be found below (**Figure 3**, **Figure 4**, **Figure 5**) individually. There is a slight difference between the upper bound values in both searches. It cannot be said which SPL is way better than the other due to a lack of information about different causes such as the behavioral pattern of the events or the importance of the event's signatures. For instance, "Custom Attack Type 1001" is counted as 1 in the last 1 hour.  All upper bound values are valid, except the one that searches the last 4 hours of data, for which there is no data for that signature in this time period. If the last 4 hours filter is selected, this signature will not be seen in this table. Besides, there are alerts for 101, 3, 2 individual signatures for 4 hours, 7 days, and 30 days filters respectively. This is the main point that I want to share.
 
 | ![screenshot](/assets/img/blog/2024-07-18-new-filter-all-in-one.webp) |
@@ -134,7 +134,7 @@ The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 
 
 There can be different statistical analysis before decide which SPL will be used. There may be developed different filters according to event analysis. 
 
-### Conclution
+### Conclusion
 To sum up, the MLTK tool is designed for analyzing data distribution and performing various data analyses for a specified period. If additional configurations are not defined, the MLTK will assume that the specified event has a normal distribution and perform calculations accordingly. However, in cases where quick action is required due to constraints of the MLTK tool, simpler statistical methods may provide better results. Before analysis, it is important to determine the desired methods by analyzing events and, if possible, using methods such as EDA to examine events in detail and calculate filters for a time period. This can improve the performance of both analysts reviewing the alarms and the SPLs run in Splunk.
 
 
