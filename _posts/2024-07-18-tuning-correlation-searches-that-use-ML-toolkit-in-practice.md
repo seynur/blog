@@ -61,7 +61,7 @@ As previously mentioned, under some circumstances, it will not be possible to us
 
 
 #### Custom
-The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 days ago to 1 day ago and from 31 days ago to 1 day ago with hourly data, resulting in **Figure 2** all together as a table. Also, all spls, and all results can be found below (**Figure 3**, **Figure 4**, **Figure 5**) individually. There is a slight difference between the upper bound values in both searches. It cannot be said which SPL is way better than the other due to a lack of information about different causes such as the behavioral pattern of the events or the importance of the event's signatures. For instance, "Custom Attack Type 1001" is counted as 1 in the last 1 hour.  All upper bound values are valid, except the one that searches the last 4 hours of data, for which there is no data for that signature in this time period. If the last 4 hours filter is selected, this signature will not be seen in this table. Besides, there are different results for 4 hours (101 event counts), 7 days (3 event counts), and 30 days (2 event counts) filters. This differences are the main point that I want to share.
+The search was executed with a time filter from 4 hours ago to 1 hour ago, 8 days ago to 1 day ago, and from 31 days ago to 1 day ago with hourly data, resulting in **Figure 2** all together as a table. Also, all SPL queries and all results can be found below (**Figure 3**, **Figure 4**, **Figure 5**) individually. There is a slight difference between the upper bound values in both searches. It cannot be said which SPL is way better than the other due to a lack of information about different causes such as the behavioral pattern of the events or the importance of the event's signatures. For instance, "Custom Attack Type 1001" is counted as 1 in the last 1 hour. All upper bound values are valid, except the one that searches the last 4 hours of data, for which there is no data for that signature in this period. If the last 4 hours filter is selected, this signature will not be seen in this table. Besides, there are different results for 4 hours (101 event counts), 7 days (3 event counts), and 30 days (2 event counts) filters. These differences are the main point that I want to share.
 
 | ![screenshot](/assets/img/blog/2024-07-18-new-filter-all-in-one.webp) |
 |:--:| 
@@ -73,6 +73,8 @@ The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 
 
 
 ```
+// SPL Query for the filter with 4 hours calculation.
+
 | tstats `summariesonly` count as ids_attacks,values(IDS_Attacks.tag) as tag from datamodel=Intrusion_Detection.IDS_Attacks by IDS_Attacks.signature 
 | `drop_dm_object_name("IDS_Attacks")` 
 | join type=left signature 
@@ -96,6 +98,8 @@ The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 
 
 
 ```
+// SPL Query for the filter with 7 days calculation.
+
 | tstats `summariesonly` count as ids_attacks,values(IDS_Attacks.tag) as tag from datamodel=Intrusion_Detection.IDS_Attacks by IDS_Attacks.signature 
 | `drop_dm_object_name("IDS_Attacks")` 
 | join type=left signature 
@@ -117,6 +121,8 @@ The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 
 | *Figure 5:* Calculating upper bounds for each signature for 30 days. |
 
 ```
+// SPL Query for the filter with 30 days calculation.
+
 | tstats `summariesonly` count as ids_attacks,values(IDS_Attacks.tag) as tag from datamodel=Intrusion_Detection.IDS_Attacks by IDS_Attacks.signature 
 | `drop_dm_object_name("IDS_Attacks")` 
 | join type=left signature 
@@ -132,11 +138,10 @@ The search was executed with time filter both from 4 hours ago to 1 hour ago, 8 
 
 ```
 
-There can be different statistical analysis before decide which SPL will be used. There may be developed different filters according to event analysis. 
+There may be different statistical analyses conducted before determining the appropriate SPL query to be used. Various filters may be developed based on event analysis.
 
 ### Conclusion
-The MLTK tool is designed for analyzing data distribution and performing various data analyses for a specified period. If additional configurations are not defined, the MLTK will assume that the specified event has a normal distribution and perform calculations accordingly. However, in cases where quick action is required due to constraints of the MLTK tool, simpler statistical methods may provide better results. Before analysis, it is important to determine the desired methods by analyzing events and, if possible, using methods such as [Exploratory Data Analysis](https://www.ibm.com/topics/exploratory-data-analysis) (EDA) to examine events in detail and calculate filters for a time period. After knowing the data, either out-of-the-box rules can be customized or brand new custom SPL (suggestion: using tstats and datamodel) can be created for the desired topic. These can improve the performance of both analysts reviewing the alarms and the SPLs run in Splunk.
-
+The MLTK tool is designed for analyzing data distribution and performing various data analyses for a specified period. If additional configurations are not defined, the MLTK will assume that the specified event has a normal distribution and perform calculations accordingly. However, in cases where quick action is required due to constraints of the MLTK tool, simpler statistical methods may provide better results. Before analysis, it is important to determine the desired methods by analyzing events and, if possible, using methods such as [Exploratory Data Analysis](https://www.ibm.com/topics/exploratory-data-analysis) (EDA) to examine events in detail and calculate filters for a limited period. After knowing the data, either out-of-the-box rules can be customized or a brand new custom SPL query (***suggestion***: using *tstats* and *datamodel*) can be created for the desired topic. These can improve the performance of both analysts reviewing the alarms and the SPLs run in Splunk.
 ---
 
 
