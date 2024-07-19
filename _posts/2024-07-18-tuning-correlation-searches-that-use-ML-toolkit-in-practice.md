@@ -26,7 +26,7 @@ Different types of algorithm categories such as Anomaly Detection, Classifiers, 
 
 The Splunk MLTK [documentation](https://docs.splunk.com/Documentation/ES/7.3.2/Admin/MLTKtroubleshooting) page mentions some limitations. For example, 1024 is the default group limit of the density function. If your group exceeds this, Splunk will return an error such as "*DensityFunction model: The number of groups cannot exceed &lt;abc&gt;; the current number of groups is &lt;xyz&gt;.*", and this error can be found in the mlspl.log file. This limit can be changed in the configuration files, but that's not the main point I want to highlight. Splunk decided on this limitation to prevent potential server crashes. As previously discussed, ML calculations come with heavy loads, which may overwhelm Splunk. Therefore, changing the default amount can be dangerous if your system fundamentally cannot handle these calculations.
 
-On the other hand, there may be a warning of "*Too few training points in some groups will likely result in poor accuracy for those groups.*" when fitting the MLTK model. This warning indicates that certain signature types lack sufficient data points for accurate calculation, leading to poor accuracy due to statistical limitations.
+On the other hand, there may be a warning that "*Too few training points in some groups will likely result in poor accuracy for those groups.*" when fitting the MLTK model. This warning indicates that certain signature types lack sufficient data points for accurate calculation, leading to poor accuracy due to statistical limitations.
 
 In order to address the points mentioned above, I would like to share some relatively simple, practical solutions from our previous work related to Enterprise Security Use-Cases.
 
