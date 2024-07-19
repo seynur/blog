@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Tuning correlation searches that use ML toolkit in practice"
+title: "Practical Approaches to Tuning ML-Based Correlation Searches in Splunk ES"
 summary: "This study aims to ensure that the correlation rules are effectively implemented using MLTK in practice without any errors."
 author: Öykü Can Şimşir
 image: /assets/img/blog/2024-07-18-MLTK-scheme.webp
@@ -10,7 +10,7 @@ categories: Splunk
 
 ---
 
-# Tuning correlation searches that use ML toolkit in practice
+# Practical Approaches to Tuning ML-Based Correlation Searches in Splunk ES
 
 In a rapidly evolving cyber security environment where new threats are encountered every day, effective threat detection and responses to them depend on advanced correlation research. These searches become exponentially more powerful when paired with machine learning (ML) capabilities. Splunk Machine Learning Toolkit (MLTK) offers powerful tools for improving correlation searches, but optimizing their performance requires a nuanced approach. This product, which operates under certain conditions and limits, may sometimes need practical regulation. This article explores practical strategies for tuning correlation searches using Splunk MLTK. Also, if you want to learn more about [Enterprise Security](https://docs.splunk.com/Documentation/ES/7.3.2/User/Overview) and [MLTK](https://docs.splunk.com/Documentation/MLApp/5.4.1/User/AboutMLTK) you can check official documentation pages.
 
