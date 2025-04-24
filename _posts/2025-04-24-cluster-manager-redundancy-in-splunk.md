@@ -13,7 +13,7 @@ categories: Splunk
 # Cluster Manager Redundancy in Splunk: What It Is, Why It Matters
 In distributed Splunk environments, the **Cluster Manager (CM)** plays a critical role: it coordinates peer nodes, their configuration bundles, and ensures data replication rules are enforced. So… what happens if the Cluster Manager goes down?
 
-If you don't have a plan, and the **Cluster Manager** goes down, your **Search Peers (Indexers)** will continue to work - collecting, indexing, searching - a little more, as [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.0/Indexer/Whathappenswhenamanagernodegoesdown) says. Problems start when a peer either wants to roll any of its hot buckets, due to a lack of information about the naming of the next hot bucket, or just goes down, and no one can reach this node. At this moment, the name of the horror film is the **Bucket-fixing process.** :( Besides, this is one of the most important Splunk processes during normal operations. It cannot be done because there is no Manager Node. Config updates cannot be pushed, and the bucket replication process cannot proceed further (for more information, please refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/Whathappenswhenamanagernodegoesdown)).
+If you don't have a plan, and the **Cluster Manager** goes down, your **Search Peers (Indexers)** will continue to work - collecting, indexing, searching - a little more, as [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.0/Indexer/Whathappenswhenamanagernodegoesdown) says. Problems start when a peer either wants to roll any of its hot buckets, due to a lack of information about the naming of the next hot bucket, or just goes down, and no one can reach this node. At this moment, the name of the horror film is the **Bucket-fixing process.** 🥺 Besides, this is one of the most important Splunk processes during normal operations. It cannot be done because there is no Manager Node. Config updates cannot be pushed, and the bucket replication process cannot proceed further (for more information, please refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/Whathappenswhenamanagernodegoesdown)).
 
 That's where **Cluster Manager Redundancy** comes in-it ensures your Splunk environment **stays operational even when things go wrong**.
 
@@ -53,7 +53,7 @@ Ideal for production environments with high availability (HA) expectations.    |
 
 
 #### 2. DNS Configuration (with Manual Mode)
-In this method, because we **inform Splunk** that *you don't need to monitor this process*, we should focus on monitoring when and which component is down. We can either *manually modify the configurations* or write an *automation script* to handle this process for us automatically. You can check [this documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_DNS_mapping_to_support_cluster_manager_redundancy) for more information. :)
+In this method, because we **inform Splunk** that *you don't need to monitor this process*, we should focus on monitoring when and which component is down. We can either *manually modify the configurations* or write an *automation script* to handle this process for us automatically. You can check [this documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_DNS_mapping_to_support_cluster_manager_redundancy) for more information. 😊
 
 
 <div class="datatable-begin"></div>
@@ -99,7 +99,7 @@ Imagine we are building a **[Distributed Clustered Deployment](https://www.splun
 According to the server.conf documentation from Splunk:
 <blockquote>If set to "auto", an eligible "standby" cluster manager will try to automatically set its redundancy state to "active" upon consecutive loss of heartbeat to the manager which is currently in active state.</blockquote>
 
-This **manual control** allows us to tailor our failover strategy based on *network*, *environment*, and *business impact* - but also demands a clearly defined operational process when disaster strikes. And when it does, it's always good to know who's holding the switch. :)
+This **manual control** allows us to tailor our failover strategy based on *network*, *environment*, and *business impact* - but also demands a clearly defined operational process when disaster strikes. And when it does, it's always good to know who's holding the switch. 😊
 
 In **the next blog post**, I'll walk you through the **local test environment** we set up, based on this architecture. We'll review the configurations, how the redundancy mechanism behaves in manual mode.
 
