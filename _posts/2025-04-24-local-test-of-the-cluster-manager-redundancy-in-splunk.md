@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Splunk Cluster Manager Redundancy -  Part 2: Implementation "
+title: "Splunk Cluster Manager Redundancy -  Part 2: Implementation"
 summary: "In this blog, we're going with the manual + DNS-based approach for its simplicity and full control over the switch process. However, since we're running everything on the same physical server (for testing and educational purposes), we're not using distinct hostnames or external DNS. Instead, we'll configure everything using local IPs."
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-04-24-ha-mode.webp
@@ -18,7 +18,7 @@ In this blog, we're going with the **manual + DNS-based approach** for its simpl
 👉 So, don't get hung up on *why* we're applying redundancy this way - our goal is to make the mechanics of the setup crystal clear for you to replicate in your environment, whether production or lab.
 
 Also:
-* All examples and configurations will be demonstrated on macOS. Please don't be mad at me, Linux friends 😊
+* All examples and configurations will be demonstrated on macOS. Please don't be mad at me. 😊
 * You'll need a Splunk Enterprise license to set up this type of environment.
 * And since this blog is aimed at less experienced Splunk Architects, I'll include helpful context around basic Linux commands and core Splunk concepts where relevant.
 * You can check my previous [blog](cluster-manager-redundancy-in-splunk.html) about what the Cluster Manager Redundancy is. 😊
@@ -43,7 +43,7 @@ If you're not familiar with these components but still want to try this method, 
 ## 2. Create Splunk Environment
 ### 2.1. Install Splunk Enterprise for Each Component
 
-If you want to continue, you should start to create some directories for each of Splunk's components. I simply created a directory called as ***splunk_9–4–1_cluster*** as a starter, due to use the 9.4.1 version of Splunk Enterprise. You can use the commands below to create all Splunks.
+If you want to continue, you should start to create some directories for each of Splunk's components. I simply created a directory called as ***splunk_9–4–1_cluster*** as a starter, because of using the 9.4.1 version of Splunk Enterprise. You can use the commands below to create all Splunk components.
 
 ```
 
@@ -66,8 +66,9 @@ Let's start with **option 1**:
 **Notes:**
 * If you are as passionate about password security as I am, you can use the credentials ***user:password*** with ***admin:admin123***. While the latter was a joke, it’s crucial to prioritize strong password choices. 😊
 
-* Also, please remember to start the Splunk service for the splunk-sh first.
-* You can use this start command to eliminate whole reading process 😊 ```splunk-idx1/bin/splunk start --accept-license --answer-yes```
+* Also, because we are going to use default ports for the splunk-sh, please remember to start the Splunk service for the splunk-sh first. Otherwise, you need to make some adjustments.
+
+* You can use this start command to eliminate the whole reading process 😊 ```splunk-idx1/bin/splunk start --accept-license --answer-yes```
 
 The image below shows what I changed while starting ***splunk-idx1*** component. Because we didn't create a cluster at this moment, I just changed *the Web Port*, *the Management Port*, *the Appserver Port*, and *the KV Store Port* of the ***splunk-idx1***. After all configurations, we will disable the web port and change the replication ports on the indexers. After we've made all configurations and created the cluster architecture, we will disable the web port and change the replication and input ports on the indexers.
 
@@ -78,7 +79,7 @@ The image below shows what I changed while starting ***splunk-idx1*** component.
 
 
 **Option 2**:
-Create a ***server.conf***, ***web.conf***, and ***user-seed.conf*** under the ***etc/system/local*** directories for each main directory of the Splunk components. Also, I will give you the example configs for ***splunk-idx1***.
+Create a ***server.conf***, ***web.conf***, and ***user-seed.conf*** under the ***etc/system/local*** directories for each main directory of the Splunk components. Also, I will give you the example configs for the ***splunk-idx1***.
 
 ```
 # user-seed.conf
@@ -112,7 +113,7 @@ splunk-idx1/bin/splunk start --accept-license --answer-yes --no-prompt
 
 
 ### 2.2. Configure Environments as Their Roles
-We will continue to create our cluster in this section, starting with ***splunk-cm1***. Please, just follow my lead and be patient, because this path is a little bit thorny. Also, don't forget to restart after configuring each component, and add your Enterprise license to CM1 at the end of the configuration. 😊
+We will continue to create our cluster in this section, starting with the  ***splunk-cm1***. Please, just follow my lead and be patient, because this path is a little bit thorny. Also, don't forget to restart after configuring each component, and add your Enterprise license to CM1 at the end of the configuration. 😊
 
 Lastly, we are creating a cluster as [*Splunk recommends*](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/Clusterconfigurationoverview) and the architecture below, using the appropriate apps with correct naming conventions. 😊
 
@@ -766,14 +767,16 @@ Now, we are going to configure the Monitoring Console, as written in the [Splunk
 
 ---
 
+
 ## 3. Wrapping Up
+
 With everything configured step by step, we've successfully set up a fully functional **Splunk multisite indexer cluster (M2) with cluster manager redundancy** - all running on a single server. This architecture, though compact, reflects how redundancy and failover logic work in production environments. Once your configuration is complete, you'll be able to monitor your cluster's **redundancy state** visually, just like in the image below. Active and standby components can be seen clearly. 😊
 
 | ![screenshot](/assets/img/blog/2025-04-24-monitor-active-standby-cms.webp) |
 |:--:| 
 | *Figure 6* Monitoring activity of the Cluster Managers. |
 
-Because we configured it as manual method, you can **manually switch** activeness between cluster managers whenever needed by running:
+Because we configured it as manual method, you can **manually switch activeness** between cluster managers whenever needed by running:
 
 ```
 
@@ -793,7 +796,7 @@ After some configuration changes and applying the ***switch-mode*** command, we 
 
 | ![screenshot](/assets/img/blog/2025-04-24-changing-cm-activeness.webp) |
 |:--:| 
-| *Figure 7* Monitoring activity of the Cluster Managers after change the active one. |
+| *Figure 7* Monitoring activity of the Cluster Managers after changing the active one. |
 
 This setup not only gives you hands-on experience with distributed Splunk environments, but also lets you safely explore **manual failover** and **resilience planning** without requiring multiple machines. Hopefully, this guide helps you build confidence in configuring and operating complex Splunk topologies.
 
@@ -805,8 +808,9 @@ Now it's your turn - spin it up, break it, recover it, and learn from it.
 ## References:
 
 - [[1]](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_a_load_balancer_to_support_cluster_manager_redundancy) Splunk. (2022). *Implement cluster manager redundancy* *https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_a_load_balancer_to_support_cluster_manager_redundancy*
-- [[2]](cluster-manager-redundancy-in-splunk.html) Şimşir Can, Ö. (2025). *Cluster Manager Redundancy in Splunk: What It Is, Why It Matters* 
+- [[2]](cluster-manager-redundancy-in-splunk.html) Şimşir Can, Ö. (2025). *Cluster Manager Redundancy in Splunk: What It Is, Why It Matters*. 
 - [[3]](https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf) Splunk. (2021). *Splunk Validated Architectures* *https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf*
 - [[4]](https://docs.splunk.com/Documentation/Splunk/9.4.0/Capacity/ComponentsofaSplunkEnterprisedeployment) Splunk. (2018). *Components of a Splunk Enterprise deployment* *http://docs.splunk.com/Documentation/Splunk/9.4.0/Capacity/ComponentsofaSplunkEnterprisedeployment*
 - [[5]](https://docs.splunk.com/Documentation/Splunk/latest/DMC/Configureindistributedmode) Splunk. (2025). *Configure the Monitoring Console in distributed moden* *https://docs.splunk.com/Documentation/Splunk/latest/DMC/Configureindistributedmode*
+
 ---

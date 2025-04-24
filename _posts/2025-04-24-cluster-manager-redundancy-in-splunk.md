@@ -24,7 +24,7 @@ When you enable cluster manager redundancy in Splunk, you're essentially **prepa
 
 At any given time, **only one Cluster Manager is "active"**, and only this manager is responsible for: coordinating indexers, pushing configuration bundles, and enforcing replication and search factors.
 
-The **standby manager** remains in sync, continuously receiving the same configuration, app bundles, and state data - but does **not control the cluster** unless activated. Additionally, both the **manager-apps** directories must contain the same apps under both cluster managers to ensure they have the same bundle IDs. If you have older versions, or didn't change directory location after upgrade, this directory can be **master-apps**.
+The **standby manager** remains in sync, continuously receiving the same configuration, app bundles, and state data, but does **not control the cluster** unless activated. Additionally, both the **manager-apps** directories must contain the same apps under both cluster managers to ensure they have the same bundle IDs. If you have older versions, or didn't change directory location after upgrade, this directory can be **master-apps**.
 
 Lastly, if the active CM fails (or you want to switch it manually), the standby can be **promoted to active** with a simple CLI command. The key takeaway is: **redundancy doesn't mean two CMs are running things at the same time**. It means one is in charge, and the other is quietly ready to step in whenever needed.
 
@@ -66,7 +66,7 @@ If monitoring processes are in place for such situations, controlling the failov
 
 <div class="datatable-end"></div>
 
-You can use the command below to change active **Cluster Manager**. This will affect all managers, and after that just change old manager IP with the new one on the DNS tables.
+You can use the command below to change the active **Cluster Manager**. This will affect all managers, and after that, just change the old manager's IP with the new one on the DNS tables.
 
 
 ```
@@ -75,7 +75,7 @@ $SPLUNK_HOME/bin/splunk cluster-manager-redundancy -switch-mode active
 
 ```
 
-Also, this command is useful when you want to check current status:
+Also, this command is useful when you want to the check current status:
 
 ```
 
@@ -97,9 +97,9 @@ Imagine we are building a **[Distributed Clustered Deployment](https://www.splun
 
 
 According to the server.conf documentation from Splunk:
-<blockquote>If set to "auto", an eligible "standby" cluster manager will try to automatically set its redundancy state to "active" upon consecutive loss of heartbeat to the manager which is currently in active state.</blockquote>
+<blockquote>If set to "auto", an eligible "standby" cluster manager will try to automatically set its redundancy state to "active" upon consecutive loss of [heartbeat](https://medium.com/r?url=https%3A%2F%2Fdocs.splunk.com%2Fobservability%2Fen%2Falerts-detectors-notifications%2Falerts-and-detectors%2Falert-condition-reference%2Fheartbeat-check.html) to the manager which is currently in active state.</blockquote>
 
-This **manual control** allows us to tailor our failover strategy based on *network*, *environment*, and *business impact* - but also demands a clearly defined operational process when disaster strikes. And when it does, it's always good to know who's holding the switch. 😊
+This **manual control** allows us to tailor our failover strategy based on *network*, *environment*, and *business impact*, but also demands a clearly defined operational process when disaster strikes. And when it does, it's always good to know who's holding the switch. 😊
 
 In **the next blog post**, I'll walk you through the **local test environment** we set up, based on this architecture. We'll review the configurations, how the redundancy mechanism behaves in manual mode.
 
@@ -115,5 +115,6 @@ Thanks for reading, and until next time:
 - [[2]](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_a_load_balancer_to_support_cluster_manager_redundancy) Splunk. (2022). *Implement cluster manager redundancy* *https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_a_load_balancer_to_support_cluster_manager_redundancy*
 - [[3]](https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf) Splunk. (2021). *Splunk Validated Architectures* *https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf*
 - [[4]](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Serverconf#High_availability_clustering_configuration) Splunk. (2025). *server.conf* *https://docs.splunk.com/Documentation/Splunk/latest/Admin/Serverconf#High_availability_clustering_configuration*
+- [[5]](https://medium.com/r?url=https%3A%2F%2Fdocs.splunk.com%2Fobservability%2Fen%2Falerts-detectors-notifications%2Falerts-and-detectors%2Falert-condition-reference%2Fheartbeat-check.html) Splunk. (2024). *Heartbeat Check* *http://medium.com/r?url=https%3A%2F%2Fdocs.splunk.com%2Fobservability%2Fen%2Falerts-detectors-notifications%2Falerts-and-detectors%2Falert-condition-reference%2Fheartbeat-check.html* 
 
 ---
