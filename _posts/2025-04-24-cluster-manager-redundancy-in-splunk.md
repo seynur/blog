@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Cluster Manager Redundancy in Splunk: What It Is, Why It Matters"
+title: "Splunk Cluster Manager Redundancy -  Part 1: What it is, why it matters"
 summary: "In distributed Splunk environments, the Cluster Manager (CM) plays a critical role: it coordinates peer nodes, their configuration bundles, and ensures data replication rules are enforced. So… what happens if the Cluster Manager goes down?"
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-04-24-redundancy-architecture.webp
@@ -10,7 +10,7 @@ categories: Splunk
 
 ---
 
-# Cluster Manager Redundancy in Splunk: What It Is, Why It Matters
+# Splunk Cluster Manager Redundancy -  Part 1: What it is, why it matters
 In distributed Splunk environments, the **Cluster Manager (CM)** plays a critical role: it coordinates peer nodes, their configuration bundles, and ensures data replication rules are enforced. So… what happens if the Cluster Manager goes down?
 
 If you don't have a plan, and the **Cluster Manager** goes down, your **Search Peers (Indexers)** will continue to work - collecting, indexing, searching - a little more, as [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.0/Indexer/Whathappenswhenamanagernodegoesdown) says. Problems start when a peer either wants to roll any of its hot buckets, due to a lack of information about the naming of the next hot bucket, or just goes down, and no one can reach this node. At this moment, the name of the horror film is the **Bucket-fixing process.** 🥺 Besides, this is one of the most important Splunk processes during normal operations. It cannot be done because there is no Manager Node. Config updates cannot be pushed, and the bucket replication process cannot proceed further (for more information, please refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/Whathappenswhenamanagernodegoesdown)).
@@ -22,13 +22,13 @@ That's where **Cluster Manager Redundancy** comes in-it ensures your Splunk envi
 ### What is the Cluster Manager Redundancy?
 When you enable cluster manager redundancy in Splunk, you're essentially **preparing a second cluster manager node** to take over if the active one becomes unavailable. You can monitor this setup both from the Cluster Manager Web UI and through the command line interface (CLI) commands.
 
-At any given time, **only one Cluster Manager is "active"**, and only this manager is is responsible for: coordinating indexers, pushing configuration bundles, and enforcing replication and search factors.
+At any given time, **only one Cluster Manager is "active"**, and only this manager is responsible for: coordinating indexers, pushing configuration bundles, and enforcing replication and search factors.
 
 The **standby manager** remains in sync, continuously receiving the same configuration, app bundles, and state data - but does **not control the cluster** unless activated. Additionally, both the **manager-apps** directories must contain the same apps under both cluster managers to ensure they have the same bundle IDs. If you have older versions, or didn't change directory location after upgrade, this directory can be **master-apps**.
 
 Lastly, if the active CM fails (or you want to switch it manually), the standby can be **promoted to active** with a simple CLI command. The key takeaway is: **redundancy doesn't mean two CMs are running things at the same time**. It means one is in charge, and the other is quietly ready to step in whenever needed.
 
-So… At this moment, we can talk about a little bit redundancy methods.
+So… At this point, let's discuss the redundancy methods.
 
 ### The Cluster Manager Redundancy Methods
 There are a few ways to implement cluster manager redundancy in Splunk. You have two options for managing Splunk: you can allow it to take control in auto mode or change its settings whenever you like. "**Auto**" doesn't mean it will operate entirely on its own; you'll need to add some third-party configurations to help Splunk. Next, we will discuss these configurations.
@@ -53,7 +53,7 @@ Ideal for production environments with high availability (HA) expectations.    |
 
 
 #### 2. DNS Configuration (with Manual Mode)
-In this method, because we **inform Splunk** that *you don't need to monitor this process*, we should focus on monitoring when and which component is down. We can either *manually modify the configurations* or write an *automation script* to handle this process for us automatically. You can check [this documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_DNS_mapping_to_support_cluster_manager_redundancy) for more information. 😊
+In this method, because we **inform Splunk** that *you don't need to monitor this process*, we should focus on monitoring when and which component is down. We can either *manually modify the configurations* or write an *automation script* to handle this process for us automatically. You can refer to [this documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_DNS_mapping_to_support_cluster_manager_redundancy) for more information. 😊
 
 
 <div class="datatable-begin"></div>

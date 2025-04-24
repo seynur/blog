@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Splunk Distributed Clustered Deployment Installation on a Server with Cluster Manager Redundancy"
+title: "Splunk Cluster Manager Redundancy -  Part 2: Implementation "
 summary: "In this blog, we're going with the manual + DNS-based approach for its simplicity and full control over the switch process. However, since we're running everything on the same physical server (for testing and educational purposes), we're not using distinct hostnames or external DNS. Instead, we'll configure everything using local IPs."
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-04-24-ha-mode.webp
@@ -10,7 +10,7 @@ categories: Splunk
 
 ---
 
-# Splunk Distributed Clustered Deployment Installation on a Server with Cluster Manager Redundancy
+# Splunk Cluster Manager Redundancy -  Part 2: Implementation 
 Cluster manager redundancy is a mechanism designed to ensure high availability and resilience in Splunk's distributed architecture. If one cluster manager becomes unavailable due to a failure or maintenance, another pre-configured cluster manager can seamlessly take over coordination duties for the indexers. Splunk provides multiple approaches to implement this,  such as automatic failover with heartbeat or manual failover using DNS redirection ([Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Implement_cluster_manager_redundancy)). Also, I mentioned this subject on my previous [blog](cluster-manager-redundancy-in-splunk.html). 😊
 
 In this blog, we're going with the **manual + DNS-based approach** for its simplicity and full control over the switch process. However, since we're running **everything on the same physical server** (*for testing and educational purposes*), we're not using distinct hostnames or external DNS. Instead, we'll configure everything using the **local IP**. 😊
