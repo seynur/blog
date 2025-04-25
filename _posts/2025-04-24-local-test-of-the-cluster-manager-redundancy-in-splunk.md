@@ -13,7 +13,7 @@ categories: Splunk
 # Splunk Cluster Manager Redundancy -  Part 2: Implementation 
 Cluster manager redundancy is a mechanism designed to ensure high availability and resilience in Splunk's distributed architecture. If one cluster manager becomes unavailable due to a failure or maintenance, another pre-configured cluster manager can seamlessly take over coordination duties for the indexers. Splunk provides multiple approaches to implement this,  such as automatic failover with heartbeat or manual failover using DNS redirection ([Splunk documentation](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Implement_cluster_manager_redundancy)). Also, I mentioned this subject on my previous [blog](cluster-manager-redundancy-in-splunk.html). 😊
 
-In this blog, we're going with the **manual + DNS-based approach** for its simplicity and full control over the switch process. However, since we're running **everything on the same physical server** (*for testing and educational purposes*), we're not using distinct hostnames or external DNS. Instead, we'll configure everything using the **local IP**. 😊
+In this blog, we're going with the **manual + DNS-based approach** for its simplicity and full control over the switch process. However, since we're running **everything on the same physical server with one network card** (*for testing and educational purposes*), we're not using distinct hostnames or external DNS. Instead, we'll configure everything using the **local IP**. 😊
 
 👉 So, don't get hung up on *why* we're applying redundancy this way - our goal is to make the mechanics of the setup crystal clear for you to replicate in your environment, whether production or lab.
 
@@ -116,6 +116,12 @@ splunk-idx1/bin/splunk start --accept-license --answer-yes --no-prompt
 We will continue to create our cluster in this section, starting with the  ***splunk-cm1***. Please, just follow my lead and be patient, because this path is a little bit thorny. Also, don't forget to restart after configuring each component, and add your Enterprise license to CM1 at the end of the configuration. 😊
 
 Lastly, we are creating a cluster as [*Splunk recommends*](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/Clusterconfigurationoverview) and the architecture below, using the appropriate apps with correct naming conventions. 😊
+
+
+🔔 **Important Note**:
+
+Ensure that **all cluster-related applications (except for the essential ones that need to differ between the Cluster Managers)** are consistently deployed to both Cluster Managers using the Deployment Server. If you have any critical configuration files (such as server.conf, authentication.conf, indexes.conf, etc.) located in either etc/system/local, etc/apps on either Cluster Manager, these files should be manually/automatically synchronized between both nodes. This will help prevent any configuration inconsistencies during failover scenarios. Of course, because we are creating a test environment in our scenario, we have only one Deployment Server. If you want to create a *highly available environment*, I recommend adding another backup **DS, MC, SH(s)**, etc., on **site-2**.
+
 
 | ![screenshot](/assets/img/blog/2025-04-24-splunk_architect_of_the_test_environment.webp) |
 |:--:| 
@@ -800,7 +806,10 @@ After some configuration changes and applying the ***switch-mode*** command, we 
 
 This setup not only gives you hands-on experience with distributed Splunk environments, but also lets you safely explore **manual failover** and **resilience planning** without requiring multiple machines. Hopefully, this guide helps you build confidence in configuring and operating complex Splunk topologies.
 
-Now it's your turn - spin it up, break it, recover it, and learn from it.
+While **manual switchover is effective for local testing and learning**, managing failover manually in production environments can be risky and prone to errors, especially in high-availability or mission-critical setups. Therefore, it is often advisable to implement automated orchestration methods, such as DNS scripts or load balancer health checks. These methods can help seamlessly add new MC/DS servers on the other site with all necessary configurations or allow for automatic operation when suitable and supported by your infrastructure.
+
+Now it’s your turn — spin it up, break it, recover it, and learn from it. 😊
+And when you’re ready to scale, think automation.
 
 **Happy Splunking!** 🚀
 
