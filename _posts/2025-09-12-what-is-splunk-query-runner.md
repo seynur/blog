@@ -5,7 +5,7 @@ summary: "The Splunk Query Runner is a lightweight command-line interface (CLI) 
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-09-12-terminal-image-of-usage_of_the_the-all_runner_script_result.webp
 date: 12-09-2025
-tags: splunk cluster-manager-redundancy failover-management installation
+tags: splunk automation query-runner devops log-analysis cli-tools data-ops
 categories: Splunk
 
 ---
