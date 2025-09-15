@@ -5,7 +5,7 @@ summary: "This guide walks you through sending logs from syslog-ng to Apache Kaf
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-09-15-streaming-syslog-ng-events-to-kafka.webp
 date: 15-09-2025
-tags: syslog-ng kafka kafka-connect confluent
+tags: syslog-ng kafka librdkafka eventlog kraft      
 categories: Kafka
 
 ---
@@ -65,7 +65,7 @@ sudo apt install -y git gcc make autoconf automake libtool pkg-config \
   liblzma-dev libsystemd-dev libz-dev uuid-dev flex bison
 ```
 
-This grabs compilers (gcc, make), build tools (autoconf, automake, libtool), and a set of development libraries that`syslog-ng`relies on.
+This grabs compilers (gcc, make), build tools (autoconf, automake, libtool), and a set of development libraries that `syslog-ng` relies on.
 
 ***centos/rocky linux (RHEL-based systems):***
 *Run the following:*
@@ -368,6 +368,7 @@ Feel free to fork the setup, build on it, and tag me when you do.
 If you run into issues or just want to chat about logs, Kafka, or infrastructure in general — don’t hesitate to reach out to me on [LinkedIn](https://www.linkedin.com/in/%C3%B6yk%C3%BC-can/). I’d love to hear what you’re building.
 
 📦 **Bonus Coming Soon**: If you’re more of an rsyslog fan — don’t worry. A Kafka integration guide for rsyslog is on the way! Stay tuned. 🚀
+
 
 ## References:
 - [[1]](https://github.com/confluentinc/librdkafka) Confluent. (2025). ***confluentinc/librdkafka***. GitHub. https://github.com/confluentinc/librdkafka
