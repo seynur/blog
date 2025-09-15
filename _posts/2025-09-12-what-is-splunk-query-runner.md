@@ -56,16 +56,15 @@ That's enough seriousness. Now let's examine the app with a use-case. 😊
 At this stage, let's set up a scenario where we want four queries to run every day, as detailed below. Note that I've already defined a `mysql-local` connection and created a database table named `internal_mysql_tests`, along with a saved search called `Endpoint - oyku-xxx - Rule`. If you don’t have similar examples, I recommend creating them first.
 
 ```
-my_internal_search_result
- -> index=_internal earliest=-15m | table host, log_level, sourcetype, _time | head  15
-my_tstats_result 
- -> |tstats count where index=_internal by sourcetype | head 5
-my_savedsearch_result 
- -> | savedsearch "Endpoint - oyku-xxx - Rule"
-my_dbxquery_result 
- -> | dbxquery connection=mysql-local query="SELECT * FROM `internal_tests`.`internal_mysql_tests` WHERE timestamp > ? ORDER BY timestamp ASC"
-there_is_no_such_an_index (it won't return any result)
- -> index=no_such_an_index
+╔═══════════════════════════╦═════════════════════════════════════════════════════════════════════════╦════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║     Search/File Name      ║                               Description                               ║                                                                    SPL                                                                      ║
+╠═══════════════════════════╬═════════════════════════════════════════════════════════════════════════╬════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
+║ my_internal_search_result ║ index search usage example                                              ║ index=_internal earliest=-15m | table host, log_level, sourcetype, _time| head  15                                                          ║
+║ my_tstats_result          ║ tstats command usage example                                            ║ |tstats count where index=_internal by sourcetype| head 5                                                                                   ║
+║ my_savedsearch_result     ║ savedsearch (e.g., correlation search / detection, ...) command example ║ | savedsearch "Endpoint - oyku-xxx - Rule"                                                                                                  ║
+║ my_dbxquery_result        ║ dbxquery command usage example                                          ║ | dbxquery connection=mysql-local query="SELECT * FROM `internal_tests`.`internal_mysql_tests` WHERE timestamp > ? ORDER BY timestamp ASC   ║
+║ there_is_no_such_an_index ║ Example that will not return data                                       ║ index=no_such_an_index                                                                                                                      ║
+╚═══════════════════════════╩═════════════════════════════════════════════════════════════════════════╩════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
 ```
 
@@ -95,9 +94,9 @@ In this step, we don't need to worry about our **earliest_date**, **earliest_tim
 
 ### 2. Step: Configure authentication 
 
-By default, splunk_query_runner uses a Splunk authentication token stored in the user.conf file. This is the recommended and most secure method, especially for automated environments where you want to avoid exposing passwords or entering credentials manually each time.
+By default, **splunk_query_runner** uses a Splunk authentication token stored in the `user.conf` file. This is the recommended and most secure method, especially for automated environments where you want to avoid exposing passwords or entering credentials manually each time.
 
-The user.conf file should include a single line like:
+The `user.conf` file should include a single line like:
 
 ```
 eyJraWQiOiJzcGx1bmsuc2VjcmV0IiwiYWxnIjoiSFM1MTIiLCJ2ZXIiOiJ2MiIsInR0eXAiOiJzdGF0aWMifQ.eyJpc3MiOiJhZG1pbiBmcm9tIE95a3UuaG9tZSIsInN1YiI6InNwbHVua19xdWVyeV91c2VyIiwiYXVkIjoic3BsdW5rLXF1ZXJ5LXJ1bm5lciIsImlkcCI6IlNwbHVuayIsImp0aSI6IjgwMmMwZTFiYTViOThasdE1ZDZkYTA4ZGIzZGYxNGIxYmYyY2I3ZTc5YWRiZjhmNjRkMjQ1ZThmN2MxMzkzYWEiLCJpYXQiOjE3NTc2ODA2MTIsImV4cCI6MTc1NzY4MTIxMiwibmJyIjoxNzU3NjgwNjEyfQ.bdzfbzkGCIpu7uHmYkVaPVeMTatIQ9NhmleReEnCGMFdqKgEDu1_BdiCJgHcdB68P7TAnzXCtcL996ab1J-2kQ
@@ -125,7 +124,7 @@ The script checks whether the `outputs/` directory exists and creates it if it d
 
 **2. Updates Time Ranges in the Input File**
 
-If you’re using dynamic time windows (such as “yesterday to today”), the script can automatically update the `earliest_date` and `latest_date` fields (params timestamp for the dbxquery function if you select true for the param value) in your input CSV file using the helper script `update_dates_for_input_files`. This feature ensures that your searches are always scheduled to run against the most recent data—ideal for daily or hourly jobs.
+If you’re using dynamic time windows (***default***: from "*yesterday* 00:00" to "*today* 00:00"), the script can automatically update the `earliest_date` and `latest_date` fields (params timestamp for the dbxquery function if you select true for the param value) in your input CSV file using the helper script `update_dates_for_input_files`. This feature ensures that your searches are always scheduled to run against the most recent data—ideal for daily or hourly jobs.
 
 
 If you are using dynamic time windows, such as "yesterday to today," the script can automatically update the `earliest_date` and `latest_date` fields in your input CSV file by using the helper script `update_dates_for_input_files`. Additionally, it modifies the parameter used in the **dbxquery** function if you select **true** for the *param* value. Please note that the parameters are only valid for the **"%Y-%m-%d %H:%M:%S"** timestamp format. If you want to change this format or other details, you will need to modify some code in the `update_dates_for_input_files` script. This feature ensures that your searches are always scheduled to run against the most recent data, making it ideal for daily or hourly jobs.
@@ -171,11 +170,11 @@ Finally, the script calls the main Python script (`splunk_query_runner.py`) with
 
 | ![screenshot](/assets/img/blog/2025-09-12-terminal-image-of-usage_of_the_the-all_runner_script.webp) |
 |:--:| 
-| *Figure 2*  Terminal output showing multiple searches running and file names being generated. |
+| *Figure 1* Terminal output showing multiple searches running and file names being generated. |
 
 **⚠️ Important**: Be aware that if a file name starts with **X_** as image below (`X_there_is_no_such_an_index_11092025T000000_12092025T000000`), it may be empty. Therefore, you should verify your query.
 
-Sample Output:
+*Sample Cli-Output*:
 ```
 Running query for: my_internal_search_result_11092025T000000_12092025T000000.csv
 Running query for: my_tstats_result_11092025T000000_12092025T000000.csv
