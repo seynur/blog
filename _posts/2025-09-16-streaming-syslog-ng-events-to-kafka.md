@@ -4,7 +4,7 @@ title: "Streaming syslog-ng Events to Kafka: A Practical Guide You Can Follow"
 summary: "This guide walks you through sending logs from syslog-ng to Apache Kafka — step by step, from building components to testing with a sample log. A lightweight, Docker-free setup using Kafka in KRaft mode, perfect for real-time log streaming."
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-09-15-streaming-syslog-ng-events-to-kafka.webp
-date: 15-09-2025
+date: 16-09-2025
 tags: syslog-ng kafka librdkafka eventlog kraft      
 categories: Kafka
 

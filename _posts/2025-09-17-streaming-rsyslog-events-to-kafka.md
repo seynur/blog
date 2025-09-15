@@ -4,7 +4,7 @@ title: "Dynamic Log Routing to Kafka with rsyslog: A Practical Guide You Can Fol
 summary: "This guide walks through setting up rsyslog to send log data directly to Kafka topics using a dynamic IP-to-topic mapping. We used a simple JSON lookup file to route incoming logs based on their source IP and confirmed delivery using netcat and a Kafka consumer. This lightweight yet powerful approach is ideal for building scalable log pipelines with minimal overhead."
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-09-16-streaming-rsyslog-events-to-kafka.webp
-date: 15-09-2025
+date: 17-09-2025
 tags: rsyslog kafka kraft     
 categories: Kafka
 
