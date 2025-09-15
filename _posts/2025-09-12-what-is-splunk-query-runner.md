@@ -14,7 +14,7 @@ categories: Splunk
 
 Are you tired of running repetitive queries in Splunk manually? Do you need a way to schedule and automate the export of your results? Introducing **splunk_query_runner**, a lightweight command-line utility designed to simplify Splunk querying and output management. 
 
-With this tool, you can use a CSV input file along with your authentication token for seamless operation. It’s perfect for automation pipelines, scheduled reporting, or simply reducing the effort involved in repetitive query tasks. You can download the app and find more information in the [GitHub repository](https://github.com/seynur/restore-archive-for-splunk/tree/main/splunk_query_runner).
+With this tool, you can use a CSV input file along with your authentication token for seamless operation. It’s perfect for automation pipelines, scheduled reporting, or simply reducing the effort involved in repetitive query tasks. You can download the app and find more information in the [GitHub repository](https://github.com/seynur/seynur-tools/tree/main/splunk_query_runner).
 
 ## What is splunk_query_runner?
 
@@ -220,7 +220,7 @@ If you believe in automation and reproducibility, this tool will quickly become 
 
 Head over to the repository, clone it, and try it out in your environment:
 
-👉 [Get Started with splunk_query_runner on GitHub](https://github.com/seynur/seynur-public-apps/tree/main/splunk_query_runner)
+👉 [Get Started with splunk_query_runner on GitHub](https://github.com/seynur/seynur-tools/tree/main/splunk_query_runner)
 
 Contributions and feedback are welcome. Feel free to fork it, customize it, and share how you’ve used it in your own projects! Also, if you encounter any problems or have questions about the topics discussed in this blog, feel free to contact me via my [LinkedIn account](https://www.linkedin.com/in/%C3%B6yk%C3%BC-can/).
 
@@ -231,7 +231,7 @@ Now it’s your turn — spin it up, break it, recover it, and learn from it. �
 
 ## References:
 
-- [[1]](https://github.com/seynur/restore-archive-for-splunk/tree/main/splunk_query_runner) Seynur. (2025). *seynur-public-apps/splunk_query_runner*. *Github*. *https://github.com/seynur/seynur-public-apps/tree/main/splunk_query_runner*
+- [[1]](https://github.com/seynur/seynur-tools/tree/main/splunk_query_runner) Seynur. (2025). *seynur-tools/splunk_query_runner*. *Github*. *https://github.com/seynur/seynur-tools/tree/main/splunk_query_runner*
 - [[2]](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/9.4/authenticate-into-the-splunk-platform-with-tokens/use-authentication-tokens) Splunk. (2025). *Use authentication tokens* *https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/9.4/authenticate-into-the-splunk-platform-with-tokens/use-authentication-tokens*
 - [[3]](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/9.3/manage-users/about-users-and-roles) Splunk. (2025). *About users and roles* *https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/9.3/manage-users/about-users-and-roles*
 
