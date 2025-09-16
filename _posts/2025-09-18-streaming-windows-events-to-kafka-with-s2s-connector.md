@@ -51,7 +51,7 @@ In this architecture, Kafka becomes the **central nervous system** of your loggi
 
 ---
 
-# The Architecture
+# The Architecture
 
 Let’s break down what’s really happening under the hood.
 
@@ -88,8 +88,8 @@ And yes — while we’re focusing on *Security* & *Application* logs in this ex
 
 ---
 
-# Step-by-Step Setup
-## Step 1: Install Splunk Universal Forwarder (UF) on Windows
+# Step-by-Step Setup
+## Step 1: Install Splunk Universal Forwarder (UF) on Windows
 
 *Splunk Universal Forwarder (UF)* is a lightweight and reliable way to collect *Windows* Event Logs.
 
@@ -143,10 +143,9 @@ This configuration sends all collected logs to the **Kafka Connect worker**, via
 
 *But First: Kafka Should Be Ready!*
 
-In the next step, we’ll install the *Splunk S2S plugin* for *Kafka Connect* and configure it.
+In the next step, we’ll install the *Splunk S2S plugin* for *Kafka Connect* and configure it. 
 
-If your *Kafka* isn’t set up yet, I’ve got you covered.
-👉 Head over to my guide on [syslog-ng + Kafka](https://blog.seynur.com/kafka/2025/09/16/streaming-syslog-ng-events-to-kafka.html) and jump to Step 4 — it includes everything you need to set up *Kafka* and verify it’s working.
+If your *Kafka* isn’t set up yet, I’ve got you covered. 👉 Head over to my guide on [syslog-ng + Kafka](https://blog.seynur.com/kafka/2025/09/16/streaming-syslog-ng-events-to-kafka.html) and jump to Step 4 — it includes everything you need to set up *Kafka* and verify it’s working.
 
 Once *Kafka* is up and running, we’re ready for *Step 2: Kafka Connect + Splunk Plugin*. 😊
 
@@ -158,17 +157,13 @@ Once *Kafka* is up and running, we’re ready for *Step 2: Kafka Connect + Splun
 We’ll be using *Kafka Connect* in *distributed mode* — which is the recommended approach for production and scaling.
 
 **🧩 Installing the Connector:**
-The easiest way to install the plugin is via the **Confluent Hub CLI**:
 
-Alternatively, you can manually download and unzip the connector, then place it under your *Kafka Connect* plugin directory (e.g., `$KAFKA_HOME/plugins`).
+The easiest way to install the plugin is via the **Confluent Hub CLI**. The connector JAR should end up in a path like `/home/oyku/confluent/plugins/splunk/kafka-connect-v2.2.2.jar`
 
-📁 The connector JAR should end up in a path like:
-
-```
-/home/oyku/confluent/plugins/splunk/kafka-connect-v2.2.2.jar
-```
+- Alternatively, you can manually download and unzip the connector, then place it under your *Kafka Connect* plugin directory (e.g., `$KAFKA_HOME/plugins`).
 
 **⚙️ Kafka Connect Worker Configuration:**
+
 Kafka Connect uses a properties file to define how it runs. The default one is usually located at:
 
 ```
@@ -287,7 +282,8 @@ If everything is set up correctly, you should see something like:
 
 ---
 
-# 🔎 What Do the Logs Look Like in Kafka?
+# 🔎 What Do the Logs Look Like in Kafka?
+
 Once everything is configured, and Splunk UF is restarted with your valid `inputs.conf` and `outputs.conf`, logs should start flowing into *Kafka*.
 
 To verify, you can consume the topic directly using the following command:
@@ -445,7 +441,7 @@ This blog is part of a series! Check out the others for alternative log collecti
 
 ---
 
-# 🙌 Final Thoughts
+# 🙌 Final Thoughts
 Getting Windows Event Logs into Kafka doesn’t have to involve messy scripts or fragile file watchers.
 
 This approach is **simple**, **scalable**, and **fully supported** — especially if you’re already using *Splunk UF* in your environment.
