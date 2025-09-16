@@ -12,13 +12,13 @@ categories: Kafka
 
 # Dynamic Log Routing to Kafka with rsyslog: A Practical Guide You Can Follow
 
-If you enjoyed setting up `syslog-ng` with Kafka, you’re in for another treat. `rsyslog`—another popular and well-established syslog daemon—offers powerful features that make it an excellent choice for real-time log forwarding. In this guide, we will show you how to stream logs directly from `rsyslog` into Apache Kafka dynamically, with topics determined on the fly based on the source IP address. Yes, it’s that flexible!
+If you enjoyed setting up [`syslog-ng` with Kafka](https://blog.seynur.com/kafka/2025/09/15/streaming-syslog-ng-events-to-kafka.html), you’re in for another treat. `rsyslog`—another popular and well-established syslog daemon—offers powerful features that make it an excellent choice for real-time log forwarding. In this guide, we will show you how to stream logs directly from `rsyslog` into Apache Kafka dynamically, with topics determined on the fly based on the source IP address. Yes, it’s that flexible!
 
 We’ll use a convenient JSON-based lookup table to match incoming IPs with their corresponding Kafka topics. This approach allows you to route logs from multiple clients to different topics without hardcoding each one. It’s clean, efficient, and scalable.
 
-This walkthrough builds on the same Kafka KRaft-mode setup we covered in our [syslog-ng + Kafka](https://blog.seynur.com/kafka/2025/09/15/streaming-syslog-ng-events-to-kafka.html) post. If you’re just joining us and haven’t set up Kafka yet, we recommend reading that section first.
+This walkthrough builds on the same **Kafka KRaft-mode** setup we covered in our [syslog-ng + Kafka](https://blog.seynur.com/kafka/2025/09/15/streaming-syslog-ng-events-to-kafka.html) post. If you’re just joining us and haven’t set up Kafka yet, we recommend reading that section first.
 
-As before, we won’t cover container setups or system-wide installations. There are no Kafka installation steps here. We’re keeping it simple and focused—so let’s dive into the rsyslog side of things!
+As before, we won’t cover container setups or system-wide installations. There are no Kafka installation steps here. We’re keeping it simple and focused—so let’s dive into the `rsyslog` side of things!
 
 ---
 

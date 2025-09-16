@@ -165,7 +165,7 @@ Traditionally, running `Kafka` also required setting up ZooKeeper, which handled
 
 In this step, we'll guide you through setting up `Kafka` in *KRaft* mode manually—no containers, no fluff-just pure, hands-on `Kafka` goodness.
 
-### 4.1 Install Java
+### 4.1 Install Java
 
 `Kafka` is built on Java, so you'll need a working Java environment before starting it up. Here’s how to install OpenJDK 11 based on your operating system:
 
@@ -181,7 +181,7 @@ sudo dnf install -y java-11-openjdk
 
 ✅ **Note**: You can verify that Java is installed by running `java -version`.
 
-###  4.2 Download and Extract Kafka
+### 4.2 Download and Extract Kafka
 
 We will be using *Confluent’s Kafka 7.5.0 Community Edition*, which includes everything needed to get started quickly.
 
@@ -193,7 +193,7 @@ cd confluent-7.5.0
 
 🎯 This will create a `confluent-7.5.0/` directory containing all the `Kafka` tools and scripts we’ll need.
 
-###  4.3 Create a KRaft Configuration File
+### 4.3 Create a KRaft Configuration File
 
 Kafka requires a configuration file to know how to run. Create a file named `custom-kraft-conf.properties` and paste the following content:
 
@@ -216,7 +216,7 @@ transaction.state.log.min.isr=1
 
 💡 This configuration is ideal for development or testing on a single node. You can adjust it later for production setups with multiple brokers.
 
-###  4.5 Format KRaft Storage and Start Kafka
+### 4.4 Format KRaft Storage and Start Kafka
 
 Before `Kafka` can start, it needs to initialize the storage directory using the configuration file you just created. 
 
