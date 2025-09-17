@@ -426,11 +426,11 @@ These logs are delivered in **raw XML format**, which is typical for Windows Eve
 - 💡 *Flexible log selection* – Just update your `WinEventLog://...` stanzas to collect different log channels.
 - 🔁 *Scalable by design* – Kafka Connect can be clustered and extended as your needs grow.
 
-*🛠️ Bonus Tool: PADAS*
+*🛠️ Bonus Tool: [PADAS](padas.io)*
 If you’re looking for a way to transform, enrich, and filter events in real-time, check out our streaming product:
-👉 **PADAS**
+👉 [**PADAS**](padas.io)
 
-I’ll be sharing a detailed walkthrough on how to use **PADAS** in this kind of pipeline in an upcoming post — stay tuned! 😊
+I’ll be sharing a detailed walkthrough on how to use [**PADAS**](padas.io) in this kind of pipeline in an upcoming post — stay tuned! 😊
 
 ---
 
