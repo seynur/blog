@@ -291,13 +291,11 @@ service:
 ```bash
 docker-compose up -d
 ```
-
 #### 2. Run the app (with Collector)
 
 ```bash
 NODE_ENV=production USE_COLLECTOR=true node --require ./instrumentation.js app.js
 ```
-
 #### 3. Test requests
 
 ```bash
