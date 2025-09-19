@@ -16,7 +16,6 @@ categories: OpenTelemetry
 
 ---
 
-## 🚀 Let's Get Started!
 ## 1. What is OpenTelemetry?
 
 **OpenTelemetry** is an open-source observability framework developed by the **Cloud Native Computing Foundation (CNCF)**. It collects, processes, and sends **telemetry data**—like **traces**, **metrics**, and **logs**—from your applications to analysis tools (e.g., Prometheus, Jaeger, Datadog). Born in 2019 from the merger of OpenTracing and OpenCensus, it's now the go-to standard for observability.
