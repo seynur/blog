@@ -10,7 +10,7 @@ categories: OpenTelemetry
 
 ---
 
-# 🔍 What is OpenTelemetry and How to Use It? – A Beginner's Guide
+# What is OpenTelemetry and How to Use It? – A Beginner's Guide
 
 > **Welcome!** In this comprehensive guide, I'll walk you through **OpenTelemetry** (OTel) in a friendly and approachable way—what it is, why it matters, and how you can use it effectively. I'll break down technical terms like **telemetry** (data about your app's performance) and **observability** (understanding what's happening inside your system) to make everything crystal clear. We'll build a practical JavaScript example together, and I'll explain OpenTelemetry's architecture step by step. This guide is up-to-date as of September 2025, including the latest features like OpenTelemetry Collector v1.0.
 
@@ -40,51 +40,23 @@ Modern systems (think microservices or Kubernetes) are complex, and pinpointing 
 
 ### 🌟 Key Benefits
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0;">
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
-
 **🔓 Open Source**  
 Free and community-driven (1,106 companies contribute; Splunk 27%, Microsoft 17%)
-
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #007bff;">
 
 **🌐 Vendor-Neutral**  
 Works with AWS, Google Cloud, Azure, and more
 
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #ffc107;">
-
 **🤖 Automatic Instrumentation**  
 Adds telemetry without code changes
-
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #dc3545;">
 
 **📡 Standard Protocol (OTLP)**  
 Ensures consistent data across platforms
 
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #6f42c1;">
-
 **🚀 Production-Ready**  
 Stable in Java, Python, Go, JavaScript, and more
 
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #20c997;">
-
 **💰 Cost Savings**  
 Avoid hefty bills (e.g., OpenAI's Datadog bill was $100M+)
-
-</div>
-
-</div>
 
 ### 📈 2025 Trends
 Open-source tools like Prometheus (89%) and OpenTelemetry (85%) are booming. 40% of companies use both, and 50% are adopting proactive observability and AI integration (e.g., anomaly detection).
@@ -95,32 +67,26 @@ OpenTelemetry collects, processes, and sends telemetry data (traces, metrics, lo
 
 ### 🔧 Core Components Overview
 
-<div style="background: #e3f2fd; padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 1px solid #bbdefb;">
-
-**🔌 Instrumentation**  
-Adds code to your app to generate telemetry data. This can be **manual** (you write the code) or **automatic** (using libraries, e.g., auto-tracing for Express).
-
-**🛠️ APIs and SDKs**  
-Provide standard interfaces (API) and language-specific tools (SDK). For example, use Tracer for traces and Meter for metrics. SDKs collect and export data.
-
-**📦 OpenTelemetry Collector**  
-A central tool that receives, processes, and sends data to analysis tools. In 2025, v1.0 supports large-scale systems.
-
-**📤 Exporting**  
-Sends data to tools like Jaeger (traces), Prometheus (metrics), or commercial platforms (Datadog, New Relic).
-
-**🔗 Context Propagation**  
-Uses W3C Trace Context to connect traces across systems (e.g., tracking a request across microservices).
-
-</div>
+> **🔌 Instrumentation**  
+> Adds code to your app to generate telemetry data. This can be **manual** (you write the code) or **automatic** (using libraries, e.g., auto-tracing for Express).
+> 
+> **🛠️ APIs and SDKs**  
+> Provide standard interfaces (API) and language-specific tools (SDK). For example, use Tracer for traces and Meter for metrics. SDKs collect and export data.
+> 
+> **📦 OpenTelemetry Collector**  
+> A central tool that receives, processes, and sends data to analysis tools. In 2025, v1.0 supports large-scale systems.
+> 
+> **📤 Exporting**  
+> Sends data to tools like Jaeger (traces), Prometheus (metrics), or commercial platforms (Datadog, New Relic).
+> 
+> **🔗 Context Propagation**  
+> Uses W3C Trace Context to connect traces across systems (e.g., tracking a request across microservices).
 
 ### 🎛️ OpenTelemetry Collector Components
 
 The **OpenTelemetry Collector** is the heart of telemetry data collection, processing, and routing. It has three main components:
 
 #### 1. Receivers
-
-<div style="background: #f0f8ff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 4px solid #2196f3;">
 
 **What They Do**: Collect telemetry data (traces, metrics, logs) from apps or other sources.
 
@@ -134,11 +100,7 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 
 **Example**: If your app sends data via OTLP, the Collector's otlp receiver catches it (e.g., `http://localhost:4318/v1/traces`).
 
-</div>
-
 #### 2. Processors
-
-<div style="background: #fff3e0; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 4px solid #ff9800;">
 
 **What They Do**: Filter, transform, or optimize data to reduce noise and improve efficiency.
 
@@ -151,11 +113,7 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 
 **Example**: The batch processor groups data to reduce network load.
 
-</div>
-
 #### 3. Exporters
-
-<div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 4px solid #4caf50;">
 
 **What They Do**: Send processed data to analysis tools or storage systems.
 
@@ -169,8 +127,6 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 
 **Example**: The prometheus exporter makes metrics available at an endpoint for Prometheus to scrape.
 
-</div>
-
 <div align="center">
 <img src="/assets/img/blog/2025-09-19-opentelemetry.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%;margin:1rem; height: auto;" />
 <p><em>Figure 1. OpenTelemetry Collector architecture showing receivers, processors, and exporters. Source: Created by the author.</em></p>
@@ -182,16 +138,12 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 
 Let's build a dice-rolling app to show OpenTelemetry's tracing and metrics in action. The app handles user requests and returns random dice roll results.
 
-<div style="background: #f8f9fa;padding: 1rem;border-radius: 12px; border: 2px solid #dee2e6;">
-
 ### 🎯 What We'll Build
 - A simple Express.js server with a `/rolldice` endpoint
 - OpenTelemetry tracing to track request flow
 - Metrics collection for request counting
 - Integration with Jaeger for trace visualization
 - Prometheus metrics export
-
-</div>
 
 ### 📁 Step 1: Project Setup
 
@@ -336,90 +288,58 @@ service:
 
 ### ▶️ Step 5: Run the Application
 
-<div style="background: #e8f5e8; padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #4caf50;">
-
-#### 1. 🐳 Start Docker services
+#### 1. Start Docker services
 
 ```bash
 docker-compose up -d
 ```
 
-#### 2. 🚀 Run the app (with Collector)
+#### 2. Run the app (with Collector)
 
 ```bash
 NODE_ENV=production USE_COLLECTOR=true node --require ./instrumentation.js app.js
 ```
 
-#### 3. 🧪 Test requests
+#### 3. Test requests
 
 ```bash
 curl "http://localhost:8080/rolldice?rolls=3"
 curl "http://localhost:8080/rolldice?rolls=abc"
 ```
 
-</div>
-
 ### 👀 Step 6: View the Data
 
-<div style="background: #fff3e0; padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #ff9800;">
-
-#### 🔍 Monitoring Dashboards
+#### Monitoring Dashboards
 - **🔍 Jaeger UI**: [http://localhost:16686](http://localhost:16686) (select dice-server)
 - **📊 Prometheus Metrics**: [http://localhost:8889/metrics](http://localhost:8889/metrics)
 
-#### 📈 Sample Metric Output
-```text
-# HELP requests_count_total Total number of requests
-# TYPE requests_count_total counter requests_count_total{job="dice-server"} 5
-```
-
-</div>
+>  📈 Sample Metric Output
+> ```text
+> # HELP requests_count_total Total number of requests
+> # TYPE requests_count_total counter requests_count_total{job="dice-server"} 5
+> ```
 
 ## 5. OpenTelemetry's Key Features
-
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #17a2b8;">
 
 **🌍 Multi-Language Support**  
 Stable for JavaScript, Python, Java, Go (traces and metrics)
 
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
-
 **🤖 Automatic Instrumentation**  
 Works with frameworks like Express or Flask without code changes
-
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #ffc107;">
 
 **🔧 Flexibility**  
 Compatible with 90+ tools (Datadog, Splunk)
 
-</div>
-
-<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #6f42c1;">
-
 **☁️ Use Cases**  
 Ideal for microservices, cloud, and distributed systems
-
-</div>
-
-</div>
 
 ---
 
 ## 🎉 Wrapping Up
 
-<div style="background: #e3f2fd; padding: 2rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #2196f3; text-align: center;">
-
-OpenTelemetry makes it easy to monitor your systems and troubleshoot issues by collecting telemetry data. It's open-source, flexible, and a breeze to set up. In 2025, it's the standard for observability, with cost savings and AI integration making it a game-changer.
-
-**🚀 Ready to get started?** Visit [opentelemetry.io/docs](https://opentelemetry.io/docs/)!
-
-</div>
+> OpenTelemetry makes it easy to monitor your systems and troubleshoot issues by collecting telemetry data. It's open-source, flexible, and a breeze to set up. In 2025, it's the standard for observability, with cost savings and AI integration making it a game-changer.
+> 
+> **🚀 Ready to get started?** Visit [opentelemetry.io/docs](https://opentelemetry.io/docs/)!
 
 ### 📚 Resources
 
