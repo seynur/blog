@@ -171,8 +171,8 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 
 </div>
 
-<div align="center" style="margin:1rem">
-<img src="/assets/img/blog/2025-09-19-opentelemetry.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%; height: auto;" />
+<div align="center">
+<img src="/assets/img/blog/2025-09-19-opentelemetry.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%;margin:1rem; height: auto;" />
 <p><em>Figure 1. OpenTelemetry Collector architecture showing receivers, processors, and exporters. Source: Created by the author.</em></p>
 </div>
 
