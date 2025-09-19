@@ -3,7 +3,7 @@ layout: default
 title: "What is OpenTelemetry and How to Use It? – A Beginner's Guide"
 summary: "OpenTelemetry is an open-source observability framework that collects, processes, and sends telemetry data (traces, metrics, logs) from your applications. This comprehensive guide covers core concepts, architecture, and hands-on setup with Node.js examples."
 author: Beste Yiğit
-image: /assets/img/blog/2025-09-19-opentelemetry.png
+image: /assets/img/blog/2025-09-19-opentelemetry-architecture.png
 date: 19-09-2025
 tags: opentelemetry observability telemetry tracing metrics logs monitoring
 categories: OpenTelemetry
@@ -23,11 +23,10 @@ categories: OpenTelemetry
 
 ### 📊 The Three Pillars of Observability
 
-| Type | Description | Example |
-|------|-------------|---------|
-| 🔍 **Traces** | Track a request's journey through your system | What happens when a user clicks a button |
-| 📈 **Metrics** | Numeric data about system performance | CPU usage, request count |
-| 📝 **Logs** | Error messages or event records | "User not found" error |
+<div align="center">
+<img src="/assets/img/blog/2025-09-19-opentelemetry-data-types.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%;margin:1rem; height: auto;" />
+<p><em>Table 1. The three pillars of observability in OpenTelemetry: traces, metrics, and logs. This diagram illustrates how each data type provides different insights into application behavior and system performance. Source: Created by the author.</em></p>
+</div>
 
 > **💡 Key Insight**: OpenTelemetry gathers this data in a standardized way, preventing **vendor lock-in** and working seamlessly with multiple analysis tools.
 
@@ -128,7 +127,7 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 **Example**: The prometheus exporter makes metrics available at an endpoint for Prometheus to scrape.
 
 <div align="center">
-<img src="/assets/img/blog/2025-09-19-opentelemetry.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%;margin:1rem; height: auto;" />
+<img src="/assets/img/blog/2025-09-19-opentelemetry-architecture.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%;margin:1rem; height: auto;" />
 <p><em>Figure 1. OpenTelemetry Collector architecture showing receivers, processors, and exporters. Source: Created by the author.</em></p>
 </div>
 
