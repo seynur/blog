@@ -171,7 +171,7 @@ The **OpenTelemetry Collector** is the heart of telemetry data collection, proce
 
 </div>
 
-<div align="center">
+<div align="center" style="margin:1rem">
 <img src="/assets/img/blog/2025-09-19-opentelemetry.png" alt="OpenTelemetry Architecture" width="900" style="max-width: 100%; height: auto;" />
 <p><em>Figure 1. OpenTelemetry Collector architecture showing receivers, processors, and exporters. Source: Created by the author.</em></p>
 </div>
@@ -339,16 +339,19 @@ service:
 <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #4caf50;">
 
 #### 1. 🐳 Start Docker services
+
 ```bash
 docker-compose up -d
 ```
 
 #### 2. 🚀 Run the app (with Collector)
+
 ```bash
 NODE_ENV=production USE_COLLECTOR=true node --require ./instrumentation.js app.js
 ```
 
 #### 3. 🧪 Test requests
+
 ```bash
 curl "http://localhost:8080/rolldice?rolls=3"
 curl "http://localhost:8080/rolldice?rolls=abc"
