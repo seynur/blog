@@ -139,7 +139,7 @@ Deploy this app under `$SPLUNK_HOME/etc/apps/` on the target instance (targeted 
 
 If you have any questions, you may want to refer to [Splunk Architectures](https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf) and [deploying apps and addons](https://docs.splunk.com/Documentation/Splunk/9.4.2/Admin/Deployappsandadd-ons).
 
-> ✅ You now have a working HEC endpoint on https://<splunk-host>:8088, ready to accept events tagged with sourcetype=fgt_log.
+> ✅ You now have a working HEC endpoint on https://<splunk-host>:8088, ready to accept events tagged with `sourcetype=fgt_log`.
 
 You can test your HEC token with the command below:
 ```
@@ -167,7 +167,7 @@ These are crafted to align with [Fortinet’s official field definitions](https:
 
 We’ll route these logs into the correct Splunk index and assign the proper sourcetype before any parsing takes place. That way, [***Splunk_TA_fortinet_fortigate***](https://splunkbase.splunk.com/app/2846) knows how to handle them automatically.
 
-The routing logic also mirrors what *Splunk_TA_fortinet_fortigate* app and [*SC4S* suggests](https://splunk.github.io/splunk-connect-for-syslog/main/sources/vendor/Fortinet/fortios/) suggests. Here’s a simplified mapping table:
+The routing logic also mirrors what *Splunk_TA_fortinet_fortigate* app and [*SC4S*](https://splunk.github.io/splunk-connect-for-syslog/main/sources/vendor/Fortinet/fortios/) suggest. Here’s a simplified mapping table:
 
 ```
 sourcetype           index
@@ -179,7 +179,7 @@ fortigate_utm        netfw
 fortigate_anomaly    netfw
 ```
 
-To automatically assign index and sourcetype based on raw log content, we created a lightweight helper app: `my_fortinet_props`. When combined with Splunk_TA_fortinet_fortigate, this ensures logs are routed to the appropriate index and sourcetype before parsing. *Default* option will be `index = netops sourcetype = fgt_log`.
+To automatically assign index and sourcetype based on raw log content, we created a lightweight helper app: `my_fortinet_props`. When combined with *Splunk_TA_fortinet_fortigate*, this ensures logs are routed to the appropriate index and sourcetype before parsing. The *default* option will be `index = netops sourcetype = fgt_log`.
 
 🗂 App Structure:
 ```
@@ -290,7 +290,7 @@ internal.key.converter.schemas.enable=false
 internal.value.converter.schemas.enable=false
 
 # Plugin path
-plugin.path=connectors/,**/Users/oyku/dev/confluent/plugins/splunk**
+plugin.path=connectors/,/Users/oyku/dev/confluent/plugins/splunk
 
 # Connect-specific metadata topics
 group.id=kafka-connect-splunk-hec-sink
@@ -464,9 +464,9 @@ This blog is part of a series! Check out the others for alternative log collecti
 Getting event logs from Kafka topic into Splunk doesn’t have to be complex — and it doesn’t require proprietary forwarding tools or fragile syslog pipes.
 
 With Kafka in the middle and Splunk’s native HEC input at the edge, we built a resilient pipeline that:
-	•	🧠 Prepares logs before they hit the indexer
-	•	🔄 Allows routing, enrichment, and replay
-	•	🚀 Scales horizontally with your infrastructure
+- 🧠 Prepares logs before they hit the indexer
+- 🔄 Allows routing, enrichment, and replay
+- 🚀 Scales horizontally with your infrastructure
 
 Whether you’re using syslog-ng, other vendor products or simply writing to Kafka topics via APIs, this connector makes your life easier.
 
@@ -488,6 +488,7 @@ You can always reach me on [*LinkedIn*](https://www.linkedin.com/in/%C3%B6yk%C3%
 Until next time —
 Happy logging! 🚀📊
 
+---
 
 ## References:
 - [[1]](https://splunkbase.splunk.com/app/2846) Splunk Inc. (2025). ***Splunk Add-on for Fortinet FortiGate***. Splunkbase. https://splunkbase.splunk.com/app/2846
