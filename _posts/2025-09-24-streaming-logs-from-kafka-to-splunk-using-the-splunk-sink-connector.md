@@ -39,7 +39,7 @@ This modularity helps reduce indexing costs, improve search performance, and mai
 
 # Use Case: Ingesting Fortinet Logs from Kafka into Splunk
 
-Let’s say you already have Fortinet logs (from FortiGate, FortiAnalyzer, FortiManager, etc.) flowing into your Kafka cluster — whether through syslog-ng, Cribl, or a custom integration.
+Let’s say you already have Fortinet logs (from FortiGate, FortiAnalyzer, FortiManager, etc.) flowing into your Kafka cluster — whether through syslog-ng, or a custom integration.
 
 Now, your goal is to stream these logs from Kafka into Splunk using the [Splunk Kafka Sink Connector](https://splunkbase.splunk.com/app/3862), but not just as raw data — as enriched, structured, and Splunk-friendly events.
 
@@ -53,7 +53,7 @@ In our example, we’ll:
 This approach ensures that by the time the events land in Splunk, they’re fully optimized for dashboards, alerts, and searches.
 
 ```
-[Fortinet Logs] --> [Kafka Topic (via Producer, Cribl, Syslog)] --> [Splunk Kafka Sink Connector] --> [Standalone Splunk (via HEC)] 
+[Fortinet Logs] --> [Kafka Topic (via Producer, Syslog)] --> [Splunk Kafka Sink Connector] --> [Standalone Splunk (via HEC)] 
 ```
 
 > This blog will show a *Kafka-based* example — but the techniques apply regardless of how logs first enter your pipeline.
@@ -333,6 +333,8 @@ $CONFLUENT_HOME/bin/kafka-topics --bootstrap-server localhost:9092 --create --to
 ```
 
 *📝 Save the Following to* `splunk-forti-sink-connector.json`:
+
+> 💾 Please remember that, since this is a test use case, we will not use *SSL* for the *HEC token*. Therefore, in the configurations, we should include the parameter `{"splunk.hec.ssl.validate.certs": "false"};` otherwise, it should be set to true.
 ```
 {
   "name": "splunk-sink-connector",
