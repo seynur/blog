@@ -334,7 +334,8 @@ $CONFLUENT_HOME/bin/kafka-topics --bootstrap-server localhost:9092 --create --to
 
 *📝 Save the Following to* `splunk-forti-sink-connector.json`:
 
-> 💾 Please remember that, since this is a test use case, we will not use *SSL* for the *HEC token*. Therefore, in the configurations, we should include the parameter `{"splunk.hec.ssl.validate.certs": "false"};` otherwise, it should be set to true.
+> *💾 Please remember that*, since this is a test use case, we will not use *SSL* for the *HEC token*. Therefore, in the configurations, we should include the parameter `{"splunk.hec.ssl.validate.certs": "false"};` otherwise, it should be set to true.
+
 ```
 {
   "name": "splunk-sink-connector",
