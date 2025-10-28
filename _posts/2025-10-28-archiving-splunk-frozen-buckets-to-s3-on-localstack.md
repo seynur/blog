@@ -174,7 +174,7 @@ This setup will ensure that any buckets older than 10 seconds get rolled over an
 
 ## 🧪 Test It!
 
-1. Start by generating some test events in the `oyku_test` index. Here’s a handy command:
+**Step 1**:  Start by generating some test events in the `oyku_test` index. Here’s a handy command:
 
 ```
 curl -k https://localhost:8088/services/collector -H 'Authorization: Splunk <TOKEN>' -d '{"event": "demo", "sourcetype": "test", "index": "oyku_test"}'
@@ -182,7 +182,7 @@ curl -k https://localhost:8088/services/collector -H 'Authorization: Splunk <TOK
 
 Feel free to use any event ingestion method you prefer! 🐣
 
-2. If you’re feeling a bit impatient, you can manually force roll hot to warm buckets with this command:
+**Step 2**: If you’re feeling a bit impatient, you can manually force roll hot to warm buckets with this command:
 
 ```
 $SPLUNK_HOME/bin/splunk _internal call /data/indexes/oyku_test/roll-hot-buckets -auth admin:admin123
@@ -190,7 +190,7 @@ $SPLUNK_HOME/bin/splunk _internal call /data/indexes/oyku_test/roll-hot-buckets 
 
 > Just a little reminder: I’m using one of the secret credentials, so let’s keep that between us! 🫶🏼😌 
 
-3. Now, check your bucket in LocalStack:
+**Step 3**:  Now, check your bucket in LocalStack:
 
 ```
 aws --endpoint-url=http://localhost:4566 s3 ls s3://s3-frozen-test-bucket/oyku_test/
