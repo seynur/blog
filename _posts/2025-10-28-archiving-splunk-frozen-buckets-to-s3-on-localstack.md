@@ -172,7 +172,7 @@ This setup will ensure that any buckets older than 10 seconds get rolled over an
 
 ---
 
-## 🧪 Test It!
+## 🧪 Test It!
 
 1. Start by generating some test events in the `oyku_test` index. Here’s a handy command:
 
