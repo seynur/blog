@@ -53,6 +53,10 @@ docker run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack
 
 This will launch LocalStack and make its services, including S3, available at `http://localhost:4566`. 
 
+| ![screenshot](/assets/img/blog/2025-10-24-getting-started-with-localstack-local-s3-bucket-creation-and-file-operations2.webp) |
+|:--:| 
+| *Figure 1* Terminal image of the LocalStack image. |
+
 > ℹ️ The best part? LocalStack comes with built-in support for many AWS services right out of the box, so you won't need to do any extra setup for basic testing with S3. Enjoy experimenting!
 
 ---
