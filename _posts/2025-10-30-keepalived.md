@@ -11,7 +11,7 @@ categories: Keepalived
 
 # MITRE ATT&CK App for Splunk 3.14.0 — Release Highlights
 
-## 1. What is MITRE ATTACK App for Splunk?
+## **1. What is MITRE ATTACK App for Splunk?**
 
 [**MITRE ATTACK App for Splunk**](https://splunkbase.splunk.com/app/4617) extends the **MITRE ATT&CK framework** by providing **compliance and triage dashboards**, **correlation search mapping**, and **drill-down analysis**. These capabilities help security teams effectively **operationalize ATT&CK** within their **SIEM workflows**.
 
@@ -38,7 +38,7 @@ categories: Keepalived
 > - **Github page:** Source code, and issue tracking.
 [https://github.com/seynur/DA-ESS-MitreContent](https://github.com/seynur/DA-ESS-MitreContent)
 
-## 2. What’s New in the MITRE ATTACK App for Splunk (3.14.0)
+## **2. What’s New in the MITRE ATTACK App for Splunk (3.14.0)**
 
 **Release:** 3.14.0 — **Date:** Oct 30, 2025
 
@@ -143,7 +143,7 @@ The **Filter by Technique ID** option allows filtering the results by specific M
   <img src="/assets/img/blog/2025-10-30-default-rules.webp" width="600"/>
 </p>
 
-## References:
+## **References:**
 
 * [**Splunkbase — MITRE ATT&CK App for Splunk**](https://splunkbase.splunk.com/app/4617)
 
