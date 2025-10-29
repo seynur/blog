@@ -54,7 +54,9 @@ Let’s take a closer look at the new updates:
 
 The **Configuration** and **Setup** sections remain unchanged. However, the main dashboards have been reorganized under two new **dropdown menus**: **Compliance** and **Incidents**.
 
-![](https://cdn-images-1.medium.com/max/4188/1*VRaB62pOnxEdzqplMDsq_A.png)
+<p align="center">
+  <img src="/assets/img/blog/2025-10-30-new-panels.webp" width="600"/>
+</p>
 
 **Compliance:**
 
@@ -112,24 +114,34 @@ This dashboard provides a **threat actor–centric compliance view** built from 
 
 Here’s a simple example dashboard that uses the lookup mentioned above. The color scheme follows the same logic as the MITRE ATT&CK Compliance dashboard (now renamed ATT&CK Matrix).
 
-![](https://cdn-images-1.medium.com/max/4068/1*ZtvRA5l38_NMSCORUWsUmw.png)
+<p align="center">
+  <img src="/assets/img/blog/2025-10-30-threat-actor.webp" width="600"/>
+</p>
 
 The **“Filter by Threat Actor”** option lets you display only the correlation searches and MITRE ATT&CK techniques associated with a specific threat actor (e.g., Agrius, AjaxSecurityTeam, Whitefly). The other filtering options work the same way as in the previous dashboards, and the **Filter by Threat Actor** field defaults to **ALL**.
 
-![](https://cdn-images-1.medium.com/max/4172/1*G82yxDIiJCgqdUU5kKBXUw.png)
+<p align="center">
+  <img src="/assets/img/blog/2025-10-30-threat-actor-panel.webp" width="600"/>
+</p>
 
 **Threat Actor (Table):** 
 This table displays the rule names, associated MITRE ATT&CK technique IDs, and the count of rules based on the underlying query results.
 
-![](https://cdn-images-1.medium.com/max/4050/1*zR0ITNF4ZvIs7HkYZyMw1w.png)
+<p align="center">
+  <img src="/assets/img/blog/2025-10-30-threat-actor-table.webp" width="600"/>
+</p>
 
 The **Filter by Technique ID** option allows filtering the results by specific MITRE ATT&CK techniques. By default, it is set to **ALL**.
 
-![](https://cdn-images-1.medium.com/max/4152/1*K0zpvTuPAM2s0gaDT1H1fA.png)
+<p align="center">
+  <img src="/assets/img/blog/2025-10-30-threat_actor_table_panel.webp" width="600"/>
+</p>
 
 ⚠️ **Note:** You can change the default configuration from the **Edit** menu on the right side of the screen. You will see a screen like the one below, where you can specify your options.
 
-![](https://cdn-images-1.medium.com/max/2044/1*Oiqb6aA7xUYow6hPZLhpNw.png)
+<p align="center">
+  <img src="/assets/img/blog/2025-10-30-default-rules.webp" width="600"/>
+</p>
 
 ## References:
 
