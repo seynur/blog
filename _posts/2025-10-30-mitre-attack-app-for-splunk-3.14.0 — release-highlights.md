@@ -1,11 +1,12 @@
 ---
 layout: default
 title: "MITRE ATT&CK App for Splunk 3.14.0 — Release Highlights"
-summary: "This guide shows how to set up a highly available Syslog-ng environment with Keepalived, ensuring continuous log collection and automatic failover via a shared Virtual IP."
+summary: "This guide highlights the new features in MITRE ATT&CK App for Splunk 3.14.0, including a redesigned dashboard layout, a threat actor lookup, and improved visualizations to streamline ATT&CK-based threat detection and analysis."
 author: Hilal Gevrek
+image: /assets/img/blog/2025-10-31-splunk-mitre.webp
 date: 30-10-2025
-tags: keepalived syslog-ng vrrp failover ha-cluster
-categories: Keepalived
+tags: splunk mitre siem
+categories: Splunk
 
 ---
 
@@ -30,7 +31,7 @@ categories: Keepalived
 * **Automated Data Lookups:** Keeps visualizations and mappings up to date via scheduled searches.
 > 📚 **Learn more & download:**
 > - **Documentation**: Official setup and usage guide.
-[https://seynur.github.io/mitre-attack-app-for-splunk-docs/v3.14.0/](https://seynur.github.io/mitre-attack-app-for-splunk-docs/v3.13.0/)
+[https://seynur.github.io/mitre-attack-app-for-splunk-docs/v3.14.0/](https://seynur.github.io/mitre-attack-app-for-splunk-docs/v3.14.0/)
 > - **Medium posts:** A detailed walkthrough by Selim Seynur explaining detection use cases and setup.
 [https://medium.com/seynur/detecting-cyber-threats-with-mitre-att-ck-app-for-splunk-a6627439a9e3](https://medium.com/seynur/detecting-cyber-threats-with-mitre-att-ck-app-for-splunk-a6627439a9e3)
 > - **Splunkbase app:** Official page to download and install the app on Splunk.
@@ -40,7 +41,7 @@ categories: Keepalived
 
 ## **2. What’s New in the MITRE ATTACK App for Splunk (3.14.0)**
 
-**Release:** 3.14.0 — **Date:** Oct 30, 2025
+**Release:** 3.14.0 — **Date:** Oct 31, 2025
 
 **Version 3.14.0** introduces a refreshed layout and enhanced visualization experience, making it easier to navigate between tactics, techniques, and detection mappings.
 
