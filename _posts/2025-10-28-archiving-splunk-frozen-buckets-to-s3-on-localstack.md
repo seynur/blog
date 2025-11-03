@@ -27,6 +27,8 @@ In this project, we will use this script to:
 - Determine when a bucket is ready to be frozen
 - Upload only the `journal.zst` file from that bucket to our LocalStack-powered S3 bucket, following the path format `<repo-name>/<index-name>/<bucket-name>/rawdata/journal.zst`
 
+Feel free to check out the app in our [seynur-tools](https://github.com/seynur/seynur-tools/tree/main/org_frozen_buckets_to_cloud_app) repository on GitHub!
+
 I’m excited to show you how everything comes together!
 
 ---
@@ -242,11 +244,12 @@ Thanks for joining us on this journey, and we can’t wait to share more with yo
 ---
 
 ## References:
-- [[1]](https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html) Şimşir Can, Ö. 2025. **Getting Started with LocalStack: Local S3 Bucket Creation and File Operations**. https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html
-- [[2]](https://www.localstack.cloud/)  LocalStack (2025). ***Webpage***. https://www.localstack.cloud/
-- [[3]](https://docs.localstack.cloud/aws/?__hstc=108988063.0ee2f30eaf277f10554eb6d4f1260de9.1761130776473.1761305608218.1761389372142.4&__hssc=108988063.1.1761389372142&__hsfp=597304104)  LocalStack (2025). ***Welcome to LocalStack for AWS Docs***. https://docs.localstack.cloud/aws/?__hstc=108988063.0ee2f30eaf277f10554eb6d4f1260de9.1761130776473.1761305608218.1761389372142.4&__hssc=108988063.1.1761389372142&__hsfp=597304104
-- [[4]](https://aws.amazon.com/s3/?trk=b2e0b71d-6f5d-4607-94dc-18f7ddd5339a&sc_channel=ps&ef_id=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE:G:s&s_kwcid=AL!4422!3!645208988806!e!!g!!s3!19580264380!143903638703&gad_campaignid=19580264380&gbraid=0AAAAADjHtp9YgzsvVgxdkeRljJzdtAzXU&gclid=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE) Amazon Web Services, Inc. (2025). ***Amazon S3***. Amazon. https://aws.amazon.com/s3/?trk=b2e0b71d-6f5d-4607-94dc-18f7ddd5339a&sc_channel=ps&ef_id=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE:G:s&s_kwcid=AL!4422!3!645208988806!e!!g!!s3!19580264380!143903638703&gad_campaignid=19580264380&gbraid=0AAAAADjHtp9YgzsvVgxdkeRljJzdtAzXU&gclid=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE
-- [[5]](https://aws.amazon.com/cli/) Amazon Web Services, Inc. (2025). ***AWS Command Line Interface***. Amazon. https://aws.amazon.com/cli/
-- [[6]](https://www.docker.com/) Docker Inc. (2025). ***Webpage***. https://www.docker.com/
+- [[1]](https://github.com/seynur/seynur-tools/tree/main/org_frozen_buckets_to_cloud_app) Seynur. (2025). *org_frozen_buckets_to_cloud_app* [Computer software]. GitHub. https://github.com/seynur/seynur-tools/tree/main/org_frozen_buckets_to_cloud_app
+- [[2]](https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html) Şimşir Can, Ö. 2025. **Getting Started with LocalStack: Local S3 Bucket Creation and File Operations**. https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html
+- [[3]](https://www.localstack.cloud/)  LocalStack (2025). ***Webpage***. https://www.localstack.cloud/
+- [[4]](https://docs.localstack.cloud/aws/?__hstc=108988063.0ee2f30eaf277f10554eb6d4f1260de9.1761130776473.1761305608218.1761389372142.4&__hssc=108988063.1.1761389372142&__hsfp=597304104)  LocalStack (2025). ***Welcome to LocalStack for AWS Docs***. https://docs.localstack.cloud/aws/?__hstc=108988063.0ee2f30eaf277f10554eb6d4f1260de9.1761130776473.1761305608218.1761389372142.4&__hssc=108988063.1.1761389372142&__hsfp=597304104
+- [[5]](https://aws.amazon.com/s3/?trk=b2e0b71d-6f5d-4607-94dc-18f7ddd5339a&sc_channel=ps&ef_id=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE:G:s&s_kwcid=AL!4422!3!645208988806!e!!g!!s3!19580264380!143903638703&gad_campaignid=19580264380&gbraid=0AAAAADjHtp9YgzsvVgxdkeRljJzdtAzXU&gclid=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE) Amazon Web Services, Inc. (2025). ***Amazon S3***. Amazon. https://aws.amazon.com/s3/?trk=b2e0b71d-6f5d-4607-94dc-18f7ddd5339a&sc_channel=ps&ef_id=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE:G:s&s_kwcid=AL!4422!3!645208988806!e!!g!!s3!19580264380!143903638703&gad_campaignid=19580264380&gbraid=0AAAAADjHtp9YgzsvVgxdkeRljJzdtAzXU&gclid=EAIaIQobChMI6aOUp5q_kAMVaGZBAh07tDl-EAAYASAAEgLyVPD_BwE
+- [[6]](https://aws.amazon.com/cli/) Amazon Web Services, Inc. (2025). ***AWS Command Line Interface***. Amazon. https://aws.amazon.com/cli/
+- [[7]](https://www.docker.com/) Docker Inc. (2025). ***Webpage***. https://www.docker.com/
 
 ---
