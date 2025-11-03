@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "Archiving Splunk Frozen Buckets to S3 on LocalStack"
-summary: "This blog will teach you how to set up a completely local S3 environment using LocalStack and AWS CLI for rapid, cloudless development and testing."
+summary: "This blog shows how to automatically archive Splunk frozen data to a fully local S3 environment using LocalStack and a custom script, no real cloud required."
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-10-28-archiving-splunk-frozen-buckets-to-s3-on-localstack2.webp
 date: 28-10-2025
