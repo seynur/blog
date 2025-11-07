@@ -13,7 +13,7 @@ categories: Keepalived
 # PART 1 — Understanding Keepalived for High Availability
 
 
-> 🫧 This post is divided into **two parts**. The first part explains **the fundamentals of Keepalived** and how it provides high availability through VRRP. The second part focuses on a practical setup, showing how to integrate [**Keepalived with syslog-ng**](https://blog.seynur.com/splunk/2025/11/07/keepalived-part2.html) to ensure uninterrupted log forwarding.
+> 🫧 This post is divided into **two parts**. The first part explains **the fundamentals of Keepalived** and how it provides high availability through VRRP. The second part focuses on a practical setup, showing how to integrate [**Keepalived with syslog-ng**](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part2.html) to ensure uninterrupted log forwarding.
 
 In modern infrastructures, resilience is the foundation of reliable operations. Ensuring service continuity and maintaining telemetry visibility require robust **high-availability** and **load-balancing** strategies.
 
@@ -294,7 +294,7 @@ To observe runtime behavior and failover activity in real time:
     sudo journalctl -u keepalived -f
 
 This command streams live logs, allowing you to monitor heartbeat exchanges, state transitions (MASTER → BACKUP), and VIP reassignment events.
-> 🫧 Continue to [**Part 2 — Implementing Keepalived Failover with syslog-ng**](https://blog.seynur.com/splunk/2025/11/07/keepalived-part2.html) for the hands-on implementation.
+> 🫧 Continue to [**Part 2 — Implementing Keepalived Failover with syslog-ng**](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part2.html) for the hands-on implementation.
 
 ## 📚 References
 

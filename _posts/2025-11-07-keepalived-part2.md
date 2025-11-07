@@ -13,7 +13,7 @@ categories: Keepalived
 # PART 2 — Implementing Keepalived Failover with syslog-ng
 
 
-> 🫧 For background and foundational concepts, check out [**Part 1 — Understanding High Availability with Keepalived**](https://blog.seynur.com/splunk/2025/11/07/keepalived-part1.html).
+> 🫧 For background and foundational concepts, check out [**Part 1 — Understanding High Availability with Keepalived**](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part1.html).
 
 [**Syslog-ng**](https://syslog-ng.github.io/) is a powerful and flexible log management tool designed to collect, process, and forward logs from multiple sources. It plays a critical role in centralized logging architectures by ensuring consistent and reliable log delivery. However, in production environments, a single Syslog-ng instance can become a **single point of failure (SPOF)**. If the active node or its network interface fails, log forwarding stops, leading to data loss and visibility gaps.
 
@@ -28,7 +28,7 @@ In this step, we’ll prepare the environment by creating two Linux virtual mach
 Both VMs should be placed on the **same subnet** to ensure smooth communication and accurate failover testing.
 
 Each machine also needs **internet access** so that the required packages, such as **Syslog-ng** and **Keepalived**, can be downloaded and installed without connectivity issues.
-> This setup was covered in detail in [**Part 1**](https://blog.seynur.com/splunk/2025/11/07/keepalived-part1.html), so only a brief overview is provided here before moving on to the configuration steps.
+> This setup was covered in detail in [**Part 1**](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part1.html), so only a brief overview is provided here before moving on to the configuration steps.
 
 ### Step 2: Configure Syslog-ng
 
@@ -360,7 +360,7 @@ The **VIP (10.0.0.10)** automatically returns to **syslog1**, and log forwarding
 ***Expected output:***
 
 <p align="center">
-  <img src="/assets/img/blog/2025-11-07-keepalived-part2-syslog-master-backup" width="600"/>
+  <img src="/assets/img/blog/2025-11-07-keepalived-part2-syslog-master-backup.webp" width="600"/>
 </p>
 
 ## 4. Debugging & Monitoring
@@ -394,7 +394,7 @@ This is especially useful during **failover testing**, allowing you to watch how
 
 ## 📚 References
 
-* [PART 1 — Understanding Keepalived for High Availability](https://blog.seynur.com/splunk/2025/11/07/keepalived-part1.html)
+* [PART 1 — Understanding Keepalived for High Availability](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part1.html)
 
 * [Keepalived Official Documentation](https://keepalived.readthedocs.io/en/latest/)
 
