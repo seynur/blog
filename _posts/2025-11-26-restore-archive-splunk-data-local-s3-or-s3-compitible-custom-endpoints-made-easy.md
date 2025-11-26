@@ -12,11 +12,11 @@ categories: Splunk
 
 # 🧊 Restore Splunk Frozen Buckets Easily: Local, S3, or Custom S3-Compatible Storage
 
-In Splunk Enterprise, frozen buckets represent the final stage of the index lifecycle; data that has aged beyond its retention policy and has been archived to save space. Depending on your setup, these frozen buckets may be written to local directories, AWS S3, or custom S3-compatible endpoints.
+In Splunk Enterprise, frozen buckets represent the final stage of the index lifecycle; data that has aged beyond its retention policy and has been archived to save space. Depending on your setup, these frozen buckets may be written to local directories, AWS S3, or custom S3 compatible endpoints.
 
 But what happens when you need to access that archived data again?
 
-Splunk provides a way to restore archived frozen buckets into the thaweddb directory of an index, making the data searchable once more — without reindexing.
+Splunk provides a way to restore archived frozen buckets into the thaweddb directory of an index, making the data searchable once more without reindexing.
 
 In this post, we’ll introduce a flexible Python script that simplifies this restore process, whether your archive is stored:
 - *Locally* 🗄️
@@ -24,8 +24,7 @@ In this post, we’ll introduce a flexible Python script that simplifies this re
 
 The script can also extract the oldest/newest event times for specific indexes in your archive, helpful for compliance checks or selective recovery.
 
-
-The script can also extract the oldest/newest event times for specific indexes in your archive, helpful for compliance checks or selective recovery — all powered by [seynur-tools/restore_archive_for_splunk](https://github.com/seynur/seynur-tools/tree/main/restore_archive_for_splunk) on GitHub￼.
+The script can also extract the oldest/newest event times for specific indexes in your archive, helpful for compliance checks or selective recovery — all powered by [seynur-tools/restore_archive_for_splunk](https://github.com/seynur/seynur-tools/tree/main/restore_archive_for_splunk) on GitHub.
 
 ## 1. 🔄 Restore Methods Overview
 
@@ -45,9 +44,9 @@ S3-compatible endpoints |         ✅ Yes          |         ✅ Yes          | 
 For each method, the script will:
 - 🔍 Detect available frozen buckets in the specified source location (*local directory* or *remote storage*).
 - 📄 Validate the presence of essential files, especially *journal.zst*, within each bucket.
-  - 📥 Retrieve the required files from:
+- 📥 Retrieve the required files from:
   - Local filesystem (direct file access)
-- *AWS S3* or *custom endpoints* (using aws s3api get-object)
+  - *AWS S3* or *custom endpoints* (using aws s3api get-object)
 - 📂 Recreate the bucket structure under the appropriate index’s *thaweddb* directory.
 - 🔎 Make the data instantly searchable in Splunk **without restarting or reindexing**.
 
@@ -67,7 +66,7 @@ This script can restore frozen buckets from various archive locations and suppor
 
 We’ll go step by step and show how the script performs in each scenario: restoring data to Splunk’s thaweddb directory so that it’s instantly searchable.
 
-Before testing scenarios let's setup test environments. To simulate realistic conditions, we’ve configured two indexes in Splunk:
+Before testing scenarios, let's set up test environments. To simulate realistic conditions, we’ve configured two indexes in Splunk:
 
 **Index** = `oyku_test_local`: This index archives frozen data directly to a local folder. Also my local frozen bucket is `<MY-LOCAL-FROZEN-PATH>/oyku_test_local/db_1764140400_1764140400_0`
 
@@ -87,13 +86,6 @@ maxWarmDBCount = 1
 
 **Index** = `oyku_test_s3`: This index pushes frozen data to a *LocalStack S3-compatible* bucket using a ***coldToFrozenScript***.
 
-**custom S3 repo** = `s3-frozen-test-bucket`
-
-**custom frozen bucket** = `db_1764140400_1764140400_0`
-
-**custom endpoint-url** = `http://localhost:4566`.
-
-
 ```
 [oyku_test_s3]
 coldPath = $SPLUNK_DB/oyku_test_s3/colddb
@@ -106,12 +98,20 @@ maxHotBuckets = 1
 maxWarmDBCount = 1
 ```
 
-📌 You can find more about setting up this ***LocalStack*** environment in my previous blog post:
+> 📌 You can find more about setting up this ***LocalStack*** environment in my previous blog post:
 [Archiving Splunk Frozen Buckets to S3 on LocalStack](http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html).
+
+Additionally, the arguments for the *LocalStack S3-compatible bucket* use case are listed below.
+
+**custom S3 repo** = `s3-frozen-test-bucket`
+
+**custom frozen bucket** = `db_1764140400_1764140400_0`
+
+**custom endpoint-url** = `http://localhost:4566`
 
 ### 2.1. 🗄️ Restoring from Local Directory
 
-In this example, we’ll restore a frozen bucket that was previously archived on the local filesystem under the frozen path defined in *indexes.conf*.
+In this example, we'll restore a frozen bucket that was previously archived on the local filesystem under the path defined in *indexes.conf* as the frozen path.
 
 #### 🧪 Step-by-step: Restore the Local Bucket
 
@@ -135,34 +135,34 @@ Success: 1, Failed: 0
 ---------------------------
 Restarting Splunk...
 
-... <splunk restarting messages>
+... <splunk restarting messages> ...
 
 The Splunk web interface is at https://oyku.host:8000
 %
 ```
 
-After running the script, the restored data becomes immediately searchable in Splunk: no reindexing or restart required as in the ***Figure 1***. 🌸
+After running the script, the restored data becomes immediately searchable in Splunk: no reindexing or restart required, as in ***Figure 1***. 🌸
 
 | ![screenshot](/assets/img/blog/2025-11-26-splunk-restore-archive-from-local-splunk-image.webp) |
 |:--:| 
 | *Figure 1* Local - Thawed data result on the Splunk. |
 
-### ☁️ 2.2. Restoring from AWS S3 or Custom S3-Compatible Endpoint
+### 2.2. ☁️ Restoring from AWS S3 or Custom S3-Compatible Endpoint
 
-Our restore script can also pull archived frozen buckets directly from AWS S3 or any custom S3-compatible endpoint such as LocalStack￼or MinIO.
+Our restore script is capable of retrieving archived frozen buckets directly from AWS S3, or any custom S3-compatible endpoint, such as LocalStack or MinIO. 
 
-In this example, we’ll simulate a production-like setup using LocalStack, but everything applies equally to AWS S3.
+In this example, we will simulate a production-like environment using LocalStack, but the process is the same for AWS S3. 
 
-The script will:
-- Use aws s3api get-object to download the `journal.zst`
-- Place it in the appropriate `thaweddb` directory
-- Make the data searchable in Splunk instantly
+The script will: 
+- Use `aws s3api get-object` to download the `journal.zst` file. 
+- Place the file in the appropriate `thaweddb` directory. 
+- Make the data instantly searchable in Splunk.
 
-This archived bucket was previously uploaded to LocalStack via the `coldToS3.py` script, as covered in my [Archiving Splunk Frozen Buckets to S3 on LocalStack](http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html) blog. Also, if you don't have experience with *LocalStack*, you may want to check my other blog about [Getting Started with LocalStack: Local S3 Bucket Creation and File Operations](http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html).
+The archived bucket mentioned was previously uploaded to LocalStack using the `coldToS3.py` script, as discussed in my blog post titled ["Archiving Splunk Frozen Buckets to S3 on LocalStack"](http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html). If you're not familiar with LocalStack, I recommend checking out my other blog, ["Getting Started with LocalStack: Local S3 Bucket Creation and File Operations"](http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html).
 
 #### 🧪 Step-by-step: Restore the S3 Bucket
 
-To restore from either *AWS S3*, simply point the script to the *S3 repo name* and *index*. The script uses your environment’s default AWS credentials and region. 
+To restore from *AWS S3*, simply specify the *S3 repository name* and *index*. The script utilizes your environment's default AWS credentials and region.
 
 **command for** ***S3 - AWS***:
 ```
@@ -199,13 +199,13 @@ Success: 1, Failed: 0
 ---------------------------
 Restarting Splunk...
 
-... <splunk restarting messages>
+... <splunk restarting messages> ...
 
 The Splunk web interface is at https://oyku.host:8000
 %
 ```
 
-On the otherhand, if you want to restore frozen buckets from a *custom S3 endpoint*, you should add the `--s3_path` parameter to the previous command example.
+To restore frozen buckets from a *custom S3 endpoint*, add the `--s3_path` parameter to the previous command.
 
 **command for** ***S3 - Custom Endpoint***:
 ```
@@ -241,8 +241,8 @@ Buckets rebuild completed.
 Success: 1, Failed: 0
 ---------------------------
 Restarting Splunk...
-
-... <splunk restarting messages>
+ 
+... <splunk restarting messages> ...
 
 The Splunk web interface is at https://oyku.host:8000
 %
@@ -250,15 +250,17 @@ The Splunk web interface is at https://oyku.host:8000
 
 Just like with local restoration, there’s no need to restart Splunk: your data will be searchable right away (***Figure 2***). 
 
+
+
 | ![screenshot](/assets/img/blog/2025-11-26-splunk-restore-archive-from-s3-splunk-image.webp) |
 |:--:| 
 | *Figure 2* S3 - thawed data result on the Splunk. |
 
 
 
-### 🕰️ 2.3. Discovering Min/Max Event Timestamps Only
+### 2.3. 🕰️ Discovering Min/Max Event Timestamps Only
 
-Sometimes, you don’t need to restore all frozen data,  you just want to know what time ranges are available in the archive.
+Sometimes, you don’t need to restore all frozen data; you just want to know what time ranges are available in the archive.
 
 Whether you’re auditing logs, checking data coverage, or planning selective restores, the script allows you to query only the min/max timestamps from your archive without restoring anything.
 
@@ -320,12 +322,12 @@ Oldest date: '2025-11-26 10:00:00', newest date: '2025-11-26 10:00:00'.
 
 ```
 
-> ⚠️ Note: The script extracts min/max times directly from the `journal.zst` file, just like Splunk does. You don’t need to decompress or inspect the raw data manually.
+> ⚠️ Note:  The script directly extracts min/max times from the `journal.zst` file, similar to how Splunk operates. There's no need to decompress or manually inspect the raw data.
 
 
 ---
 
-# 🎁 Wrapping Up
+# 3. 🎁 Wrapping Up
 
 Managing archived data in Splunk doesn’t have to be a pain. Whether your frozen buckets live on ***local disks***, in ***AWS S3***, or a ***custom S3-compatible service*** like *LocalStack* or *MinIO*, this script gives you full control over:
 - ♻️ Restoring buckets into Splunk’s *thaweddb* for instant search
@@ -343,7 +345,7 @@ Until next time 🚀📦
 
 ---
 
-## References:
+# References:
 - [[1]](https://github.com/seynur/seynur-tools/tree/main/restore_archive_for_splunk) Seynur (2025). restore_archive_for_splunk [GitHub repository]. GitHub. https://github.com/seynur/seynur-tools/tree/main/restore_archive_for_splunk
 - [[2]](http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html) Şimşir Can, Ö. (2025). Getting Started with LocalStack: Local S3 Bucket Creation and File Operations. http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html
 - [[3]](http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html) Şimşir Can, Ö. (2025). Archiving Splunk Frozen Buckets to S3 (via LocalStack). http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html
