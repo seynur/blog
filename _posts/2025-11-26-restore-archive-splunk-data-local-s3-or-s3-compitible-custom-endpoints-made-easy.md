@@ -5,8 +5,8 @@ summary: "Easily restore frozen Splunk data from local storage, AWS S3, or S3-co
 author: Öykü Can Şimşir
 image: /assets/img/blog/2025-10-24-getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.webp
 date: 24-10-2025
-tags: localstack s3 aws docker
-categories: LocalStack
+tags: splunk s3 aws docker archive-restore
+categories: Splunk 
 
 ---
 
