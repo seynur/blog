@@ -175,17 +175,17 @@ Navigate to **Settings → Agent Management** and confirm that **splunk-hf**a
 
 To ensure that both the Universal Forwarder (UF) and Heavy Forwarder (HF) send data to the correct indexers, a routing configuration must be applied through the Deployment Server. This section creates a dedicated Server Class and assigns the output application that defines where the forwarders should forward their data.
 
-### ***1. Create the Server Class***
+### **1. Create the Server Class**
 
 - Navigate to: **Settings → Agent Management → Server Classes → New Server Class**
 - Enter the server class name: `sc_forwarder_outputs`, then save.
 
-### ***2. Assign the Output Configuration App***
+### **2. Assign the Output Configuration App**
 
 - Go to: **Settings → Agent Management → Server Classes → sc_forwarder_outputs →** `org_forwarder_outputs` **→ Save**
 - This attaches the output configuration app to the server class.
 
-### ***3. Define Agent Scope***
+### **3. Define Agent Scope**
 
 - Navigate to: **Settings → Agent Management → Server Classes → sc_forwarder_outputs → Agents**
 - Set the **Include** section to , and in the **Exclude** section add `splunk-cm`and `splunk-shc`.
@@ -196,7 +196,7 @@ To ensure that both the Universal Forwarder (UF) and Heavy Forwarder (HF) send d
 
 - This ensures that only UF and HF containers receive the output configuration.
 
-### ***4.* Restart Forwarders (Recommended for Production)**
+### **4. Restart Forwarders (Recommended for Production)**
 
 To apply the new output configuration, it is recommended to restart the forwarders via: **Settings → Agent Management → Applications → org_forwarder_outputs → Restart Agent**
 
