@@ -47,7 +47,7 @@ In the architecture diagram, elements shown in **red** will be completed in Pa
 > This Docker-based Splunk deployment is designed for lab, learning, and testing purposes only. It is not intended for production use.
 >
 > Since multiple Splunk components (such as Search Head, Indexer, Cluster Manager, Deployer, etc.) run on a single host as separate containers, this setup requires relatively high CPU and memory resources.
->
+
 ### **🧩 Step 1: Build the Compose file**
 
 The following Docker Compose file launches **7 individual Splunk containers**that form the foundation of a distributed environment.
@@ -207,7 +207,7 @@ docker exec -u splunk -it splunk-ds bash   # re-enter as splunk
 
 This step covers the configuration of both the Cluster Manager (CM) and the Indexer peers (IDX1 & IDX2).
 
-### ***1. Configure the Cluster Manager (CM)***
+### **1. Configure the Cluster Manager (CM)**
 
 Begin by copying the necessary configuration applications into the Cluster Manager’s app directory:
 
@@ -233,7 +233,7 @@ docker exec -u splunk -it splunk-cm bash   # re-enter as splunk
 /opt/splunk/bin/splunk restart
 ```
 
-### ***2. Configure the Indexer Peers (IDX1 & IDX2)***
+### **2. Configure the Indexer Peers (IDX1 & IDX2)**
 
 Copy the required configuration apps to each indexer peer:
 
