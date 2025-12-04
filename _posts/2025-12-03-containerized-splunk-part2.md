@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "PART 2 — Distributed Splunk in Docker: Forwarder Architecture & Data Ingestion Pipeline"
-summary: "...."
+summary: "In this two-part article series, this part focuses on log onboarding using Universal and Heavy Forwarders within a containerized distributed Splunk environment."
 author: Hilal Gevrek
 image: /assets/img/blog/2025-12-03-docker-splunk-part2.webp
 date: 03-12-2025
@@ -12,7 +12,7 @@ categories: Splunk
 
 # **PART 2 — Distributed Splunk in Docker: Forwarder Architecture & Data Ingestion Pipeline**
 
-**In [Part 1](https:link) of this series, a fully distributed Splunk deployment was created using Docker**, including both Indexer Clustering and Search Head Clustering. With the core architecture now established, the next step is to examine how data flows into Splunk. **Part 2 focuses on Heavy Forwarders and Universal Forwarders**, two critical components that define data ingestion, parsing behavior, and scalability across complex environments.
+**In [Part 1](https://blog.seynur.com/splunk/2025/12/03/containerized-splunk-part1.html) of this series, a fully distributed Splunk deployment was created using Docker**, including both Indexer Clustering and Search Head Clustering. With the core architecture now established, the next step is to examine how data flows into Splunk. **Part 2 focuses on Heavy Forwarders and Universal Forwarders**, two critical components that define data ingestion, parsing behavior, and scalability across complex environments.
 
 ### **🧩 Step 1: Build the Compose file**
 
@@ -97,7 +97,7 @@ In this part of the article series, the workflow is organized into the following
 
 This step prepares the Universal Forwarder by applying essential configuration apps, adjusting permissions, and registering it with the Deployment Server. After completing these tasks, the UF becomes ready to ingest and forward log data.
 
-### **1. Copy Configuration Apps to the Universal Forwarder**
+#### **1. Copy Configuration Apps to the Universal Forwarder**
 
 Apps placed under `/opt/splunk/etc/apps` are used locally by the Universal Forwarder itself. To copy the necessary configuration apps, run the following commands:
 
@@ -105,7 +105,7 @@ Apps placed under `/opt/splunk/etc/apps` are used locally by the Universal For
 docker cp <path_to_cloned_repo>/seynur-demos/splunk/splunk-cluster-lab-docker/uf/:opt:splunkforwarder:etc:apps/org_all_deploymentclient splunk-uf:/opt/splunkforwarder/etc/apps/
 ```
 
-### **2. Adjust File Permissions**
+#### **2. Adjust File Permissions**
 
 To ensure proper file ownership and permissions, enter the Universal Forwarder container as root and update ownership:
 
@@ -115,7 +115,7 @@ chown -R splunk:splunk /opt/splunkforwarder
 exit
 ```
 
-### **3. Restart Splunk**
+#### **3. Restart Splunk**
 
 Restart the Splunk instance within the container to apply the changes:
 
@@ -124,7 +124,7 @@ docker exec -u splunk -it splunk-uf bash # re-enter as splunk
 /opt/splunk/bin/splunkforwarder restart
 ```
 
-### **4. Verify the Deployment Server**
+#### **4. Verify the Deployment Server**
 
 Navigate to **Settings → Agent Management** and confirm that **splunk-uf**appears in the list of connected deployment clients.
 
@@ -136,7 +136,7 @@ Navigate to **Settings → Agent Management** and confirm that **splunk-uf**a
 
 This step prepares the Heavy Forwarder with the necessary configuration apps and permissions so it can register with the Deployment Server and operate correctly within the environment.
 
-### **1. Copy Configuration Apps to the Heavy Forwarder**
+#### **1. Copy Configuration Apps to the Heavy Forwarder**
 
 Apps placed under `/opt/splunk/etc/apps` are used locally by the Heavy Forwarder itself. To copy the necessary configuration apps, run the following commands:
 
@@ -144,7 +144,7 @@ Apps placed under `/opt/splunk/etc/apps` are used locally by the Heavy Forward
 docker cp <path_to_cloned_repo>/seynur-demos/splunk/splunk-cluster-lab-docker/hf/:opt:splunk:etc:apps/org_all_deploymentclient splunk-hf:/opt/splunk/etc/apps/
 ```
 
-### **2. Adjust File Permissions**
+#### **2. Adjust File Permissions**
 
 To ensure proper file ownership and permissions, enter the Universal Forwarder container as root and update ownership:
 
@@ -154,7 +154,7 @@ chown -R splunk:splunk /opt/splunk
 exit
 ```
 
-### **3. Restart Splunk**
+#### **3. Restart Splunk**
 
 Restart the Splunk instance within the container to apply the changes:
 
@@ -163,7 +163,7 @@ docker exec -u splunk -it splunk-hf bash # re-enter as splunk
 /opt/splunk/bin/splunk restart
 ```
 
-### **4. Verify the Deployment Server**
+#### **4. Verify the Deployment Server**
 
 Navigate to **Settings → Agent Management** and confirm that **splunk-hf**appears in the list of connected deployment clients.
 
@@ -175,17 +175,17 @@ Navigate to **Settings → Agent Management** and confirm that **splunk-hf**a
 
 To ensure that both the Universal Forwarder (UF) and Heavy Forwarder (HF) send data to the correct indexers, a routing configuration must be applied through the Deployment Server. This section creates a dedicated Server Class and assigns the output application that defines where the forwarders should forward their data.
 
-### **1. Create the Server Class**
+#### **1. Create the Server Class**
 
 - Navigate to: **Settings → Agent Management → Server Classes → New Server Class**
 - Enter the server class name: `sc_forwarder_outputs`, then save.
 
-### **2. Assign the Output Configuration App**
+#### **2. Assign the Output Configuration App**
 
 - Go to: **Settings → Agent Management → Server Classes → sc_forwarder_outputs →** `org_forwarder_outputs` **→ Save**
 - This attaches the output configuration app to the server class.
 
-### **3. Define Agent Scope**
+#### **3. Define Agent Scope**
 
 - Navigate to: **Settings → Agent Management → Server Classes → sc_forwarder_outputs → Agents**
 - Set the **Include** section to , and in the **Exclude** section add `splunk-cm`and `splunk-shc`.
@@ -196,7 +196,7 @@ To ensure that both the Universal Forwarder (UF) and Heavy Forwarder (HF) send d
 
 - This ensures that only UF and HF containers receive the output configuration.
 
-### **4. Restart Forwarders (Recommended for Production)**
+#### **4. Restart Forwarders (Recommended for Production)**
 
 To apply the new output configuration, it is recommended to restart the forwarders via: **Settings → Agent Management → Applications → org_forwarder_outputs → Restart Agent**
 
@@ -212,7 +212,7 @@ The environment is now ready for input configuration.
 
 Configuring log inputs for both the Universal Forwarder (UF) and Heavy Forwarder (HF) involves preparing indexes, deploying input configurations, simulating log data.
 
-### **1. Create new indexes for input**
+#### **1. Create new indexes for input**
 
 Connect to the Deployment Server and navigate to the indexes app directory. Then open the `indexes.conf` file located at `/opt/splunk/etc/deployment-apps/org_all_indexes/local/`:
 
@@ -242,7 +242,7 @@ thawedPath = $SPLUNK_DB/hf_security/thaweddb
 
 These indexes will be used to store data processed by the Universal Forwarder (UF) and Heavy Forwarder (HF).
 
-### **2. Deploy Input Configurations**
+#### **2. Deploy Input Configurations**
 
 To enable UF and HF to collect and process logs, input and props apps must be deployed via the Deployment Server.
 
@@ -277,11 +277,11 @@ Create two Server Classes on the DS UI:
 
 This setup ensures that the Heavy Forwarder (HF) and Universal Forwarder (UF) receive their respective input configurations correctly.
 
-### **3. Push the changes**
+#### **3. Push the changes**
 
 After configuring the server classes, go to the Cluster Manager’s Splunk Web interface. Under **Settings → Indexer Clustering → Configuration Bundle Actions**, validate the bundle, check for errors, and then push the bundle to apply the changes across the cluster.
 
-### **4. Apply the SHCluster Bundle**
+#### **4. Apply the SHCluster Bundle**
 
 To ensure consistent configuration across all Search Heads, including indexes, event types, and other knowledge objects, the SHC bundle must be applied.
 
@@ -291,7 +291,7 @@ To ensure consistent configuration across all Search Heads, including indexes, e
 
 This finalizes the input configuration deployment for both the Universal Forwarder and Heavy Forwarder.
 
-### **5. Create dummy linux inputs**
+#### **5. Create dummy linux inputs**
 
 Since Splunk containers do not generate real `/var/log` activity, synthetic data must be injected into both the Universal Forwarder (UF) and Heavy Forwarder (HF) to simulate a traditional Linux host
 
@@ -320,7 +320,7 @@ Once all configurations are applied and sample log data is ingested, the final s
 > ⚠️ Note: Since the sample syslog data contains entries dated Nov 26, be sure to adjust your search time range accordingly when querying the logs.
 > 
 
-### **1. Universal Forwarder (UF) Data Inputs**
+#### **1. Universal Forwarder (UF) Data Inputs**
 
 The Universal Forwarder (UF) simply forwards raw logs without processing. In this setup, it sends all logs directly to the `uf_os` index.
 
@@ -330,7 +330,7 @@ The Universal Forwarder (UF) simply forwards raw logs without processing. In thi
   <img src="/assets/img/blog/2025-12-03-uf_os.webp" width="600"/>
 </p>
 
-### **2. Heavy Forwarder (HF) Data Inputs**
+#### **2. Heavy Forwarder (HF) Data Inputs**
 
 The Heavy Forwarder (HF) parses, filters, drops, and routes data at index-time based on transforms. According to the configurations below, it:
 

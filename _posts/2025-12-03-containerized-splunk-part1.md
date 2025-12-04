@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "PART 1 — Distributed Splunk in Docker: Building a Complete Clustered Architecture"
-summary: "...."
+summary: "This two-part article series demonstrates how to build a fully containerized distributed Splunk environment in Docker. Part 1 focuses on the clustered architecture and deployment, while Part 2 covers log ingestion using forwarders."
 author: Hilal Gevrek
 image: /assets/img/blog/2025-12-03-docker-splunk.webp
 date: 03-12-2025
@@ -18,7 +18,7 @@ Understanding Splunk’s distributed architecture can be challenging, especially
 
 **Part 1 focuses on creating a realistic distributed Splunk setup with Docker Compose.** The environment includes an **indexer cluster**, a **search head cluster**, and **all required supporting components**. By the end of Part 1, a fully functional distributed Splunk environment is ready for use.
 
-**[Part 2](https://link) extends the setup by introducing data ingestion.** This includes installing both the **Universal Forwarder (UF)** and **Heavy Forwarder (HF)**, sending logs into the environment, and examining how ingestion flows within a distributed architecture. The aim is to illustrate not only how the cluster is structured but also how data moves through it.
+**[Part 2](https://blog.seynur.com/splunk/2025/12/03/containerized-splunk-part2.html) extends the setup by introducing data ingestion.** This includes installing both the **Universal Forwarder (UF)** and **Heavy Forwarder (HF)**, sending logs into the environment, and examining how ingestion flows within a distributed architecture. The aim is to illustrate not only how the cluster is structured but also how data moves through it.
 
 With this two-part approach, the series provides both structural and practical insight into Splunk’s distributed architecture, from spinning up the cluster to handling log ingestion at scale.
 
@@ -93,7 +93,7 @@ services:
 > ⚙️ The platform setting linux/amd64 is optional and can be customized or removed based on your system.
 > 
 
-You can view the complete `docker-compose`file [here](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk-cluster-lab-docker/docker-compose.yml). Although the full configuration includes **both Heavy Forwarder (HF) and Universal Forwarder (UF) services, the sections marked as Part 2 can be removed for the setup demonstrated in Part 1**. The environment can be fully deployed and tested without the forwarders, which will be introduced and configured in [Part 2](https:link).
+You can view the complete `docker-compose`file [here](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk-cluster-lab-docker/docker-compose.yml). Although the full configuration includes **both Heavy Forwarder (HF) and Universal Forwarder (UF) services, the sections marked as Part 2 can be removed for the setup demonstrated in Part 1**. The environment can be fully deployed and tested without the forwarders, which will be introduced and configured in [Part 2](https://blog.seynur.com/splunk/2025/12/03/containerized-splunk-part2.html).
 
 Run the following command to start all containers for the Splunk distributed environment:
 
@@ -160,7 +160,7 @@ The cloned configuration files will be used during the application configuration
 
 The Deployment Server requires both local configuration apps and deployment apps intended for distribution to forwarders and other Splunk components.
 
-### **1. Copy Configuration Apps to the Deployment Server**
+#### **1. Copy Configuration Apps to the Deployment Server**
 
 Apps placed under `/opt/splunk/etc/apps` are used locally by the Deployment Server itself. To copy the necessary configuration apps **from the local machine into the Docker container**, run the following commands:
 
@@ -170,7 +170,7 @@ docker cp <path_to_cloned_repo>/seynur-demos/splunk/splunk-cluster-lab-docker/ds
 docker cp <path_to_cloned_repo>/seynur-demos/splunk/splunk-cluster-lab-docker/ds/:opt:splunk:etc:apps/org_full_license_server splunk-ds:/opt/splunk/etc/apps/
 ```
 
-### **2. Copy Deployment Apps for Distribution**
+#### **2. Copy Deployment Apps for Distribution**
 
 Apps placed under `/opt/splunk/etc/deployment-apps` are distributed to forwarders and other Splunk components through Deployment Server server classes. Use the commands below to copy the deployment apps:
 
@@ -184,7 +184,7 @@ docker cp <path_to_cloned_repo>/seynur-demos/splunk/splunk-cluster-lab-docker/ds
 docker cp <path_to_cloned_repo>/seynur-demos/splunk/splunk-cluster-lab-docker/ds/:opt:splunk:etc:deployment-apps/org_search_bundle_size_distsearch splunk-ds:/opt/splunk/etc/deployment-apps/
 ```
 
-### **3. Adjust File Permissions**
+#### **3. Adjust File Permissions**
 
 To ensure proper file ownership and permissions, enter the Deployment Server container as root and update ownership:
 
@@ -194,7 +194,7 @@ chown -R splunk:splunk /opt/splunk
 exit
 ```
 
-### **4. Restart Splunk:**
+#### **4. Restart Splunk:**
 
 Restart the Splunk instance within the container to apply the changes:
 
@@ -207,7 +207,7 @@ docker exec -u splunk -it splunk-ds bash   # re-enter as splunk
 
 This step covers the configuration of both the Cluster Manager (CM) and the Indexer peers (IDX1 & IDX2).
 
-### **1. Configure the Cluster Manager (CM)**
+#### **1. Configure the Cluster Manager (CM)**
 
 Begin by copying the necessary configuration applications into the Cluster Manager’s app directory:
 
@@ -233,7 +233,7 @@ docker exec -u splunk -it splunk-cm bash   # re-enter as splunk
 /opt/splunk/bin/splunk restart
 ```
 
-### **2. Configure the Indexer Peers (IDX1 & IDX2)**
+#### **2. Configure the Indexer Peers (IDX1 & IDX2)**
 
 Copy the required configuration apps to each indexer peer:
 
@@ -271,7 +271,7 @@ docker exec -u splunk -it splunk-idx2 bash # re-enter as splunk
 /opt/splunk/bin/splunk restart
 ```
 
-### **3. Validate the Indexer Cluster Health**
+#### **3. Validate the Indexer Cluster Health**
 
 With the Cluster Manager and indexer peers configured and restarted, the next step is to validate the overall health of the indexer cluster.
 
@@ -286,7 +286,7 @@ You should see an output similar to the one shown in the screenshot below.
   <br><em>Splunk Web Interface</em>
 </p>
 
-### **4. Verify Deployment Server & Configure Server Classes for Indexer Cluster**
+#### **4. Verify Deployment Server & Configure Server Classes for Indexer Cluster**
 
 ***4.1. Verify Deployment Server Connectivity:***
 
@@ -351,7 +351,7 @@ In this interface, all Indexer peers should be visible, confirming their registr
 
 This step covers the configuration of both the **Search Head Deployer** (SHC Deployer) and the **Search Heads** (SH1 & SH2 & SH3).
 
-### **1. Setup SHC Deployer:**
+#### **1. Setup SHC Deployer:**
 
 Start by copying the required configuration apps into the SHC Deployer container:
 
@@ -383,7 +383,7 @@ docker exec -u splunk -it splunk-shc bash # re-enter as splunk
 /opt/splunk/bin/splunk restart
 ```
 
-### **2. Verify Deployment Server & Configure Server Classes for the Search Head Cluster**
+#### **2. Verify Deployment Server & Configure Server Classes for the Search Head Cluster**
 
 ***2.1. Verify Deployment Server Connectivity:***
 
@@ -431,7 +431,7 @@ After completion, the server class should show one forwarder, **splunk-shc**, a
 
 Push the changes via the Cluster Manager.
 
-### **3. Initialize SHC Members:**
+#### **3. Initialize SHC Members:**
 
 Each Search Head member (`splunk-sh1`, `splunk-sh2`, `splunk-sh3`) must be individually configured to join the Search Head Cluster (SHC). This involves setting cluster-specific parameters and **ensuring the member can communicate with the SHC Deployer and other cluster nodes**. The configuration is applied by **running the following command on each member**:
 
@@ -450,7 +450,7 @@ Each Search Head member (`splunk-sh1`, `splunk-sh2`, `splunk-sh3`) must be ind
 /opt/splunk/bin/splunk restart
 ```
 
-### **4. Bootstrap the Cluster Captain**
+#### **4. Bootstrap the Cluster Captain**
 
 On the first Search Head member (`splunk-sh1`), the **cluster captain** role must be initialized (bootstrapped). The **cluster captain is responsible for coordinating the activities within the Search Head Cluster (SHC)**, such as managing configuration updates and coordinating searches.
 
@@ -461,7 +461,7 @@ Run the following command on `splunk-sh1`:
  -servers_list https://splunk-sh1:8089,https://splunk-sh2:8089,https://splunk-sh3:8089
 ```
 
-### **5. Integrate Search Heads with the Cluster Manager**
+#### **5. Integrate Search Heads with the Cluster Manager**
 
 ***5.1. Configure Cluster Integration on Each Search Head:***
 
@@ -490,7 +490,7 @@ You should see a screen similar to the one below, displaying the Search Heads co
   <img src="/assets/img/blog/2025-12-03-validate-sh.webp" width="600"/>
 </p>
 
-### **6. Apply the SHCluster Bundle**
+#### **6. Apply the SHCluster Bundle**
 
 From the SHC Deployer, the configuration bundle must be pushed to the Search Head Cluster members. This ensures that all Search Heads receive the latest configurations and apps managed by the Deployer.
 
@@ -502,7 +502,7 @@ Run the following command on the SHC Deployer to push the bundle to a target Sea
 
 This command uploads the bundle and distributes it across the cluster, synchronizing the configurations.
 
-### **7. Verify the SHC Status**
+#### **7. Verify the SHC Status**
 
 After applying the bundle, verify the health and status of the Search Head Cluster. This can be done from any Search Head member by running the status command:
 
@@ -518,7 +518,7 @@ This command displays the current state of the cluster, showing connected member
 
 To monitor a distributed Splunk environment effectively, the Monitoring Console (MC) needs to be configured in distributed mode. Follow these steps to set it up:
 
-### **1. Enable Distributed Mode**
+#### **1. Enable Distributed Mode**
 
 Navigate to the Monitoring Console settings and enable distributed mode to allow the MC to communicate with multiple Splunk instances:
 
@@ -526,7 +526,7 @@ Navigate to the Monitoring Console settings and enable distributed mode to allow
 - Select **Distributed Mode**
 - Click **Save** to apply the changes.
 
-### **2. Add Search Peers**
+#### **2. Add Search Peers**
 
 Add the key servers in your environment as Search Peers so the MC can gather data from them: Go to **MC → Settings → Distributed Search → Search Peers → New Search Peer**
 
@@ -538,7 +538,7 @@ Search Head1 (SH1) Peer URL: https://splunk-sh1:8089
 Search Head2 (SH2) Peer URL: https://splunk-sh2:8089
 Search Head3 (SH3) Peer URL: https://splunk-sh3:8089
 ```
-### **3. Switch Monitoring Console to Distributed Mode**
+#### **3. Switch Monitoring Console to Distributed Mode**
 
 After adding the peers, configure the MC itself to operate in distributed mode to correctly display data across the environment:
 
@@ -547,7 +547,7 @@ After adding the peers, configure the MC itself to operate in distributed mode t
 - Click **Continue**
 - Apply the changes by clicking **Apply Changes** and then **Save**.
 
-### **4. Assign and Verify Server Roles**
+#### **4. Assign and Verify Server Roles**
 
 Once distributed mode is active, check that each server has the correct role assigned in the MC. Adjust roles if necessary to ensure accurate monitoring and reporting.
 
@@ -560,7 +560,7 @@ Once distributed mode is active, check that each server has the correct role ass
 
 ### **Final Checks**
 
-### **Docker Volume Deletion Risks**
+#### **Docker Volume Deletion Risks**
 
 Before completing the setup, here are some critical points to ensure your Splunk distributed environment remains stable and your data stays safe.
 
@@ -586,7 +586,7 @@ docker compose up -d
 
 These commands only stop/start the containers and will preserve all Splunk configuration and data stored in volumes.
 
-### **Deployment App Flow Overview**
+#### **Deployment App Flow Overview**
 
 The **Deployment Server (DS)** stores all deployment apps under `/opt/splunk/etc/deployment-apps`, grouped mainly as `sc_idx_cluster_apps`and `sc_sh_cluster_apps`. These app bundles are distributed either to the Cluster Manager or to the Search Head Cluster, depending on their purpose.
 
@@ -594,7 +594,7 @@ The **Cluster Manager (CM)** receives the `sc_idx_cluster_apps`from the DS an
 
 Similarly, the **Search Head Cluster (SHC)** receives the `sc_sh_cluster_apps`from the DS, which are stored on the SHC members at `/opt/splunk/etc/shcluster/apps`. To distribute these applications across the cluster, you run the `apply shcluster-bundle` command on the captain node of the Search Head Cluster. After the bundle is applied, the apps are deployed to all SH members (e.g., SH1 and SH2) under the standard app directory `/opt/splunk/etc/apps`.
 
-### **Ensuring [pass4SymmKey](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.0/secure-distributed-and-clustered-splunk-environments/secure-splunk-enterprise-services-with-pass4symmkey) Consistency in Splunk Cluster Deployments**
+#### **Ensuring [pass4SymmKey](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.0/secure-distributed-and-clustered-splunk-environments/secure-splunk-enterprise-services-with-pass4symmkey) Consistency in Splunk Cluster Deployments**
 
 - In a multisite environment, the `pass4SymmKey` value in both the **multisite_manager_base** and **cluster_indexer_base** must be identical. The Cluster Manager and its cluster members must agree on this setting.
 - For the Search Head (SH), the `pass4SymmKey` specified in `/opt/splunk/etc/system/local/server.conf` must also be the same as the cluster keys.
