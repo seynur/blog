@@ -394,7 +394,7 @@ FORMAT = hf_os
 
 The Splunk Add-on (TA) installed from Splunkbase comes with built-in data model extractions and tagging configurations. These configurations **automatically extract important fields and apply consistent tags to the data**. This setup simplifies searching and improves event correlation, especially within Splunk Enterprise Security environments.
 
-Below are two screenshots comparing the new and old Splunkbase interfaces for the interfaces for the [Splunk Add-on for Unix and Linux](https://splunkbase.splunk.com/app/833).
+Below are two screenshots comparing data processing and field extraction behavior with and without the [Splunk Add-on for Unix and Linux](https://splunkbase.splunk.com/app/833).
 
 <p align="center">
   <img src="/assets/img/blog/2025-12-03-ta-difference.webp" width="600"/>

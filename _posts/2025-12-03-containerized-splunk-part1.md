@@ -24,7 +24,7 @@ With this two-part approach, the series provides both structural and practical i
 
 > In this setup, to better understand the cluster architecture, application configuration will be done manually.
 >
-> ⚙️ For automated installation using Ansible, see the official guide: [**Splunk Docs: Automated Distributed Setup with Ansible**](https://splunk.github.io/docker-splunk/advanced/DISTRIBUTED_TOPOLOGY.html)
+> ⚙️ For automated installation using Ansible, see the official guide: [**Splunk Docs: docker-splunk**](https://splunk.github.io/docker-splunk/)
 >
 >📚 If you’re new to Ansible, you can check out my guide: [**Splunk Multi-Server Setup Using Ansible**](https://medium.com/seynur/multi-server-splunk-setup-with-ansible-ssh-25b8dcd845d7)
 > 
