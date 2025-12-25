@@ -81,11 +81,6 @@ The ML Sidecar is designed to be a friendly "*companion engine*" for your data n
 
 This clear division of tasks helps keep the Splunk app straightforward while giving the ML engine all the flexibility it needs!
 
-ML Sidecar is intentionally built like a "*companion engine*":
-- Splunk remains the source of truth for raw events
-- Python runs the heavy modeling/scoring work outside Splunk search runtime
-- Results are exported to KVStore collections for fast dashboards and investigations
-
 ---
 
 ## 🧮 3. Feature Engineering (Extracted → Computed → Learned)
