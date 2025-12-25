@@ -86,7 +86,6 @@ ML Sidecar is intentionally built like a "*companion engine*":
 - Python runs the heavy modeling/scoring work outside Splunk search runtime
 - Results are exported to KVStore collections for fast dashboards and investigations
 
-
 ---
 
 ## 🧮 3. Feature Engineering (Extracted → Computed → Learned)
@@ -165,6 +164,8 @@ user_hour_score = min(|hour − mean_hour| / std_hour, 1)
 ```
 final_anomaly_score = 0.4 * outlier + 0.3 * cluster_rarity + 0.2 * signature_rarity + 0.1 * user_hour_score
 ```
+
+> ***Sparkling Note***: All constants in the final_anomaly_score calculations can be changed depending on your data and your own work. I determined these values ​​somewhat empirically while examining the data and conducting this study.
 
 Hope this helps you understand the process a bit better! 🪄
 
