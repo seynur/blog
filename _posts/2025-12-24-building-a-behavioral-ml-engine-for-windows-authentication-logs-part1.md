@@ -116,6 +116,7 @@ Here’s how it works for each K:
 > ***Fallback***: If things don’t work out with the other options, we’ll default to K=4 to make sure we still have a working model. When that happens, it's a good idea to double-check your inputs using some multivariate analysis. 
 
 > ***Note***: If you don't like the KMeans, you can easily switch up the model used in the algorithm by tweaking the `core/model.py` script. 🐣
+
 ---
 
 ## 🚨 5. Composite Anomaly Score
