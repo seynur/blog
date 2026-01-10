@@ -93,12 +93,12 @@ These events are ingested into Splunk first (as normal logs), and then read back
 Once data is available in Splunk, running the full pipeline is intentionally simple. You can also, find pre-requriments from the [splunk_ml_sidecar/README.md](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/README.md) file.
 
 1. pull the repository from the Github. We will use `splunk_ml_sidecar` directory but you can check out our other demos from this repository. 🐣
-      ```
+      ```bash
       gh repo clone seynur/seynur-demos
       ```
 
 2. Install the ML Engine
-      ```
+      ```bash
       cd splunk_ml_sidecar/ml_sidecar
       pip install -e .
       ```
@@ -106,49 +106,51 @@ Once data is available in Splunk, running the full pipeline is intentionally sim
 3. Configure:
 - both ingestion and output Splunk REST token (`ingestion.auth_token` & `output.auth_token`) & base Splunk urls (`ingestion.base_url` & `output.base_url`). Also, you can modify all configurations in the [settings.yaml](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/ml_sidecar/config/settings.yaml) file as you desired.
 
-      > Note: We have both ingestion and output configurations that you may want to collect input from X server and send all data to another server setup.
-
-
+      Note: We have both ingestion and output configurations that you may want to collect input from X server and send all data to another server setup.
 
 - `ingestion.earliest` & `ingestion.latest` time. Right now, we are ingesting the last -90d. 
 
 - you can modify your modeling setups. *For more information*, you can check either [my previous blog](http://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html) or [splunk_ml_sidecar/ml_sidecar/README.md](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/ml_sidecar/README.md) file.
 
-      > Note: There is no other algorithm than kmeans at this moment
+      Note: There is no other algorithm than kmeans at this moment
 
 
 4. Change `OUT_FILE` as your full input file path in the [generator script](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/auth-windows-log-generator-as-json-with-real-user-behaviour.py), and generate synthetic authentication logs.
 
-```
-python3 auth-windows-log-generator-as-json-with-real-user-behaviour.py
-```
+      ```
+      python3 auth-windows-log-generator-as-json-with-real-user-behaviour.py
+      ```
 
 5. Configure Splunk to ingest the synthetic data.
-```
-# splunk_ml_sidecar/splunk_ml_sidecar_app/local/inputs.conf
 
-[monitor://<full-path-of-the-input-file>]
-disabled = false
-index = ml_sidecar
-sourcetype = ml:sidecar:json
+      ```
+      # splunk_ml_sidecar/splunk_ml_sidecar_app/local/inputs.conf
 
-```
+      [monitor://<full-path-of-the-input-file>]
+      disabled = false
+      index = ml_sidecar
+      sourcetype = ml:sidecar:json
+
+      ```
 
 6. Restart Splunk after adding the app, and validate the KVStore contents below and inputs exist in Splunk.
-```
-auth_events_lookup
-auth_outlier_events_lookup
-auth_cluster_profiles_lookup
-auth_user_profiles_lookup
-auth_user_thresholds
-```
+
+      ```
+      auth_events_lookup
+      auth_outlier_events_lookup
+      auth_cluster_profiles_lookup
+      auth_user_profiles_lookup
+      auth_user_thresholds
+      ```
 
 Once data is available in Splunk, running the full pipeline is intentionally simple.
 
 From the  splunk_ml_sidecar/ml_sidecar/ directory:
+
 ```
 python run_auto.py
 ```
+
 | ![screenshot](/assets/img/blog/2025-12-25-building-a-behavioral-ml-engine-for-windows-authentication-logs-part2.webp) |
 |:--:| 
 | *Figure 1* example of the `run_auto.py` script outputs on the cli. |
