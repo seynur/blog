@@ -10,7 +10,7 @@ categories: Splunk
 
 ---
 
-# Building a Highly Available Splunk Deployment Server (POC)
+# Building a Highly Available Splunk Deployment Server Cluster (POC)
 ## 🌸 1. Overview
 
 In many Splunk environments, the Deployment Server (DS) is an essential part of the setup, even though it's often overlooked. While it doesn't directly handle data like indexers or search heads, it plays a key role in keeping everything organized and working smoothly:
@@ -36,7 +36,7 @@ This proof of concept (POC) dives into that question and gathers insights from t
 
 **Friendly reminder:** If you’re not familiar with `Keepalived`, it might be helpful to do a little research first or check out another similar option. We'll be using a VIP in the deploymentclient.conf for seamless operation. And if you want to know more about Keepalived, check out my friend's blog series on [Understanding Keepalived for High Availability](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part1.html). 
 
-If you're interested in setting up ****a solid redundancy structure**** for your Splunk environment, you might want to check out my previous blog series on [Splunk Cluster Manager Redundancy](https://blog.seynur.com/splunk/2025/04/24/cluster-manager-redundancy-in-splunk.html). This blog is designed to help you create a basic *Distributed Clustered Deployment* (M2) with *cluster manager redundancy*. Plus, I've included some handy configuration files for you to reference along the way. 
+If you're interested in setting up **a solid redundancy structure** for your Splunk environment, you might want to check out my previous blog series on [Splunk Cluster Manager Redundancy](https://blog.seynur.com/splunk/2025/04/24/cluster-manager-redundancy-in-splunk.html). This blog is designed to help you create a basic *Distributed Clustered Deployment* (M2) with *cluster manager redundancy*. Plus, I've included some handy configuration files for you to reference along the way. 
 
 ---
 
@@ -47,7 +47,7 @@ Since the release of version 9.2, Splunk Enterprise has introduced some handy sh
 - **`client_events`**: This is where you'll find information about your clients.
 - **`_splunk_ds_info`**: This directory contains server class configuration files that are shared between agent management servers.
 
-To get your ****deployment server (DS)**** cluster up and running, you'll want to make sure the `client_events` and `deployment-apps` directories are shared with each other. It's pretty simple to use the same mount points for these directories on all your deployment servers, as explained in the [documentation](https://help.splunk.com/en/splunk-enterprise/administer/update-your-deployment/10.0/configure-the-agent-management-system/implement-an-agent-management-cluster#set-up-a-shared-drive-0).
+To get your **deployment server (DS)** cluster up and running, you'll want to make sure the `client_events` and `deployment-apps` directories are shared with each other. It's pretty simple to use the same mount points for these directories on all your deployment servers, as explained in the [documentation](https://help.splunk.com/en/splunk-enterprise/administer/update-your-deployment/10.0/configure-the-agent-management-system/implement-an-agent-management-cluster#set-up-a-shared-drive-0).
 
 Once everything is shared and set up correctly, your deployment servers will be able to work together to manage the clients smoothly. Plus, passive deployment servers will have the ability to view the status of active clients using the same files and directories. 
 
@@ -66,9 +66,11 @@ Welcome to my proof of concept (POC)! The aim here isn't to create a full-blown 
 
 To keep things realistic yet easy to manage, I've put together the following POC architecture for you.
 
-### 3.1. Pre-requirements:
+---
 
-Before we dive in, please note that this setup is designed for macOS (ARM). If you’re using a different operating system, you might need to tweak a few steps. 
+### 3.1. Prerequisites:
+
+Before we dive in, please note that this setup is designed for *macOS (ARM)*. If you’re using a different operating system, you might need to tweak a few steps. 
 
 For example, we’ll be using UTM for emulation, but other VM software can be handy if you’re on Windows.
 
@@ -92,6 +94,7 @@ splunk_ds_ha/
 ├── README.md
 ├── s1_configurations/
 │   ├── etc_system_local/
+|   │   ├── inputs.conf
 |   │   └── server.conf
 |   │
 │   └── etc_apps/
@@ -139,24 +142,25 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
    - Once that’s done, you’ll want to copy all the relevant apps and configurations from our [GitHub Repository](https://github.com/seynur/seynur-demos/tree/main/splunk/splunk_ds_ha). Just be sure to change the placeholder `targetUri` URL in the `deploymentclient.conf` file to the correct VIP on your UTMs.
    - For the configurations, take the files from the `s1_configurations/etc_system_local` directory and place them in `$SPLUNK_HOME/etc/system/local/`. Then, move the directories from `s1_configurations/etc_apps` to `$SPLUNK_HOME/etc/apps/`.
 
-
+      ```
             splunk_ds_ha/
             ...
             ├── s1_configurations/
             │   ├── etc_system_local/
+            |   │   ├── inputs.conf
             |   │   └── server.conf
             |   │
             │   └── etc_apps/
             |       └── poc_all_deploymentclient/
             ...
 
-      - Start Splunk and verify that it is fully operational
+      ```
+      
+   - Start Splunk and verify that it is fully operational. This instance will later act as a deployment client.
 
-      This instance will later act as a deployment client.
+2. Let's create a shared directory (`shared_apps`) on the host!
 
-2. Let's create a shared directory (shared_apps) on the host!
-
-   - First things first, we need to set up a shared directory that both of our Deployment Servers can access.
+   - First things first, we need to set up a shared directory that both of our deployment servers can access.
    - **Quick Reminder:** Make sure to adjust the permissions so the `splunk` user can read and write to it.
    - Inside this shared directory, let’s create two folders:
 
@@ -167,7 +171,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
 3. Now, let’s set up two ubuntu in UTM
 
    - Go ahead and create two Ubuntu 24.04.3 emulator, naming them DS1 and DS2.
-   - In UTM, head over to `Settings > Sharing` and configure it to point both VMs to the same shared directory (shared_apps) on the host.
+   - In UTM, head over to `Settings > Sharing` and configure it to point both VMs to the same shared directory (`shared_apps`) on the host.
    - Once we start the VMs, we’ll mount the shared directory on both DS1 and DS2 by running these commands:
    
       ```bash
@@ -188,10 +192,10 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       **On both DS1 and DS2:**
       - If you're using the **tgz method**, please create the `splunk` user.
 
-      ```bash
-      useradd -d /opt/splunk/ splunk
-      sudo usermod -s /bin/bash splunk
-      ```
+            ```bash
+            useradd -d /opt/splunk/ splunk
+            sudo usermod -s /bin/bash splunk
+            ```
 
       - Install **Splunk Enterprise 10.0.2** using either the tgz or package method.
 
@@ -205,7 +209,8 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
 5.  Bind shared directories into Splunk paths.
 
       As we move forward, note that the `/opt/splunk/var/log/client_events` directory won't exist yet, and that's totally okay!
-      **On both Deployment Servers:**
+
+      **On both deployment servers:**
       - **Bind deployment apps:**
       ```bash
       mount --bind /mnt/shared_apps/deployment-apps /opt/splunk/etc/deployment-apps
@@ -216,7 +221,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       mount --bind /mnt/shared_apps/client_events /opt/splunk/var/log/client_events
       ```
       
-      Now, copy the `deployment-apps` directory from the repository directly into the `shared_apps/deployment-apps` directory. 
+      Now, copy the `deployment-apps/` directory from the repository directly into the `shared_apps/deployment-apps/` directory. 
 
       **Important:** Make sure to update any placeholder URLs in the files with the correct ones.
 
@@ -266,19 +271,19 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       - **Start Splunk** on both DS1 and DS2.
       - Verify that both instances start cleanly without issues.
 
-
 8. Install and configure keepalived
 
       Let’s ensure high availability with Keepalived!
 
-      - Install keepalived on both DS1 and DS2
+      - Install keepalived on both DS1 and DS2.
+      
       ```bash
             sudo apt update
             sudo apt install -y keepalived
       ```
             
-      - Next, create a script to check the status of Splunk on both DS:
-      
+      - Next, create a script to check the status of Splunk on *both DS*.
+   
       ```bash
             sudo tee /etc/keepalived/check_splunk.sh >/dev/null <<'EOF'
             #!/usr/bin/env bash
@@ -293,7 +298,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
             sudo chmod +x /etc/keepalived/check_splunk.sh
       ```
 
-      - on DS1, set up Keepalived:
+      - on *DS1*, set up Keepalived:
 
       ```bash
             sudo tee /etc/keepalived/keepalived.conf >/dev/null <<EOF
@@ -339,7 +344,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
             EOF
       ```
 
-      - on DS2 do the same but with slightly different configurations:
+      - on *DS2* do the same but with slightly different configurations:
 
       ```bash
             sudo tee /etc/keepalived/keepalived.conf >/dev/null <<EOF
@@ -386,7 +391,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       ```
 
       - Configure a Virtual IP (VIP) and find out what are your UTM ips/interface. 
-      - Replace the placeholders (<INTERFACE-PLACEHOLDER>``, `<DS1-PLACEHOLDER>`, `<DS2-PLACEHOLDER>`, and `<DS-VIP-PLACEHOLDER>`) in the configuration files with your actual settings, such as the interface and IP addresses. Then run the following commands on both DS:
+      - Replace the placeholders (`<INTERFACE-PLACEHOLDER>`, `<DS1-PLACEHOLDER>`, `<DS2-PLACEHOLDER>`, and `<DS-VIP-PLACEHOLDER>`) in the configuration files with your actual settings, such as the interface and IP addresses. Then run the following commands on both DS:
 
       ```bash
             sudo sed -i \
@@ -406,7 +411,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       - Verify which node owns the VIP with the command below:
 
       ```bash
-            -*ip -4 addr show dev <INTERFACE-PLACEHOLDER>
+            ip -4 addr show dev <INTERFACE-PLACEHOLDER>
       ```
 
       - Test VIP reachability
@@ -418,8 +423,8 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       > Remember to follow the Splunk name conventions as a best practice. 🐣
 
       - Create a serverclass (for example: `sc_s1_apps`). 
-      - Assign apps with wildcard usage as `poc_*`. Also, configure them with restart behavior
-      - Add the local Splunk instance as a deployment client
+      - Assign apps with wildcard usage as `poc_*`. Also, configure them with restart behavior.
+      - Add the local Splunk instance as a deployment client.
 
 10. Verify application deployment and shared state
 
@@ -428,7 +433,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
 
       Next, you should also see the same client in the DS2 UI! 🥳
 
-      > **Optional Checks:** You can verify client events and checksum information under the `shared_apps/client_events` directory to confirm there are no unexpected changes.
+      > **Optional Checks:** You can verify client events and checksum information under the `shared_apps/client_events/` directory to confirm there are no unexpected changes.
 
       > **Note:** Changes made through the UI are ***automatically*** shared. However, `CLI-based` changes will ***require a reload on the DS*** where those changes were made.
 
@@ -456,8 +461,8 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       Alternatively, you can use the command below to see if *ds2* reloads the apps again:
 
       ```
-      index=_internal  host=*-ds2
-      |rex field=_raw "issueReload\":(?<issue_reload>[^\,]+)"
+      index=_internal  host="poc-ds2"
+      | rex field=_raw "issueReload\":(?<issue_reload>[^\,]+)"
       | search issue_reload = *
       ```
 
@@ -504,7 +509,7 @@ Hope this helps, and feel free to reach out if you need more assistance! 😊
 
 ## 5. Summary & Final thoughts
 
-****What did we achieve with this POC?****
+**What did we achieve with this POC?**
 
 ✅ No single point of failure for the Deployment Server  
 ✅ Agents consistently connect to the same address (VIP)  
@@ -532,7 +537,7 @@ If you’re aware of the trade-offs, this pattern can be incredibly helpful!
 
 ---
 
-****What could we explore next?****  
+**What could we explore next?**
 - Swap the shared filesystem for NFS or clustered storage  
 - Introduce REST-based health checks  
 - Add monitoring during VIP transitions  
