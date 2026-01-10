@@ -192,10 +192,10 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
       **On both DS1 and DS2:**
       - If you're using the **tgz method**, please create the `splunk` user.
 
-            ```bash
+      ```bash
             useradd -d /opt/splunk/ splunk
             sudo usermod -s /bin/bash splunk
-            ```
+      ```
 
       - Install **Splunk Enterprise 10.0.2** using either the tgz or package method.
 
@@ -208,7 +208,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
 
 5.  Bind shared directories into Splunk paths.
 
-      As we move forward, note that the `/opt/splunk/var/log/client_events` directory won't exist yet, and that's totally okay!
+      As we move forward, note that the `/opt/splunk/var/log/client_events/` directory won't exist yet, and that's totally okay!
 
       **On both deployment servers:**
       - **Bind deployment apps:**
@@ -256,7 +256,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
             |       └── poc_full_license_server/
             ...
 
-      The most important configuration file here is `serverclass.conf`, which you’ll find in both `etc_apps` directories. Remember, these files need to be identical, and contains the key option for this POC:
+      The most important configuration file here is `serverclass.conf`, which you’ll find in both `etc_apps/` directories. Remember, these files need to be identical, and contains the key option for this POC:
       ```
       [global]
       syncMode = sharedDir
@@ -407,8 +407,7 @@ Here’s a high-level flow of what we’ll be doing in this POC. Each step is de
 
       - Configure health checks based on splunk status
       
-      After starting keepalived:
-      - Verify which node owns the VIP with the command below:
+      - After starting keepalived, verify which node owns the VIP with the command below:
 
       ```bash
             ip -4 addr show dev <INTERFACE-PLACEHOLDER>
