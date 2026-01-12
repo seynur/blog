@@ -74,8 +74,8 @@ Keeping these layers separate makes the system easier to reason about, and easie
 
 ---
 
-## 🧪 Input Data: What Are We Feeding the Engine?
-For this project, we used synthetic Windows authentication events generated as JSON. They mimic common authentication Windows Events. If you want, you can also check [generator script](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/auth-windows-log-generator-as-json-with-real-user-behaviour.py) from the repository.
+## 3. 🧪 Input Data: What Are We Feeding the Engine?
+For this project, we used synthetic Windows authentication events generated as JSON. If you want, you can also check [generator script](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/auth-windows-log-generator-as-json-with-real-user-behaviour.py) from the repository.
 
 
 Example event:
@@ -83,9 +83,9 @@ Example event:
 {"TimeCreated": "2025-12-15T07:55:44.007717Z", "user": "svc-web", "src_user": "svc-web", "src": "10.10.2.120", "dest": "SERVER011", "signature_id": 4624, "signature": "An account was successfully logged on", "action": "success", "process": "C:\\Windows\\System32\\lsass.exe"}
 ```
 
-These events are ingested into Splunk first (as normal logs), and then read back by the ML Sidecar.
+These events are ingested into Splunk first (as normal logs) and then read back by the ML Sidecar.
 
-> 💡 The key idea: Splunk remains the system of record for logs. The ML Sidecar only reads data and writes results to KVStore. Also, because output will be crowded, don't forget to change your lookup configurations as your environment.
+> **💡 The key idea**: Splunk remains the system of record for logs. The ML Sidecar only reads data and writes results to KVStore. Also, because output will be crowded, don't forget to change your lookup configurations according to your environment.
 
 ---
 
@@ -224,7 +224,7 @@ Furthermore, you can check the lookups directly.
 
 ---
 
-## 📘 Wrapping Up
+## 7. 📘 Wrapping Up
 
 With Part 1 and Part 2 together, we now have the full picture:
 - how authentication behavior is modeled
