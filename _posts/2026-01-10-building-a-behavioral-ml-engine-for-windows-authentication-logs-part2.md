@@ -19,13 +19,13 @@ how authentication behavior is modeled, clustered, scored, and turned into expla
 In this second part, let’s be a bit more practical.
 
 We’ll walk through:
-- the full project layout
-- how data flows from Splunk into the ML Sidecar
-- how the pipeline is executed
-- what gets written back to Splunk
-- and how we can quickly explore the results using dashboards and lookups
+- The full project layout,
+- How data flows from Splunk into the ML Sidecar,
+- How the pipeline is executed,
+- What gets written back to Splunk,
+- And how we can quickly explore the results using dashboards and lookups.
 
-No deep math this time - just connecting the dots end to end.
+No deep math this time, just connecting the dots end to end.
 
 Also, if you want to deepdive the math and code;
 - [📘 Part 1: Building a Behavioral ML Engine for Windows Authentication Logs](http://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html)
@@ -42,7 +42,7 @@ splunk_ml_sidecar/
 ├── ml_sidecar/                     ← Python ML engine
 │   ├── config/settings.yaml
 │   ├── core/*.py                   ← Features, modeling, pipeline logic
-│   ├── models/                     ← Trained KMeans + metadata
+│   ├── models/                     ← Trained K-Means + metadata
 │   ├── run_auto.py
 │   └── README.md
 │
@@ -68,9 +68,9 @@ All ML logic lives here and runs outside of Splunk indexing.
 
 A helper script we used to generate realistic synthetic Windows authentication logs for testing and experimentation.
 
-Keeping these layers separate makes the system easier to reason about — and easier to replace parts later.
+Keeping these layers separate makes the system easier to reason about, and easier to replace parts later.
 
-> Also, keep in mind: I just wanted to illustrate we can create a self-controlled system in this project. Of course, there can be some enchancements on algorithm and the general logic.
+> *Also, keep in mind*: I just wanted to illustrate that we can create a self-controlled system in this project. Of course, there can be some enhancements to the algorithm and the general logic.
 
 ---
 
@@ -85,7 +85,7 @@ Example event:
 
 These events are ingested into Splunk first (as normal logs), and then read back by the ML Sidecar.
 
-> 💡 The key idea: Splunk remains the system of record for logs. The ML Sidecar only reads data and writes results to KVStore. Also, because output will be crowded, don't forget to change your lookups configurations as your environment. 
+> 💡 The key idea: Splunk remains the system of record for logs. The ML Sidecar only reads data and writes results to KVStore. Also, because output will be crowded, don't forget to change your lookup configurations as your environment.
 
 ---
 
@@ -104,15 +104,15 @@ Once data is available in Splunk, running the full pipeline is intentionally sim
       ```
 
 3. Configure:
-- both ingestion and output Splunk REST token (`ingestion.auth_token` & `output.auth_token`) & base Splunk urls (`ingestion.base_url` & `output.base_url`). Also, you can modify all configurations in the [settings.yaml](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/ml_sidecar/config/settings.yaml) file as you desired.
+      - both ingestion and output Splunk REST token (`ingestion.auth_token` & `output.auth_token`) & base Splunk urls (`ingestion.base_url` & `output.base_url`). Also, you can modify all configurations in the [settings.yaml](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/ml_sidecar/config/settings.yaml) file as you desired.
 
-      Note: We have both ingestion and output configurations that you may want to collect input from X server and send all data to another server setup.
+      > **Note**: We have both ingestion and output configurations that you may want to collect input from X server and send all data to another server setup.
 
-- `ingestion.earliest` & `ingestion.latest` time. Right now, we are ingesting the last -90d. 
+      - `ingestion.earliest` & `ingestion.latest` time. Right now, we are ingesting the last 90 days. 
 
-- you can modify your modeling setups. *For more information*, you can check either [my previous blog](http://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html) or [splunk_ml_sidecar/ml_sidecar/README.md](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/ml_sidecar/README.md) file.
+      - you can modify your modeling setups. *For more information*, you can check either [my previous blog](http://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html) or [splunk_ml_sidecar/ml_sidecar/README.md](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/ml_sidecar/README.md) file.
 
-      Note: There is no other algorithm than kmeans at this moment
+      > **Note**: There is no other algorithm other than k-means at this moment in this study.
 
 
 4. Change `OUT_FILE` as your full input file path in the [generator script](https://github.com/seynur/seynur-demos/blob/main/splunk/splunk_ml_sidecar/auth-windows-log-generator-as-json-with-real-user-behaviour.py), and generate synthetic authentication logs.
@@ -145,7 +145,7 @@ Once data is available in Splunk, running the full pipeline is intentionally sim
 
 Once data is available in Splunk, running the full pipeline is intentionally simple.
 
-From the  splunk_ml_sidecar/ml_sidecar/ directory:
+From the `splunk_ml_sidecar/ml_sidecar/` directory:
 
 ```
 python run_auto.py
@@ -155,20 +155,19 @@ python run_auto.py
 |:--:| 
 | *Figure 1* example of the `run_auto.py` script outputs on the cli. |
 
-That’s it.
+That’s it. 🌸
 
 Behind the scenes, this triggers the full chain:
 1. Load configuration from settings.yaml
 2. Pull authentication events from Splunk via REST
-3. Train or load an existing KMeans model
+3. Train or load an existing K-Means model
 4. Check for behavioral drift
 5. Score all events
-6. Apply adaptive thresholds (user / cluster / global)
+6. Apply adaptive thresholds (user/cluster/global)
 7. Build profiles and enriched event records
 8. Write everything into Splunk KVStore
 
-If this is the first run, a model is trained.
-On later runs, and drift level is enough to your new data, the engine reuses the model unless drift is detected.
+If this is the first run, a model is trained. On later runs, if the drift level is enough for your new data, the engine reuses the model unless drift is detected.
 
 
 ---
@@ -243,7 +242,7 @@ But even in this state, you can think of it as a starting point to develop your 
 
 > 📁 Full code & documentation: [GitHub Repository](https://github.com/seynur/seynur-demos/tree/main/splunk/splunk_ml_sidecar)  
 
-If you end up trying something similar — or break it in an interesting way - I’d love to hear about it 🙂
+If you end up trying something similar or break it interestingly, I'd love to hear about it. 😊
 
 Connect with me on [*LinkedIn*](https://www.linkedin.com/in/%C3%B6yk%C3%BC-can/) or drop a comment on the blog. 
 
