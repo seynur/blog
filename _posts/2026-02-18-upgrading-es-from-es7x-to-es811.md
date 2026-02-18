@@ -228,7 +228,7 @@ Fantastic job getting to this point! Here’s a quick recap of what we’ve acco
 
 Now it’s time for the exciting part: the upgrade! 🎉
 
-1. **Upgrading with a Search Head Cluster (SHC)**
+> **Upgrading with a Search Head Cluster (SHC)**
 
 If you’re working in a clustered environment, we’ll use the SHC Deployer to handle the upgrade, and it’s easier than you might think!
 
@@ -247,7 +247,7 @@ Once the bundle is pushed:
 
 With all the prep work you’ve done, the upgrade should go off without a hitch! So, no need to rush—grab a cup of coffee or tea and relax while you wait! ☕️
 
-2. **If You Don’t Have a Cluster**
+> **If You Don’t Have a Cluster**
 
 No worries at all—upgrading is super simple and straightforward for you! You can:
 
@@ -308,11 +308,6 @@ Because ES 8.x enforces stricter requirements around:
 - `description`
 
 Some of these fields were optional before, but now they’re required!
-
-To find out which correlation rules (now called event-based detections) were not converted properly, you can use the following SPL. It will return a simple table showing which of your detections are missing any required fields. 
-```
-| rest /servicesNS/-/-/saved/searches splunk_server=local
-```
 
 To find out what changes to correlation searches are needed to pass ES 8 Content Management validation checks after migration—run this on your ES 7.x system:
 
