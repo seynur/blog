@@ -337,7 +337,7 @@ To find out what changes to correlation searches are needed to pass ES 8 Content
 
 Instead of manually updating each correlation search, we decided to use our handy script:
 
-👉 [https://github.com/seynur/seynur-tools/splunk_es8_config_updater](https://github.com/seynur/seynur-tools/splunk_es8_config_updater)
+👉 [https://github.com/seynur/seynur-tools/tree/main/splunk_es8_config_updater](https://github.com/seynur/seynur-tools/tree/main/splunk_es8_config_updater)
 
 **Here’s what the script does:**
 - It scans through the `savedsearches.conf` file.
@@ -468,6 +468,6 @@ https://help.splunk.com/en/splunk-enterprise/release-notes-and-updates/compatibi
 
 - [[3]](https://lantern.splunk.com/Get_Started_with_Splunk_Software/Upgrading_to_Enterprise_Security_8.0.x_-_Overview) Splunk. (n.d.). *Upgrading to Enterprise Security 8.0.x – Overview*. Splunk Lantern. Retrieved from https://lantern.splunk.com/Get_Started_with_Splunk_Software/Upgrading_to_Enterprise_Security_8.0.x_-_Overview
 
-- [[4]](https://github.com/seynur/seynur-tools/tree/main/splunk/splunk_es8_config_updater) Seynur (2025). seynur-tools/splunk_es8_config_updater [GitHub repository]. GitHub. Retrieved from https://github.com/seynur/seynur-demos/tree/main/splunk/splunk_es8_config_updater
+- [[4]](https://github.com/seynur/seynur-tools/tree/main/splunk_es8_config_updater) Seynur (2025). seynur-tools/splunk_es8_config_updater [GitHub repository]. GitHub. Retrieved from https://github.com/seynur/seynur-tools/tree/main/splunk_es8_config_updater
 
 - [[5]](https://help.splunk.com/en/splunk-enterprise-security-8/user-guide/8.3/analytics/audit-dashboards?_gl=1*1w8vsbs*_gcl_aw*R0NMLjE3NzA5MDU4NTYuQ2p3S0NBaUFrYmJNQmhCMkVpd0FOYnh0YlFzM0dRMHN5Tnl0VW5aMGVfejlUSWFRWmJOTUhoU1BKUVAtUDljOXNsemhpRmZTYUtBbGRCb0NsZjBRQXZEX0J3RQ..*_gcl_au*MTA0OTAyODgxMy4xNzcwNjU0NjAw*FPAU*MTA0OTAyODgxMy4xNzcwNjU0NjAw*_ga*NDc4OTk2ODM4LjE3NjI3MDg0MjQ.*_ga_5EPM2P39FV*czE3NzEzMTYyOTEkbzExNCRnMSR0MTc3MTMxNjgyOCRqNDckbDAkaDExMDk0NzI4MjY.*_fplc*ZFBqamJmUnFqZEVmQ1RMamFZJTJGUGYxTmZHNENHQ3UlMkZXMkxHJTJCOFdUZmE0eDJpWGxRWiUyQk42aTNMZDBRMjB4dU1oTEtaMFUyT3dJJTJGWVR3aTBoZXZGcGM3VEFDMENBTjAzNlRoeGRUbEdycCUyQnRuZkk3cjFZNjNhaXclMkI1eTh2JTJGdyUzRCUzRA..#ariaid-title8) Splunk. (n.d.). *Audit dashboards - ES configuration health*. Splunk Documentation. 
