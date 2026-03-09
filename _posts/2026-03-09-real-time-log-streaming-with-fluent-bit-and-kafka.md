@@ -293,6 +293,7 @@ sudo vi /etc/fluent-bit/fluent-bit.conf
 > 
 > > **Output** sends the records to the Kafka topic `lab_linux_logs`
 > 
+
 - **After saving the configuration, restart Fluent Bit to apply the changes:**
 ```yaml
 sudo systemctl restart fluent-bitsudo systemctl status fluent-bit
