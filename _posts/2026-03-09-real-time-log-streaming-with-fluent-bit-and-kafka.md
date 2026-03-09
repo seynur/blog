@@ -16,7 +16,7 @@ Modern systems generate an enormous volume of logs across distributed Linux and 
 
 In this article, we will build a real-time log streaming pipeline using **Fluent Bit** and **Apache Kafka**. *Fluent Bit will act as a lightweight edge agent to collect logs from Linux systems, while Kafka will serve as a scalable buffer and streaming backbone.* By the end of this guide, you will have a working log pipeline that demonstrates how Fluent Bit and Kafka can be used together for real-time log streaming.
 
-### **Architecture Overview**
+#### **Architecture Overview**
 
 <p align="center">
   <img src="/assets/img/blog/2026-03-09-fluentbit.png" alt="fluentbit" width="600"/>
@@ -41,7 +41,7 @@ Finally, processed records are delivered through **Output plugins** to externa
 
 This modular approach makes Fluent Bit a highly efficient and flexible solution for log collection in **modern, containerized, and distributed environments**.
 
-### **Fluent Bit Pipeline Components**
+#### **Fluent Bit Pipeline Components**
 
 To better understand how Fluent Bit processes log data, the pipeline can be summarized through the following components:
 
@@ -65,7 +65,7 @@ Downstream systems read data from Kafka using **consumers**, which subscribe to
 
 By combining partitioning, replication, and consumer groups, Kafka provides a reliable and scalable backbone for streaming and processing the log data collected by Fluent Bit.
 
-### **Kafka Message Flow Components**
+#### **Kafka Message Flow Components**
 
 - **Producer** → Sends messages to a Kafka topic
 - **Topic** → Logical channel used to organize messages
@@ -78,7 +78,7 @@ By combining partitioning, replication, and consumer groups, Kafka provides a re
 
 After introducing the architecture and the core components, we can now move on to the implementation phase. In this section, we will build the real-time log pipeline step by step, starting with the deployment of Kafka.
 
-### **🧩 Step 1: Deploy Kafka (KRaft Mode)**
+#### **🧩 Step 1: Deploy Kafka (KRaft Mode)**
 
 Kafka will run in **KRaft mode**, which removes the need for ZooKeeper and simplifies the overall setup. This mode is particularly convenient for local development and testing environments.
 
@@ -157,7 +157,7 @@ docker compose up -d
 > *Instead, configure advertised.listeners with a **reachable IP address or hostname** that clients can access.*
 > 
 
-### **🧩 Step 2: Create a Topic for Log Streaming**
+#### **🧩 Step 2: Create a Topic for Log Streaming**
 
 After Kafka is running, the next step is to create a topic that will receive the logs forwarded by Fluent Bit.
 
@@ -195,7 +195,7 @@ kafka-console-consumer \
 
 This consumer will display incoming messages in real time, allowing you to verify that log records are successfully being written to the topic.
 
-### **🧩 Step 3: Install and Start Fluent Bit Agent**
+#### **🧩 Step 3: Install and Start Fluent Bit Agent**
 
 For demonstration purposes, Fluent Bit will collect logs from a simple test file. In real-world environments, this configuration can easily be adapted to collect logs from system services, application logs, or container workloads.
 
@@ -211,8 +211,7 @@ sudo gpg --dearmor -o /usr/share/keyrings/fluentbit-keyring.gpg
 - **Add the Fluent Bit Repository:**
 
 ```yaml
-echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/noble noble main" \
-| sudo tee /etc/apt/sources.list.d/fluent-bit.list
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/noble noble main" \ | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 - **Update the package list and install Fluent Bit:**
@@ -243,7 +242,7 @@ journalctl -u fluent-bit -f
 
 This command allows you to monitor Fluent Bit activity and quickly identify configuration or connectivity issues.
 
-### **🧩 Step 4: Generate Sample Log Data**
+#### **🧩 Step 4: Generate Sample Log Data**
 
 - **To demonstrate the pipeline, we will generate a simple test log file that Fluent Bit will monitor:**
 ```yaml
@@ -257,7 +256,7 @@ echo "HELLO KAFKA!!!" >> /var/log/test.log
 
 This file (/var/log/test.log) will be continuously **tailed by Fluent Bit** and forwarded to Kafka.
 
-### **🧩 Step 5: Configure Fluent Bit**
+#### **🧩 Step 5: Configure Fluent Bit**
 
 - **First, open the main Fluent Bit configuration file for editing:**
 ```yaml
@@ -265,6 +264,7 @@ sudo vi /etc/fluent-bit/fluent-bit.conf
 ```
 
 - **Then, update the configuration as follows:**
+
 ```yaml
 [SERVICE]
     Flush 1
@@ -298,7 +298,7 @@ sudo vi /etc/fluent-bit/fluent-bit.conf
 sudo systemctl restart fluent-bitsudo systemctl status fluent-bit
 ```
 
-### **🧩 Step 6: Validate the End-to-End Pipeline**
+#### **🧩 Step 6: Validate the End-to-End Pipeline**
 
 If the pipeline is configured correctly, the existing log entries should appear in the Kafka consumer output.
 
@@ -332,5 +332,3 @@ As a next step, this pipeline can be extended by integrating downstream systems 
 - [**Confluent Kafka Docker Image** (Docker Hub)](https://hub.docker.com/r/confluentinc/cp-kafka/)
 - [**What is Fluent Bit** (Official Documentation)](https://docs.fluentbit.io/manual/about/what-is-fluent-bit)
 - [**Fluent Bit Installation on Ubuntu** (Official Documentation)](https://docs.fluentbit.io/manual/installation/downloads/linux/ubuntu)
-
-*Originally published at [https://blog.seynur.com](https://blog.seynur.com/).*
