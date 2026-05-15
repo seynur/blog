@@ -2,7 +2,7 @@
 layout: default
 title: "Upgrading Splunk ES from 7.x to 8.1.1 - Our Journey and Lessons Learned"
 summary: "Upgrading from Splunk ES 7.x to 8.1.1 isn’t just a version change — it’s a structured transition that, with the right preparation and automation, can be smooth, controlled, and operationally safe."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2026-02-18-upgrading-es-from-es7x-to-es811.webp
 date: 18-02-2026
 tags: splunk es upgrade 8.1.1

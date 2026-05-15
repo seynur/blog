@@ -2,7 +2,7 @@
 layout: default
 title:  "Streaming Logs from Kafka to Splunk using the Splunk Sink Connector"
 summary: "In this blog, I show how to stream Fortinet logs from Kafka into Splunk using the Splunk Sink Connector — no SC4S, no intermediate scripts, just clean, timestamped data ready for dashboards and detection."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-09-24-streaming-logs-from-kafka-to-splunk.webp
 date: 24-09-2025
 tags: splunk kafka s2sconnector 

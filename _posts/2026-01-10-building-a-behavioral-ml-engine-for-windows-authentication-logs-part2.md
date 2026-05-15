@@ -2,7 +2,7 @@
 layout: default
 title: "📘 Part 2: Behavioral ML for Windows Authentication — From Data to Dashboards"
 summary: "Running the ML Sidecar end-to-end: ingesting data, executing the pipeline, and exploring dashboards."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-12-24-building-a-behavioral-ml-engine-for-windows-authentication-logs.webp
 date: 10-01-2026
 tags: splunk python windows ml anomaly dashboard

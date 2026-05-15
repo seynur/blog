@@ -2,7 +2,7 @@
 layout: default
 title: "Splunk Cluster Manager Redundancy -  Part 1: What it is, why it matters"
 summary: "In distributed Splunk environments, the Cluster Manager (CM) plays a critical role: it coordinates peer nodes, their configuration bundles, and ensures data replication rules are enforced. So… what happens if the Cluster Manager goes down?"
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-04-24-redundancy-architecture.webp
 date: 24-04-2025
 tags: splunk cluster-manager-redundancy failover-management

@@ -2,7 +2,7 @@
 layout: default
 title: "Practical Approaches to Tuning ML-Based Correlation Searches in Splunk ES"
 summary: "This study aims to ensure that the correlation rules are effectively implemented using MLTK in practice without any errors."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2024-07-18-MLTK-scheme.webp
 date: 18-07-2024
 tags: splunk MLTK machine-learning-tool correlation-searches

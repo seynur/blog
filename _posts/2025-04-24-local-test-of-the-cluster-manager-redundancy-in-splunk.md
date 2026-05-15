@@ -2,7 +2,7 @@
 layout: default
 title: "Splunk Cluster Manager Redundancy -  Part 2: Implementation"
 summary: "In this blog, we're going with the manual + DNS-based approach for its simplicity and full control over the switch process. However, since we're running everything on the same physical server (for testing and educational purposes), we're not using distinct hostnames or external DNS. Instead, we'll configure everything using local IPs."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-04-24-ha-mode.webp
 date: 24-04-2025
 tags: splunk cluster-manager-redundancy failover-management installation

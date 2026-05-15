@@ -2,7 +2,7 @@
 layout: default
 title:  "Getting Started with LocalStack: Local S3 Bucket Creation and File Operations"
 summary: "This blog will teach you how to set up a completely local S3 environment using LocalStack and AWS CLI for rapid, cloudless development and testing."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-10-24-getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.webp
 date: 24-10-2025
 tags: localstack s3 aws docker

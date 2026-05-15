@@ -2,7 +2,7 @@
 layout: default
 title: "Automate Your Splunk Queries with splunk_query_runner"
 summary: "The Splunk Query Runner is a lightweight command-line interface (CLI) tool designed to automate the execution of Splunk queries using a straightforward CSV input format. Whether you are executing saved searches, tstats, or dbxquery commands, this tool helps you produce consistent and timestamped outputs with minimal effort. In this blog, we will guide you through its functionality, configuration process, and how it can save you hours in performing repetitive tasks with Splunk."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-09-12-terminal-image-of-usage_of_the_the-all_runner_script_result.webp
 date: 12-09-2025
 tags: splunk automation query-runner devops log-analysis cli-tools data-ops

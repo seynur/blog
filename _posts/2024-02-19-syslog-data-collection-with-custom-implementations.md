@@ -2,7 +2,7 @@
 layout: default
 title: "Splunk Connect for Syslog (SC4S): Installation, Usage & Implementations"
 summary: "This blog outlines the installation and the usage of SC4S to import syslog input data into Splunk, addressing various use cases including custom and complex configurations."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2024-02-19-splunkproject.webp
 date: 19-02-2024
 tags: splunk sc4s syslog-ng splunk-connect-for-syslog

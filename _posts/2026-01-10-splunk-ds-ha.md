@@ -2,7 +2,7 @@
 layout: default
 title: "Building a Highly Available Splunk Deployment Server Cluster (POC)"
 summary: "A hands-on, honest POC story: why we needed Deployment Server redundancy in Splunk, what we tried, what worked, and what we learned along the way."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2026-01-10-splunk_ds_ha.webp
 date: 10-01-2026
 tags: splunk deployment-server ha keepalived

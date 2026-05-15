@@ -2,7 +2,7 @@
 layout: default
 title:  "Send Windows Event Logs to Kafka — The Easy Way with Splunk UF & Splunk S2S Kafka Connector"
 summary: "In this blog, I show how to collect Windows Event Logs with Splunk Universal Forwarder and stream them directly into Kafka using the Splunk S2S Connector — no HEC, no scripts, just clean, scalable log shipping."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-09-18-streaming-windows-events-to-kafka-with-s2s-connector.webp
 date: 18-09-2025
 tags: splunk kafka s2sconnector 

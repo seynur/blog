@@ -2,7 +2,7 @@
 layout: default
 title:  "📘 Part 1: Behavioral ML for Windows Authentication: Concepts & Engine"
 summary: "ML Sidecar is an experimental Python engine that models “normal” authentication behavior, scores deviations from multiple perspectives, and turns them into flexible, explainable outlier signals for Splunk."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2025-12-24-building-a-behavioral-ml-engine-for-windows-authentication-logs.webp
 date: 24-12-2025
 tags: splunk python windows ml anomaly

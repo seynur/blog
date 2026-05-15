@@ -2,7 +2,7 @@
 layout: default
 title: "From Sysmon to Splunk: Building a Linux Detection Pipeline (End-to-End)"
 summary: "This guide shows how to implement Sysmon for Linux, get its events forwarded to Splunk, and then parse the raw XML events to make them searchable. The output will be a basic but effective chain that gives you insight into what is happening on your Linux systems."
-author: Öykü Can Şimşir
+author: Öykü Can
 image: /assets/img/blog/2026-04-11-ms-sysmon-linux-main.png
 date: 11-04-2026
 tags: microsoft sysmon linux splunk cybersecurity
