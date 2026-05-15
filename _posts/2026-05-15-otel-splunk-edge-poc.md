@@ -160,12 +160,12 @@ Usually:
 
 But since we also had Splunk Edge Processor that required its own ingestion components, it was decided to reconfigure environment in the following way:
 
-| Component                       | Port    |
-| --------------------------------| ------- |
-| Splunk Edge Processor           | 9997    |
-| Splunk Enterprise S2S Input     | 9998    |
-| Splunk Edge Processor HEC       | 8088    |
-| Splunk Management Port          | 8089    |
+| Component                       |   | Port    |
+| --------------------------------| - | ------- |
+| Splunk Edge Processor           |   | 9997    |
+| Splunk Enterprise S2S Input     |   | 9998    |
+| Splunk Edge Processor HEC       |   | 8088    |
+| Splunk Management Port          |   | 8089    |
 
 ---
 
@@ -420,7 +420,7 @@ Some useful metrics include:
 - Instance Status
 - Queues
 
-Performing the whole POC using one VM running Ubuntu Linux was really convenient to develop. Have fun exploring Splunk!
+Performing the whole POC using one VM running Ubuntu Linux was really convenient to develop. 
 
 ---
 
@@ -495,14 +495,16 @@ The same SPL2 pipeline masks IP addresses before indexing them into Splunk at th
 
 Here are a few common event patterns we support:
 
-| Pattern Type                      | Sourcetype      | Index   |
-| --------------------------------- | --------------- | ------- |
-| Authentication events             | linux_secure    | osnix   |
-| Kernel events                     | linux:kernel    | osnix   |
-| Systemd events                    | linux:systemd   | osnix   |
-| Generic syslog events             | syslog          | osnix   |
-| OTEL Collector internal events    | otelcol:internal| osnix   |
-| Journald fallback events          | linux:journald  | osnix   |
+
+| Pattern Type                      |   | Sourcetype      | Index   |
+| --------------------------------- | - | --------------- | ------- |
+| Authentication events             |   | linux_secure    | osnix   |
+| Kernel events                     |   | linux:kernel    | osnix   |
+| Systemd events                    |   | linux:systemd   | osnix   |
+| Generic syslog events             |   | syslog          | osnix   |
+| OTEL Collector internal events    |   | otelcol:internal| osnix   |
+| Journald fallback events          |   | linux:journald  | osnix   |
+
 
 It was notable how certain regex operations were too aggressive, leading to certain journald events not being sent to downstream processing altogether. The workaround for this problem was to conditionally wrap these actions in `if(match())`, which would perform them only if the corresponding IP addresses were found in the event.
 
@@ -541,7 +543,6 @@ which were routed into indexes such as:
 
 * osnix
 * otel
-* edge_poc
 
 The best part of what we achieved was the IP masking performed on the edge layer itself, which prevented any sensitive infrastructure information from reaching the indexing tier in the unmasked form.
 
@@ -557,7 +558,7 @@ Such a solution provides a good example of the powerful capabilities of OpenTele
 
 ### 6.1. Important Note
 
-One thing worth noting about this POC is that there were some Linux events that did not fully comply with expectations created by default settings of the Splunk app, [`Splunk_TA_nix`] (https://splunkbase.splunk.com/app/833).
+One thing worth noting about this POC is that there were some Linux events that did not fully comply with expectations created by default settings of the Splunk app, [`Splunk_TA_nix`](https://splunkbase.splunk.com/app/833).
 
 The fact that many telemetry logs were in JSON made some events parsing fail since they did not comply with expectations related to field extraction and sourcetypes set up by the add-on.
 
@@ -595,7 +596,7 @@ Well done! 🎉
 
 Thanks to this project, we now have a very flexible Linux telemetry pipeline that collects, routes, masks, and preprocesses log data before indexing them in Splunk.
 
-💬 I would be more than happy to see your comments, feedbacks, suggestions, or even questions! Feel free to contact me on LinkedIn! 🧚🏽‍♀️
+💬 I would be more than happy to see your comments, feedbacks, suggestions, or even questions! Feel free to contact me on [LinkedIn](https://www.linkedin.com/in/%C3%B6yk%C3%BC-can/)! 🧚🏽‍♀️
 
 Until next time! 👋
 
