@@ -450,10 +450,11 @@ As examples of logs processed within one pipeline, we can cite the following:
 To cope with that task, we applied dynamic conditional matching in our pipeline.
 
 The resulting pipeline looks like this:
+
 ```
 $pipeline = | from $source
 
-/** Sourcetype deciding **/
+/** Deciding on the Sourcetype **/
 | eval sourcetype=case(
  match(_raw, /SYSLOG_IDENTIFIER("| ):("| )(sudo|sshd|su|passwd|useradd|groupadd|userdel|groupdel)("| )/), "linux_secure",
  match(_raw, /("| )_TRANSPORT("| ):("| )kernel("| )/) OR match(_raw, /SYSLOG_IDENTIFIER("| ):("| )kernel("| )/), "linux:kernel",
@@ -465,13 +466,13 @@ $pipeline = | from $source
  1=1, "linux:journald"
 )
 
-/** Index deciding **/
+/** Deciding on the Index **/
 | eval index=case(like(sourcetype, "linux%") OR sourcetype == "syslog", "osnix",
  sourcetype=="otelcol:internal", "otel",
  1=1, "edge_poc"
 )
 
-/** Check & apply if IP masking is needed **/
+/** Check if IP masking is required and implement it **/
 | eval _raw=case(
  match(_raw, /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/),
  replace(_raw, /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/, "x.x.x.x"),
