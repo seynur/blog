@@ -127,7 +127,7 @@ You should have received `splunk_s1` as well as a number of events!
 |:--:|
 | *Figure 3*: Remote search results from `splunk_s2`. |
 
-> **Note:** Just a quick note: whether you’re working with the UI or the configuration files, the result will be the same! The user interface simply makes it more convenient for documentation and management.
+> **Note:** whether you’re working with the UI or the configuration files, the result will be the same! The user interface simply makes it more convenient for documentation and management.
 
 --- 
 
