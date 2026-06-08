@@ -70,7 +70,7 @@ federated.provider = splunk_s1
 
 > **Note:** It is vital to note that `federated:internal` is our local alias and `federated.dataset = index:_internal` is the actual index name on the remote side.
 
-Then restart `splunk_s2` and jump to [Step 3](#step-3--run-the-search).
+Then restart `splunk_s2` and jump to [Run & Verify](#run--verify).
 
 ## Option B - Using the UI
 
