@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Splunk Talking to Splunk: Federated Search in 5 Minutes"
-summary: "Federated search lets one Splunk instance query another remotely: no forwarders, no pipelines. Just two config files, a restart, and you're done."
+summary: "Federated Search allows the central Splunk server to search many other remote Splunk servers at the time of running the search – no need for forwarders or pipelines. Set up your provider and federated indexes on the search head, restart, and you will have access to data from both servers."
 author: Öykü Can
 image: /assets/img/blog/2026-06-09-federated-search.png
 date: 09-06-2026
