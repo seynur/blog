@@ -154,7 +154,7 @@ And that works on your machine? Awesome! Try it now in production. The differenc
 
 3. Provide Permissions
 
-Minimum permissions required are `Storage Object Creator` and `Storage Object Viewer`. This step cannot be skipped, as you'll regret it when you need to do it later.
+    Minimum permissions required are `Storage Object Creator` and `Storage Object Viewer`. This step cannot be skipped, as you'll regret it when you need to do it later.
 
 4. Modify `coldToGCS.py`
     ```python
