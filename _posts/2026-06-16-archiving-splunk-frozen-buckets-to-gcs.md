@@ -177,14 +177,6 @@ Until next time! ☁️
 
 ---
 
-## 🔜 Coming Up Next
-
-Hey there! In our next post, we’re excited to show you how to take those archived buckets and bring them back to life in Splunk’s `thaweddb` directory. We’ll walk you through the process of turning them into a readable format using the `journal.zst` file.
-
-Thanks for joining us on this journey, and we can’t wait to share more with you soon! Stay tuned!
-
----
-
 ## References:
 - [[1]](https://github.com/seynur/seynur-tools/tree/main/org_frozen_buckets_to_cloud_app) Seynur. (2025). *org_frozen_buckets_to_cloud_app* [Computer software]. GitHub. [https://github.com/seynur/seynur-tools/tree/main/org_frozen_buckets_to_cloud_app](https://github.com/seynur/seynur-tools/tree/main/org_frozen_buckets_to_cloud_app)
 - [[2]](https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html) Can, Ö. (2025). **Getting Started with LocalStack: Local S3 Bucket Creation and File Operations**. Seynur. [https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html)](https://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html)
