@@ -76,7 +76,9 @@ I normally write extensive walkthroughs, but this time it's going to be short, p
     ```
 
 3. Configure `coldToGCS.py`
+
     > Two lines. You can do this.
+
     ```
     GCS_BUCKET = "gs://gcs-frozen-test-bucket"
     EMULATOR_HOST = "http://localhost:4443"
@@ -130,7 +132,7 @@ There is your frozen bucket, sitting safely in a fake cloud on your computer. Im
 
 ---
 
-## Next Step: Production Setup With Actual GCS
+## Next Step: Production Setup With Actual GCS
 
 And that works on your machine? Awesome! Try it now in production. The difference between this and the above section isn’t as big as you think it is.
 
