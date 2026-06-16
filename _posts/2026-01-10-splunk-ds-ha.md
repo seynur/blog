@@ -566,7 +566,7 @@ https://help.splunk.com/en/splunk-enterprise/administer/update-your-deployment/1
 - [[5]](https://blog.seynur.com/keepalived/2025/11/07/keepalived-part1.html) Gevrek, H. (2025). Understanding keepalived for high availability (Part 1). Retrieved from
 https://blog.seynur.com/keepalived/2025/11/07/keepalived-part1.html
 
-- [[6]](https://blog.seynur.com/splunk/2025/04/24/cluster-manager-redundancy-in-splunk.html) Şimşir Can, Ö. (2025). Splunk Cluster Manager Redundancy - Part 1: What it is, why it matters. Retrieved from
+- [[6]](https://blog.seynur.com/splunk/2025/04/24/cluster-manager-redundancy-in-splunk.html) Can, Ö. (2025). Splunk Cluster Manager Redundancy - Part 1: What it is, why it matters. Retrieved from
 https://blog.seynur.com/splunk/2025/04/24/cluster-manager-redundancy-in-splunk.html
 
 - [[7]](https://splunk.my.site.com/customer/s/article/DS-Cluster-not-working-on-CIFS-filesystem-Unable-to-deliver-splunk-ds-lock-lock) Splunk Inc. (2025). Deployment Server Cluster Feature Does not Work When Using a CIFS Filesystem. Retrieved from

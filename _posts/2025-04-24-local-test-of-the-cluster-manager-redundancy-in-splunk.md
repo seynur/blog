@@ -817,7 +817,7 @@ And when you’re ready to scale, think automation.
 ## References:
 
 - [[1]](https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_a_load_balancer_to_support_cluster_manager_redundancy) Splunk. (2022). *Implement cluster manager redundancy* *https://docs.splunk.com/Documentation/Splunk/9.4.1/Indexer/CMredundancy#Use_a_load_balancer_to_support_cluster_manager_redundancy*
-- [[2]](cluster-manager-redundancy-in-splunk.html) Şimşir Can, Ö. (2025). *Cluster Manager Redundancy in Splunk: What It Is, Why It Matters*. 
+- [[2]](cluster-manager-redundancy-in-splunk.html) Can, Ö. (2025). *Cluster Manager Redundancy in Splunk: What It Is, Why It Matters*. 
 - [[3]](https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf) Splunk. (2021). *Splunk Validated Architectures* *https://www.splunk.com/en_us/pdfs/white-paper/splunk-validated-architectures.pdf*
 - [[4]](https://docs.splunk.com/Documentation/Splunk/9.4.0/Capacity/ComponentsofaSplunkEnterprisedeployment) Splunk. (2018). *Components of a Splunk Enterprise deployment* *http://docs.splunk.com/Documentation/Splunk/9.4.0/Capacity/ComponentsofaSplunkEnterprisedeployment*
 - [[5]](https://docs.splunk.com/Documentation/Splunk/latest/DMC/Configureindistributedmode) Splunk. (2025). *Configure the Monitoring Console in distributed moden* *https://docs.splunk.com/Documentation/Splunk/latest/DMC/Configureindistributedmode*

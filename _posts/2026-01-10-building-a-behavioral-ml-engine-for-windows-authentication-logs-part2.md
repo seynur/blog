@@ -253,7 +253,7 @@ Until next time 👋🔍
 # References:
 - [[1]](https://github.com/seynur/seynur-demos/tree/main/splunk/splunk_ml_sidecar) Seynur (2025). seynur-demos/splunk_ml_sidecar [GitHub repository]. GitHub. https://github.com/seynur/seynur-demos/tree/main/splunk/splunk_ml_sidecar
 
-- [[2]](https://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html) Şimşir Can, Ö. (2025). 📘 Part 1: Building a Behavioral ML Engine for Windows Authentication Logs. https://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html
+- [[2]](https://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html) Can, Ö. (2025). 📘 Part 1: Building a Behavioral ML Engine for Windows Authentication Logs. https://blog.seynur.com/splunk/2025/12/24/building-a-behavioral-ml-engine-for-windows-authentication-logs-part1.html
 
 - [[3]](https://docs.splunk.com/Documentation/Splunk/latest/RESTREF/RESTsearch) Splunk Inc. (2024). Splunk REST API Reference – Search Job Export Endpoint.
 https://docs.splunk.com/Documentation/Splunk/latest/RESTREF/RESTsearch

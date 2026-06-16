@@ -347,7 +347,7 @@ Until next time 🚀📦
 
 # References:
 - [[1]](https://github.com/seynur/seynur-tools/tree/main/restore_archive_for_splunk) Seynur (2025). restore_archive_for_splunk [GitHub repository]. GitHub. https://github.com/seynur/seynur-tools/tree/main/restore_archive_for_splunk
-- [[2]](http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html) Şimşir Can, Ö. (2025). Getting Started with LocalStack: Local S3 Bucket Creation and File Operations. http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html
-- [[3]](http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html) Şimşir Can, Ö. (2025). Archiving Splunk Frozen Buckets to S3 (via LocalStack). http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html
+- [[2]](http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html) Can, Ö. (2025). Getting Started with LocalStack: Local S3 Bucket Creation and File Operations. http://blog.seynur.com/localstack/2025/10/24/getting-started-with-localstack-local-s3-bucket-creation-and-file-operations.html
+- [[3]](http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html) Can, Ö. (2025). Archiving Splunk Frozen Buckets to S3 (via LocalStack). http://blog.seynur.com/localstack/2025/10/28/archiving-splunk-frozen-buckets-to-s3-on-localstack.html
 
 ---
