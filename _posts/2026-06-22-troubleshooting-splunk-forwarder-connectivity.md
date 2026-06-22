@@ -384,8 +384,3 @@ A few proactive habits can save you from most of these headaches in the first pl
 
 Happy troubleshooting — and may your queues always be empty.
 
----
-
-*Originally published at [blog.seynur.com](https://blog.seynur.com)*
-
-*Tags: Splunk, Splunk Enterprise, Troubleshooting, Troubleshooting Tips, SIEM*
