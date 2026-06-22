@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Troubleshooting Splunk Forwarder Connectivity: A Field Guide"
-summary: "Automate your Splunk deployment with Ansible: configure SSH access, manage inventories, and roll out installations with ease."
+summary: "A practical, hands-on guide to diagnosing and fixing Splunk Universal and Heavy Forwarder connectivity issues."
 author: Damla Erblang
 image: /assets/img/blog/2026-06-22-splunk-forwarder-connectivity.webp
 date: 22-06-2026
@@ -17,7 +17,6 @@ This guide is that place. Whether you're working with a Universal Forwarder (UF)
 <p align="center">
   <img src="/assets/img/blog/2026-06-22-splunk-forwarder-connectivity.webp" alt="splunkforwarders" width="600"/>
 </p>
-
 
 ---
 
